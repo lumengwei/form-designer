@@ -5,7 +5,7 @@
 
 基于Ant Design 和 jQuery UI 的表单设计器
 
-![](./prevew.png)
+![](https://raw.githubusercontent.com/lumengwei/form-designer/master/preview.png?token=ADRBJSAR7WXL3VOK3ILOAHC4X4TMC)
 
 </div>
 
