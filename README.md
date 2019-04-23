@@ -36,7 +36,7 @@
 }
 ```
 
-在this.props 中还提供了<b>renderCounter</b>属性，每次组件的刷新该属性值会自增。definition的结构可能是深层次的，然而在Ant Design提供的React 组件中的[shouldComponentUpdate(nextProps,nextState)](https://reactjs.org/docs/react-component.html#shouldcomponentupdate)方法的实现是对象的浅层比较，在某些情况下Component Editor对组件属性的改变不会导致组件的刷新。可以通过renderCounter来解决组件不刷新的问题。
+在this.props 中还提供了<b>renderCounter</b>属性，每次组件的刷新该属性值会自增。definition的结构可能是深层次的，然而在Ant Design提供的React 组件中的<a href="https://reactjs.org/docs/react-component.html#shouldcomponentupdate" target="_blank" rel="noopener noreferrer">shouldComponentUpdate(nextProps,nextState)</a>方法的实现是对象的浅层比较，在某些情况下Component Editor对组件属性的改变不会导致组件的刷新。可以通过renderCounter来解决组件不刷新的问题。
 ```
 /**
  * 组件
