@@ -3,7 +3,7 @@
 
 <div align="center">
 
-基于Ant Design 和 jQuery UI 的表单设计器
+基于<a href="https://ant.design/" taget="_blank" rel="noopener noreferrer">Ant Design</a> 和 <a href="http://jqueryui.com/" taget="_blank" rel="noopener noreferrer">jQuery UI</a> 的表单设计器
 
 ![](https://github.com/lumengwei/form-designer/blob/master/preview.png)
 
