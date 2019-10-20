@@ -1,2 +1,2 @@
-require('./ColumnLayoutFactory')
 require('./LinearLayoutFactory')
+require('./ColumnLayoutFactory')
