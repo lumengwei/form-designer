@@ -6,7 +6,6 @@ import componentStyle from './component.less';
 import FormStudio from '../util/FormStudio';
 import PropsEditor from  './PropsEditor';
 
-console.log(componentStyle);
 require('./components');
 
 require('./layout');
