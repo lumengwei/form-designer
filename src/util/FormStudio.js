@@ -1,23 +1,25 @@
 const factoryStore = {};
 
-const factoryList=[];
+const factoryList = [];
 
-class FormStudio{
-  draggedFactory= null;
+class FormStudio {
+  draggedFactory = null;
 
-     // 处于拖拽状态下的组件工厂
-  propsEditor = null;       // 属性编辑器
+  transferSource = null
 
-  _activeComponent = null;  // 当前被激活的组件
+  // 处于拖拽状态下的组件工厂
+  propsEditor = null; // 属性编辑器
 
-  _topLayout= null; // 顶级布局
+  _activeComponent = null; // 当前被激活的组件
+
+  _topLayout = null; // 顶级布局
 
   /**
    * 注册组件工厂
    * @param factory
    */
-  registerFactory(factory){
-    if(factoryStore[factory.type]){
+  registerFactory(factory) {
+    if (factoryStore[factory.type]) {
       console.log(`[warn] factory ${factory.type} is exist, ignore`);
       return;
     }
@@ -31,41 +33,45 @@ class FormStudio{
    * @param factoryType
    * @returns {*}
    */
-  getFactory(factoryType){
-    return factoryStore[factoryType]
+  getFactory(factoryType) {
+    return factoryStore[factoryType];
   }
 
-  factoryMap(map){
+  factoryMap(map) {
     return factoryList.map(map);
   }
 
-  factoryFilter(filter){
+  factoryFilter(filter) {
     return factoryList.filter(filter);
   }
 
-  set activeComponent(component){
+  set activeComponent(component) {
     this._activeComponent = component;
-    if(component){
-      this.propsEditor.setComponentIns(component)
-    }else{
-      this.propsEditor.setComponentIns(null)
+    if (this.propsEditor) {
+      if (component) {
+        this.propsEditor.setComponentIns(component);
+      } else {
+        this.propsEditor.setComponentIns(null);
+      }
     }
   }
 
-  get activeComponent(){
+  get activeComponent() {
     return this._activeComponent;
   }
 
-  set topLayout(layout){
+  set topLayout(layout) {
     this._topLayout = layout;
   }
 
-  getJsonData(){
-    return JSON.parse(JSON.stringify(this._topLayout.props.definition))
+  get topLayout() {
+    return this._topLayout
+  }
+
+
+  getJsonData() {
+    return JSON.parse(JSON.stringify(this._topLayout.props.definition));
   }
 }
 
-
-
 export default new FormStudio();
-

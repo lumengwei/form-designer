@@ -1,2 +1,4 @@
-require('./ColumnLayoutFactory')
-require('./LinearLayoutFactory')
+require('./LinearLayoutFactory');
+require('./ColumnLayoutFactory');
+require('./DividerLayoutFactory');
+require('./TabsLayoutFactory');
