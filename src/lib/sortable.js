@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import SortableJS from 'sortablejs';
-console.log(SortableJS)
 
 const store = {
   nextSibling: null,
