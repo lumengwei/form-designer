@@ -65,7 +65,7 @@ class ColumnComponentEditor extends PureComponent{
                   message:'不得小于1'
               },{
               type:'number',
-              max:1,
+              max:10,
               message:'不得小于10'
           }]
           })(<InputNumber />)}
