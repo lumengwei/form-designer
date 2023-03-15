@@ -1,4 +1,4 @@
-import { ComponentFactory } from '/@/modules/form/views/designer/types';
+import type {ComponentFactory} from "../../../../src/types";
 
 const Factory: ComponentFactory<any> = {
   title: '流式布局',

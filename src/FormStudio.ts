@@ -37,15 +37,11 @@ class FormStudio {
      * @param factoryType
      * @returns {*}
      */
-    getFactory<T>(factoryType): ComponentFactory<T> {
+    getFactory<T>(factoryType: string): ComponentFactory<T> {
         return factoryStore.get(factoryType) as ComponentFactory<T>;
     }
 
-    factoryMap(map) {
-        return factoryList.map(map);
-    }
-
-    factoryFilter(filter) {
+    factoryFilter(filter: (it: ComponentFactory<any>) => boolean) {
         return factoryList.filter(filter);
     }
 

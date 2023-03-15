@@ -1,8 +1,4 @@
-import {
-  ComponentDefinition,
-  ComponentFactory,
-  TableField,
-} from '/@/modules/form/views/designer/types';
+import {ComponentDefinition, ComponentFactory, TableField} from "../../../../src/types";
 
 export type CheckboxProps = {
   placeholder: string;
