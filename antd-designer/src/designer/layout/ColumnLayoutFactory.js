@@ -80,6 +80,7 @@ class ColumnLayoutFactory{
 
   title="列布局"
 
+
   /**
    * 初始化一个组件定义
    * @returns {{type: string, title: string}}

@@ -4,7 +4,7 @@ import $ from '../lib/jquery';
 import FormView from './FormView';
 import componentStyle from './component.less';
 import FormStudio from '../util/FormStudio';
-import PropsEditor from  './PropsEditor';
+import PropsEditor from './PropsEditor';
 
 require('./components');
 

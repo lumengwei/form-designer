@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "types": ["vite/client"]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.js"
+  ]
+}

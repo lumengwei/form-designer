@@ -123,4 +123,4 @@ class InputFactory {
 export default InputFactory;
 ```
 
-在compoents/index.js 或 layout/index.js 引入自己组件
+在compoents/index.tsx 或 layout/index.tsx 引入自己组件
