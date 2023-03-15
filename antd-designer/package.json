@@ -5,15 +5,18 @@
   "scripts": {
     "start": "npx webpack serve"
   },
-  "browser": "./src/index.js",
+  "main": "./src/index.tsx",
   "dependencies": {
-    "antd": "^3.16.5",
+    "antd": "^5.3.1",
+    "classnames": "^2.3.2",
     "jquery": "^3.4.0",
     "jquery-ui-dist": "^1.12.1",
     "react": "latest",
-    "react-dom": "^16.8.6"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-
+    "@types/react-dom": "^18.0.11",
+    "create-react-class": "^15.7.0",
+    "hoist-non-react-statics": "^3.3.2"
   }
 }

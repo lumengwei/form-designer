@@ -1,12 +1,16 @@
 import type {Configuration as DevServerConfiguration} from "webpack-dev-server";
 import type {Configuration} from "webpack";
 import * as webpack from "webpack";
-import * as path from 'path';
+import type {LoaderContext} from "mini-css-extract-plugin/types/utils";
+
+const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('mini-css-extract-plugin');
 
-function getLocalIdent(context, localIdentName, localName) {
+function getLocalIdent(context: LoaderContext,
+                       localIdentName: string,
+                       localName: string) {
     return localName;
 }
 
@@ -21,13 +25,16 @@ const devServer: DevServerConfiguration = {
 };
 
 const config: Configuration = {
-    mode: "development",
-    entry: path.resolve(__dirname, 'src/index.tsx'),
     output: {
         path: path.resolve(__dirname, "dist"),
     },
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
             {
                 test: /\.js/,
                 use: {
@@ -76,7 +83,7 @@ const config: Configuration = {
         ]
     },
     resolve: {
-        extensions: [".js"]
+        extensions: ['.tsx', '.ts', '.js']
     },
     devServer,
     plugins: [
