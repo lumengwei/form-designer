@@ -21,9 +21,15 @@
       "es2017"
     ]
   },
+  "path": [],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.js"
+  ],
+  "include": [
+    "./**/*.d.ts",
+    "./**/*.ts",
+    "./**/*.tsx"
   ]
 }

@@ -26,7 +26,5 @@ export interface ComponentDefinition<T> extends Component {
  * 负责创建组件的定义
  */
 export interface ComponentFactory<T> extends Component {
-    new(): ComponentFactory<T>;
-
     createComponentDefinition: () => ComponentDefinition<T> | FieldDefinition;
 }

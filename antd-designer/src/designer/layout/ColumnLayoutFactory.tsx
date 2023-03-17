@@ -4,7 +4,9 @@ import { ComponentEditor, FactoryRegister } from '../warpper';
 import { Layout } from '../component';
 import { guaranteeNumber } from '../../util/MiscUtil';
 import LayoutWrapper from './LayoutWrapper';
-import FormStudio from "../../util/FormStudio";
+import FormStudio from "../../../../src/FormStudio";
+import {ComponentFactory} from "../../../../src/types";
+import {CheckboxProps} from "../../../../src/props";
 
 const LinearLayoutFactory = FormStudio.getFactory("LinearLayout");
 
@@ -75,7 +77,7 @@ class ColumnComponentEditor extends PureComponent{
 }
 
 @FactoryRegister(ColumnLayout, ColumnComponentEditor)
-class ColumnLayoutFactory{
+class ColumnLayoutFactory implements ComponentFactory<CheckboxProps>{
   type="ColumnLayout"
 
   title="列布局"

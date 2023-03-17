@@ -7,3 +7,5 @@ export type CheckboxProps = {
         disabled: boolean;
     }[];
 };
+
+export type LinearLayoutProps = {};

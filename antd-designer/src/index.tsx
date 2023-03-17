@@ -3,7 +3,7 @@ import {Layout, Button} from 'antd';
 import {render} from 'react-dom';
 import FormDesigner from './designer/FormDesigner';
 import 'antd/dist/antd.css';
-import FormStudio from "./util/FormStudio";  // or 'antd/dist/antd.less'
+import FormStudio from "../../src/FormStudio";
 
 const {Header, Content} = Layout;
 

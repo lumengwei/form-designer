@@ -4,7 +4,7 @@
 
 .form-view {
   min-height: 93%;
-  margin:0 15px;
+  margin: 0 15px;
   background: #fff;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 
@@ -21,7 +21,7 @@
   & .form-content {
     display: flex;
     min-height: 700px;
-    padding:10px;
+    padding: 10px;
   }
 
   & .columnLayout {
@@ -41,7 +41,7 @@
     -moz-transition: opacity linear 0.15s;
     transition: opacity linear 0.15s;
 
-    & .fm-btn{
+    & .fm-btn {
       margin-left: 1px;
       padding: 0 5px;
       color: #fff;
@@ -61,23 +61,23 @@
   & .formPlaceholder,
   & .form-placeholder-filed {
     height: 80px;
-    border: 2px dashed  @warn-color;
+    border: 2px dashed @warn-color;
   }
 
-  & .ui-sortable{
+  & .ui-sortable {
     width: 100%;
-    min-height:50px;
+    min-height: 50px;
   }
 
-  & .component{
+  & .component {
     position: relative;
     cursor: pointer;
 
-    &.active{
+    &.active {
       background: #fff8dc;
       border-color: #ddd;
 
-      & .fm-btn-remove{
+      & .fm-btn-remove {
         display: block !important;
       }
     }
@@ -90,40 +90,40 @@
     border: 1px dashed @border-color;
     cursor: pointer;
 
-    & .component-layout{
+    & .component-layout {
       border-right: none;
-      border-left:none;
+      border-left: none;
     }
 
-    & .component-layout:first-child{
+    & .component-layout:first-child {
       border-top: none;
     }
   }
 
-  & .column-layout{
+  & .column-layout {
     display: table;
     width: 100%;
     table-layout: fixed;
 
 
-    & .cell{
+    & .cell {
       display: table-cell;
       height: 50px;
       vertical-align: top;
       border-left: 1px dashed @border-color;
     }
 
-    & .cell:first-child{
+    & .cell:first-child {
       border-left: none !important;
     }
 
   }
 
-  & .component-field{
+  & .component-field {
     position: relative;
     background: #fff;
     padding: 8px 10px 8px;
-    border: 1px dashed rgba(0,0,0,0);
+    border: 1px dashed rgba(0, 0, 0, 0);
 
     & .fm-btn-remove {
       position: absolute;
@@ -142,6 +142,7 @@
       margin-top: 5px;
       text-align: right;
     }
+
     & .field-content {
       position: relative;
       min-height: 30px;
@@ -158,7 +159,7 @@
   }
 }
 
-.form-designer{
+.form-designer {
   display: flex;
   height: 100%;
   margin: -24px;

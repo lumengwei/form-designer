@@ -7,7 +7,6 @@ import FormStudio from "../../../src/FormStudio";
 type ComponentEditorClass = typeof ComponentEditor;
 
 export function ComponentEditor(component: ComponentClass) {
-    Form.create()
     return Form.create({
         onValuesChange(props, values, allValues) {
             if (props.onValuesChange) {// PropsEditor#onValuesChange
@@ -23,11 +22,12 @@ export function ComponentEditor(component: ComponentClass) {
  * @param Factory
  * @constructor
  */
-export function FactoryRegister(Component: ComponentClass, ComponentEditor: ComponentEditorClass) {
+export function FactoryRegister(Component: ComponentClass, ComponentEditor?: ComponentEditorClass) {
 
     return function FactoryWrapper<T>(Factory: ComponentFactory<T>) {
+        const prototype = Object.getPrototypeOf(Factory);
         if (Component) {
-            Factory.prototype.renderComponent = (componentDefinition: ComponentDefinition<T>) => {
+            prototype.renderComponent = (componentDefinition: ComponentDefinition<T>) => {
                 return function (props: any) {
                     return <Component {...props} definition={componentDefinition}/>
                 }
@@ -35,7 +35,7 @@ export function FactoryRegister(Component: ComponentClass, ComponentEditor: Comp
         }
 
         if (ComponentEditor) {
-            Factory.prototype.renderEditor = (componentDefinition: ComponentDefinition<T>) => {
+            prototype.renderEditor = (componentDefinition: ComponentDefinition<T>) => {
                 return function (props: any) {
                     return <ComponentEditor {...props} definition={componentDefinition}/>
                 }
