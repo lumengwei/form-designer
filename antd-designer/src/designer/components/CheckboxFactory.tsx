@@ -7,6 +7,7 @@ import {getErasure} from '../../util/MiscUtil';
 import {PropsEditor} from '../fragements';
 import type {ComponentFactory} from '../../../../src/types'
 import {CheckboxProps} from "../../../../src/props";
+import {ReactComponentProps} from "../types";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -14,7 +15,7 @@ const CheckboxGroup = Checkbox.Group;
 class CheckboxComponent extends Component {
 
     render() {
-        const {definition: {props}, renderCounter} = this.props;
+        const {definition: {props}} = this.props;
         const defaultValue = props.options.filter(item => {
             return item.checked;
         }).map(item => {
@@ -22,16 +23,16 @@ class CheckboxComponent extends Component {
         });
 
         return (
-            <CheckboxGroup options={props.options} value={defaultValue} renderCounter={renderCounter}/>
+            <CheckboxGroup options={props.options} value={defaultValue}/>
         )
     }
 }
 
-@ComponentEditor
-class CheckboxComponentEditor extends PureComponent {
+class CheckboxComponentEditor extends PureComponent<ReactComponentProps<CheckboxProps>>
+    implements ComponentEditor<CheckboxProps> {
 
 
-    onChange(_, allValues) {
+    onChange(allValues) {
         const {definition: {props}, definition} = this.props;
         definition.name = getErasure(allValues, 'name');
         definition.title = getErasure(allValues, 'title');
@@ -116,7 +117,7 @@ class CheckboxComponentEditor extends PureComponent {
     }
 }
 
-@FactoryRegister(CheckboxComponent, CheckboxComponentEditor)
+@FactoryRegister<CheckboxProps>(CheckboxComponent, CheckboxComponentEditor)
 export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
     type = "Checkbox"
 
@@ -137,7 +138,7 @@ export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
             props: {
                 placeholder: '请输入',
                 options: [
-                    {label: '显示值', value: '真值', checked: false}
+                    {label: '显示值', value: '真值', checked: false, disabled: false}
                 ]
             },
         }

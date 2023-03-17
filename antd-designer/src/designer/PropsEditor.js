@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import FormStudio from '../util/FormStudio';
+import FactoryRenders from "./FactoryRenders";
 
 require('./formView.less');
 
@@ -64,7 +65,7 @@ class FormEditor extends PureComponent {
     renderProps() {
         const {definition} = this.state;
         if (definition) {
-            return FormStudio.getFactory(definition.type).renderEditor(definition)({
+            return FactoryRenders.getRender(definition.type).renderEditor(definition)({
                 componentIns: this.componentIns,
                 onValuesChange: this.onValuesChange.bind(this),
                 wrappedComponentRef: this.componentEditorRef

@@ -7,10 +7,8 @@ export interface Component {
  * 字段定义
  */
 export interface FieldDefinition {
-    fieldDef: {
-        fieldName: string;
-        fieldType: string;
-    }
+    fieldName: string;
+    fieldType: string;
 }
 
 /**
@@ -19,12 +17,18 @@ export interface FieldDefinition {
 export interface ComponentDefinition<T> extends Component {
     props?: T;
     children?: ComponentDefinition<any>[];
+    fieldDef?: FieldDefinition;
 }
+
 
 /**
  * 组件工厂
  * 负责创建组件的定义
  */
 export interface ComponentFactory<T> extends Component {
-    createComponentDefinition: () => ComponentDefinition<T> | FieldDefinition;
+    createComponentDefinition: () => ComponentDefinition<T>;
+}
+
+export interface ComponentFactoryConstructor<T> {
+    new(): ComponentFactory<T>;
 }

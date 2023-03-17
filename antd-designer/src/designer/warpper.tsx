@@ -1,20 +1,8 @@
 import React, {Component, ComponentClass} from 'react';
-import {Form} from 'antd';
-import {ComponentDefinition, ComponentFactory} from "../../../src/types";
+import {ComponentDefinition, ComponentFactoryConstructor, ComponentFactory} from "../../../src/types";
 import FormStudio from "../../../src/FormStudio";
-
-
-type ComponentEditorClass = typeof ComponentEditor;
-
-export function ComponentEditor(component: ComponentClass) {
-    return Form.create({
-        onValuesChange(props, values, allValues) {
-            if (props.onValuesChange) {// PropsEditor#onValuesChange
-                props.onValuesChange(props, values, allValues)
-            }
-        }
-    })(component);
-}
+import FactoryRenders from "./FactoryRenders";
+import {ComponentFactoryRender, ReactComponentProps} from "./types";
 
 
 /**
@@ -22,27 +10,31 @@ export function ComponentEditor(component: ComponentClass) {
  * @param Factory
  * @constructor
  */
-export function FactoryRegister(Component: ComponentClass, ComponentEditor?: ComponentEditorClass) {
+export function FactoryRegister<T>(Component: ComponentClass, ComponentEditor?: ComponentClass<ReactComponentProps<T>>) {
 
-    return function FactoryWrapper<T>(Factory: ComponentFactory<T>) {
+    return function FactoryWrapper(Factory: ComponentFactoryConstructor<T>) {
         const prototype = Object.getPrototypeOf(Factory);
-        if (Component) {
-            prototype.renderComponent = (componentDefinition: ComponentDefinition<T>) => {
+
+
+        const render: ComponentFactoryRender<T, any> = {
+            renderComponent(componentDefinition: ComponentDefinition<T>) {
                 return function (props: any) {
                     return <Component {...props} definition={componentDefinition}/>
                 }
-            };
-        }
-
-        if (ComponentEditor) {
-            prototype.renderEditor = (componentDefinition: ComponentDefinition<T>) => {
+            },
+            renderEditor(componentDefinition: ComponentDefinition<T>) {
                 return function (props: any) {
-                    return <ComponentEditor {...props} definition={componentDefinition}/>
+                    if (ComponentEditor) {
+                        return <ComponentEditor {...props} definition={componentDefinition}/>
+                    } else {
+                        return (<></>);
+                    }
                 }
             }
         }
 
-
-        FormStudio.registerFactory(new Factory())
+        const factory: ComponentFactory<any> = Object.create(prototype);
+        FactoryRenders.register<ComponentFactory<any>>(render, factory.type)
+        FormStudio.registerFactory(factory)
     }
 }

@@ -9,3 +9,12 @@ export type CheckboxProps = {
 };
 
 export type LinearLayoutProps = {};
+
+export type ColumnLayoutProps = {
+    columnNum: number
+};
+
+
+export type InputProps = {
+    placeholder: string
+};
