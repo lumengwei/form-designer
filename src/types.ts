@@ -1,6 +1,11 @@
 export interface Component {
     title: string;
-    type: string;
+    readonly type: string;
+}
+
+export interface FormDefinition {
+    description: string;
+    width: string;
 }
 
 /**
@@ -18,6 +23,7 @@ export interface ComponentDefinition<T> extends Component {
     props?: T;
     children?: ComponentDefinition<any>[];
     fieldDef?: FieldDefinition;
+    rules?: FieldRule[];
 }
 
 
@@ -31,4 +37,27 @@ export interface ComponentFactory<T> extends Component {
 
 export interface ComponentFactoryConstructor<T> {
     new(): ComponentFactory<T>;
+}
+
+export type FieldRuleType =
+    'string'
+    | 'number'
+    | 'boolean'
+    | 'method'
+    | 'regexp'
+    | 'integer'
+    | 'float'
+    | 'object'
+    | 'enum'
+    | 'date'
+    | 'url'
+    | 'hex'
+    | 'email';
+
+export interface FieldRule {
+    type?: FieldRuleType;
+    len?: number;
+    max?: number;
+    min: number;
+    message: string;
 }

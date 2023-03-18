@@ -1,39 +1,53 @@
 import React, {PureComponent} from 'react';
-import {Button, Checkbox, Form, Input} from 'antd';
-import {ReactComponent} from '../reactComponent';
+import {Button, Checkbox, Form, Input, Select} from 'antd';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
+import {ReactComponent} from '../reactComponent';
+import {getErasure} from '../../util/MiscUtil';
 import {PropsEditor} from '../fragements';
-import type {ComponentFactory} from '../../../../src/types'
-import {CheckboxProps} from "../../../../src/props";
+import {CheckboxProps, SelectProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-
-const CheckboxGroup = Checkbox.Group;
+import {ComponentFactory} from "../../../../src/types";
 
 @ComponentWrapper
-class CheckboxComponent extends ReactComponent<ReactComponentProps<CheckboxProps>, CheckboxProps, ReactComponentState> {
+class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, SelectProps, ReactComponentState> {
+
+    renderOptions() {
+        const {definition: {props}} = this.props;
+        return props!.options.map(item => {
+            return <Select.Option value={item.value} disabled={item.disabled}>{item.label}</Select.Option>
+        })
+    }
 
     render() {
-        const definition = this.props.definition;
-        const props: CheckboxProps = definition.props!;
-        const defaultValue = props.options.filter(item => {
+        const {definition: {props}} = this.props;
+        const defaultValue = props!.options.filter(item => {
             return item.checked;
         }).map(item => {
             return item.value;
         });
 
         return (
-            <CheckboxGroup options={props.options} value={defaultValue}/>
+            <Select
+                allowClear
+                showSearch
+                style={{width: '100%'}}
+                placeholder={props!.placeholder}
+                value={defaultValue}
+                filterOption={(input, option) => option!.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            >
+                {this.renderOptions()}
+            </Select>
         )
     }
 }
 
-class CheckboxComponentEditor extends PureComponent<ReactComponentProps<CheckboxProps>>
-    implements ComponentEditor<ReactComponentProps<CheckboxProps>, CheckboxProps> {
+class SelectComponentEditor extends PureComponent<ReactComponentProps<SelectProps>>
+    implements ComponentEditor<ReactComponentProps<SelectProps>, SelectProps> {
 
 
     onChange(allValues: any) {
         const {definition: {props}, definition} = this.props;
-        console.log(allValues)
+        definition.title = getErasure(allValues, 'title');
 
         return true;
     }
@@ -66,17 +80,8 @@ class CheckboxComponentEditor extends PureComponent<ReactComponentProps<Checkbox
                     label={index !== 0 ? null : "可选值：显示值 -- 真值 -- 默认-- 禁用"}
                     style={{marginBottom: 0}}
                 >
-
-                    <Form.Item style={{
-                        display: 'inline-block',
-                        width: 'calc(50% - 55px)',
-                        marginBottom: 0,
-                        marginRight: '3px'
-                    }}>
-                        <Input/>
-                    </Form.Item>
                     <Form.Item
-                        initialValue={item.value}
+                        initialValue={item.label}
                         style={{
                             display: 'inline-block',
                             width: 'calc(50% - 55px)',
@@ -85,13 +90,24 @@ class CheckboxComponentEditor extends PureComponent<ReactComponentProps<Checkbox
                         }}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item initialValue={item.checked}
-                               style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
-
+                    <Form.Item
+                        initialValue={item.label}
+                        style={{
+                            display: 'inline-block',
+                            width: 'calc(50% - 55px)',
+                            marginBottom: 0,
+                            marginRight: '3px'
+                        }}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        initialValue={item.checked}
+                        style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
                         <Checkbox/>
                     </Form.Item>
-                    <Form.Item initialValue={item.disabled}
-                               style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
+                    <Form.Item
+                        initialValue={item.disabled}
+                        style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
                         <Checkbox/>
                     </Form.Item>
                     <Form.Item style={{display: 'inline-block', width: '48px', marginBottom: 0}}>
@@ -108,18 +124,18 @@ class CheckboxComponentEditor extends PureComponent<ReactComponentProps<Checkbox
 
     render() {
         return (
-            <PropsEditor {...this.props}>
+            <PropsEditor {...this.props} placeholder>
                 {this.renderOptions()}
             </PropsEditor>
         );
     }
 }
 
-@FactoryRegister(CheckboxComponent, CheckboxComponentEditor)
-export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
-    readonly type = "Checkbox"
+@FactoryRegister(SelectComponent, SelectComponentEditor)
+class SelectFactory implements ComponentFactory<SelectProps> {
+    type = "Select"
 
-    title = "多选框"
+    title = "下拉选择"
 
     /**
      * 初始化一个组件定义
@@ -129,11 +145,6 @@ export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
         return {
             type: this.type,
             title: this.title,
-            fieldDef: {
-                fieldTitle: this.title,
-                fieldType: '',
-                fieldName: '',
-            },
             props: {
                 placeholder: '请输入',
                 options: [
@@ -143,4 +154,7 @@ export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
         }
     }
 }
+
+
+export default SelectFactory;
 

@@ -1,38 +1,39 @@
 import React, {PureComponent} from 'react';
 import {Form, InputNumber} from 'antd';
-import {ComponentEditor, FactoryRegister} from '../warpper';
-import {Layout} from '../component';
-import {guaranteeNumber} from '../../util/MiscUtil';
-import LayoutWrapper from './LayoutWrapper';
+import {Layout} from '../reactComponent';
+import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import FormStudio from "../../../../src/FormStudio";
 import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
-import {ColumnLayoutProps, LinearLayoutProps} from "../../../../src/props";
+import {ColumnLayoutProps} from "../../../../src/props";
+import {ComponentEditor, ReactComponentGroupState, ReactComponentProps} from "../types";
+import FactoryRenders from "../FactoryRenders";
 
-const LinearLayoutFactory = FormStudio.getFactory<LinearLayoutProps>("LinearLayout");
 
 @LayoutWrapper()
-class ColumnLayout extends Layout {
+class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, ColumnLayoutProps, ReactComponentGroupState<ColumnLayoutProps>> {
 
     renderColumns() {
-        const {definition: {children, props: {columnNum}}} = this.props;
+        const LinearLayoutFactory = FormStudio.getFactory("LinearLayout")
+        const render = FactoryRenders.getRender("LinearLayout")
+        const {definition: {props, children}} = this.props;
 
-        let es = columnNum - children.length;
+        let es = props!.columnNum - children!.length;
         if (es !== 0) {
             if (es < 0) {
                 es = Math.abs(es);
-                children.splice(children.length - es, es);
+                children!.splice(children!.length - es, es);
             } else {
                 while (es !== 0) {
-                    children.splice(children.length, 0, LinearLayoutFactory.createComponentDefinition());
+                    children!.splice(children!.length, 0, LinearLayoutFactory.createComponentDefinition());
                     es -= 1;
                 }
             }
         }
 
-        return children.map(item => {
+        return children!.map(item => {
             return (
                 <div className="cell">
-                    {LinearLayoutFactory.renderComponenet(item)()}
+                    {render.renderComponent(item)({})}
                 </div>)
         })
 
@@ -45,32 +46,32 @@ class ColumnLayout extends Layout {
     }
 }
 
-@ComponentEditor
-class ColumnComponentEditor extends PureComponent {
+class ColumnComponentEditor extends PureComponent<ReactComponentProps<ColumnLayoutProps>>
+    implements ComponentEditor<ReactComponentProps<ColumnLayoutProps>, ColumnLayoutProps> {
 
-    onChange(_, allValues) {
+    onChange(allValues: any) {
         const {definition: {props}} = this.props;
-        Object.assign(props, allValues);
-        props.columnNum = guaranteeNumber(props.columnNum, 0, 10);
     }
 
     render() {
-        const {form: {getFieldDecorator}, definition: {props}} = this.props;
+        const {definition: {props}} = this.props;
         return (
             <Form>
-                <Form.Item label="列数目" style={{marginBottom: 0}}>
-                    {getFieldDecorator('columnNum', {
-                        initialValue: props.columnNum,
-                        rules: [{
-                            type: 'number',
-                            min: 1,
-                            message: '不得小于1'
-                        }, {
-                            type: 'number',
-                            max: 10,
-                            message: '不得小于10'
-                        }]
-                    })(<InputNumber/>)}
+                <Form.Item
+                    initialValue={props!.columnNum}
+                    label="列数目"
+                    style={{marginBottom: 0}}
+                    rules={[{
+                        type: 'number',
+                        min: 1,
+                        message: '不得小于1'
+                    }, {
+                        type: 'number',
+                        max: 10,
+                        message: '不得小于10'
+                    }]}
+                >
+                    <InputNumber/>
                 </Form.Item>
             </Form>);
     }
@@ -78,7 +79,7 @@ class ColumnComponentEditor extends PureComponent {
 
 @FactoryRegister(ColumnLayout, ColumnComponentEditor)
 class ColumnLayoutFactory implements ComponentFactory<ColumnLayoutProps> {
-    type = "ColumnLayout"
+    readonly type = "ColumnLayout"
 
     title = "列布局"
 
@@ -88,6 +89,7 @@ class ColumnLayoutFactory implements ComponentFactory<ColumnLayoutProps> {
      * @returns {{type: string, title: string}}
      */
     createComponentDefinition(): ComponentDefinition<ColumnLayoutProps> {
+        const LinearLayoutFactory = FormStudio.getFactory("LinearLayout")
         return {
             type: this.type,
             title: this.title,

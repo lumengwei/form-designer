@@ -8,9 +8,9 @@ class FormStudio {
     private _draggedFactory: ComponentFactory<any> | null = null;
 
     // 处于拖拽状态下的组件工厂
-    private _propsEditor = null; // 属性编辑器
+    private _propsEditor: any | null = null; // 属性编辑器
 
-    private _activeComponent = null; // 当前被激活的组件
+    private _activeComponent: any | null = null; // 当前被激活的组件
 
     private _definition: ComponentDefinition<any> | null = null;
 

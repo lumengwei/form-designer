@@ -1,11 +1,10 @@
 import React, {PureComponent} from 'react';
 import {Input} from 'antd';
-import {FactoryRegister} from '../warpper';
-import {Component} from '../component';
-import ComponentWrapper from './ComponentWrapper';
+import {ComponentWrapper, FactoryRegister} from '../wrapper';
+import {ReactComponent} from '../reactComponent';
 import {getErasure} from '../../util/MiscUtil';
 import {PropsEditor} from '../fragements';
-import {ComponentEditor, ReactComponentProps} from "../types";
+import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
 import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
 import {InputProps} from "../../../../src/props";
 
@@ -13,12 +12,12 @@ import {InputProps} from "../../../../src/props";
  * 组件
  */
 @ComponentWrapper
-class InputComponent extends Component {
+class InputComponent extends ReactComponent<ReactComponentProps<InputProps>, InputProps, ReactComponentState> {
 
     render() {
         const {definition: {props}} = this.props;
         return (
-            <Input placeholder={props.placeholder}/>
+            <Input placeholder={props!.placeholder}/>
         )
     }
 }
@@ -26,7 +25,8 @@ class InputComponent extends Component {
 /**
  * 组件属性编辑器
  */
-class InputComponentEditor extends PureComponent<ReactComponentProps<InputProps>> implements ComponentEditor<InputProps> {
+class InputComponentEditor extends PureComponent<ReactComponentProps<InputProps>>
+    implements ComponentEditor<ReactComponentProps<InputProps>, InputProps> {
 
     /**
      * 当编辑器改变时，此方法被调用
@@ -51,7 +51,7 @@ class InputComponentEditor extends PureComponent<ReactComponentProps<InputProps>
 /**
  * 组件工厂
  */
-@FactoryRegister<InputProps>(InputComponent, InputComponentEditor)
+@FactoryRegister(InputComponent, InputComponentEditor)
 class InputFactory implements ComponentFactory<InputProps> {
     type = "Input"
 
@@ -71,7 +71,6 @@ class InputFactory implements ComponentFactory<InputProps> {
         }
     }
 }
-
 
 export default InputFactory;
 

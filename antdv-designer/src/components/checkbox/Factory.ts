@@ -1,11 +1,11 @@
-import {ComponentDefinition, ComponentFactory, FieldDefinition} from "../../../../src/types";
+import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
 import {CheckboxProps} from "../../../../src/props";
 
 
 const Factory: ComponentFactory<CheckboxProps> = {
     title: '多选框',
     type: 'Checkbox',
-    createComponentDefinition(): ComponentDefinition<CheckboxProps> & FieldDefinition {
+    createComponentDefinition(): ComponentDefinition<CheckboxProps> {
         return {
             type: this.type,
             title: this.title,

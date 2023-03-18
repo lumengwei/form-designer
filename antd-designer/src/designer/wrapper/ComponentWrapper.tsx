@@ -2,10 +2,11 @@ import React, {ComponentClass} from 'react';
 import {CloseCircleOutlined} from '@ant-design/icons';
 import className from 'classnames';
 import createReactClass from 'create-react-class';
+import {ReactComponentProps} from "../types";
 
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
-function ComponentWrapper(WrappedComponent: ComponentClass) {
+function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProps<T>>) {
     // noinspection JSAnnotator
     const componentLayout = createReactClass({
         displayName: 'ComponentWrapper',
@@ -58,21 +59,26 @@ function ComponentWrapper(WrappedComponent: ComponentClass) {
             const {active, renderCounter} = this.state;
             const {definition} = this.props;
             return (
-                <div className={className({'component': true, 'component-field': true, 'active': active})}
-                     onClick={this.onActive}>
-          <span className="fm-btn-remove">
-            <CloseCircleOutlined/>
-          </span>
-                    <div>
-                        <div className="field-title">
-                            <span>{definition.title}</span>
-                        </div>
-                        <div className="field-content">
-                            <WrappedComponent {...this.props} definition={definition} renderCounter={renderCounter}
-                                              ref={this.setWrappedInstance}/>
+                <>
+                    <div className={className({'component': true, 'component-field': true, 'active': active})}
+                         onClick={this.onActive}>
+                            <span className="fm-btn-remove">
+                              <CloseCircleOutlined/>
+                            </span>
+                        <div>
+                            <div className="field-title">
+                                <span>{definition.title}</span>
+                            </div>
+                            <div className="field-content">
+                                <WrappedComponent
+                                    {...this.props}
+                                    definition={definition}
+                                    renderCounter={renderCounter}
+                                    ref={this.setWrappedInstance}/>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </>
             );
         }
     });

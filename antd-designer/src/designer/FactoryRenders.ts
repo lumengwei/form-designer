@@ -1,10 +1,13 @@
 import {ComponentFactoryRender} from "./types";
-import {ComponentFactory} from "../../../src/types";
 
 class FactoryRenders {
-    private _renders = new Map<string, ComponentFactoryRender<any, any>>();
+    private _renders: Map<string, ComponentFactoryRender<any, any>>;
 
-    register<T extends ComponentFactory<T>>(factory: ComponentFactoryRender<T, any>, factoryType: string) {
+    constructor() {
+        this._renders = new Map<string, ComponentFactoryRender<any, any>>();
+    }
+
+    register<T>(factory: ComponentFactoryRender<T, any>, factoryType: string) {
         if (this._renders.has(factoryType)) {
             console.log(`[warn] factory ${factoryType} is exist, ignore`);
             return;
@@ -13,7 +16,7 @@ class FactoryRenders {
         this._renders.set(factoryType, factory);
     }
 
-    getRender<T extends ComponentFactory<T>>(factoryType: string): ComponentFactoryRender<T, any> {
+    getRender<T>(factoryType: string): ComponentFactoryRender<T, any> {
         return this._renders.get(factoryType) as ComponentFactoryRender<T, any>;
     }
 }

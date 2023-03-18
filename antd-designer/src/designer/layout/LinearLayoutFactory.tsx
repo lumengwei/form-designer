@@ -1,12 +1,11 @@
 import React from 'react';
-import {FactoryRegister} from '../warpper';
 import {sortable} from '../../lib/sortable';
-import {Layout} from '../component';
-import LayoutWrapper from './LayoutWrapper';
+import {Layout} from '../reactComponent';
+import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
 import {LinearLayoutProps} from "../../../../src/props";
-import FormStudio from "../../../../src/FormStudio";
-import {ComponentFactoryRender} from "../types";
+import {ReactComponentGroupState, ReactComponentProps} from "../types";
+import FactoryRenders from "../FactoryRenders";
 
 /**
  * 这是一个特殊的布局
@@ -19,9 +18,12 @@ import {ComponentFactoryRender} from "../types";
         minHeight: '50px',
     }
 })
-class LinearLayout extends Layout {
+class LinearLayout extends Layout<ReactComponentProps<LinearLayoutProps>,
+    LinearLayoutProps
+    , ReactComponentGroupState<LinearLayoutProps>> {
 
     private _node: HTMLElement | null = null;
+
 
     componentDidMount() {
         sortable(this._node, this);
@@ -34,8 +36,8 @@ class LinearLayout extends Layout {
     renderChildren() {
         const definition: ComponentDefinition<any> = this.props.definition;
         return definition.children!.map(item => {
-            const factory: ComponentFactoryRender<any> = FormStudio.getFactory<any>(item.type);
-            return factory.renderComponenet(item)();
+            const factory = FactoryRenders.getRender<any>(item.type);
+            return factory.renderComponent(item)({});
         });
     }
 
@@ -48,7 +50,7 @@ class LinearLayout extends Layout {
     }
 }
 
-@FactoryRegister<LinearLayoutProps>(LinearLayout)
+@FactoryRegister(LinearLayout)
 class LinearLayoutFactory implements ComponentFactory<LinearLayoutProps> {
     type = "LinearLayout"
 

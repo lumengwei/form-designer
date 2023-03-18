@@ -1,8 +1,8 @@
 import React, {Component, ComponentClass} from 'react';
-import {ComponentDefinition, ComponentFactoryConstructor, ComponentFactory} from "../../../src/types";
-import FormStudio from "../../../src/FormStudio";
-import FactoryRenders from "./FactoryRenders";
-import {ComponentFactoryRender, ReactComponentProps} from "./types";
+import {ComponentDefinition, ComponentFactory, ComponentFactoryConstructor} from "../../../../src/types";
+import FormStudio from "../../../../src/FormStudio";
+import FactoryRenders from "../FactoryRenders";
+import {ComponentFactoryRender, ReactComponentProps} from "../types";
 
 
 /**
@@ -10,12 +10,10 @@ import {ComponentFactoryRender, ReactComponentProps} from "./types";
  * @param Factory
  * @constructor
  */
-export function FactoryRegister<T>(Component: ComponentClass, ComponentEditor?: ComponentClass<ReactComponentProps<T>>) {
+export function FactoryRegister<P extends ReactComponentProps<T>, T>(Component: ComponentClass<P>
+    , ComponentEditor?: ComponentClass<ReactComponentProps<T>>) {
 
     return function FactoryWrapper(Factory: ComponentFactoryConstructor<T>) {
-        const prototype = Object.getPrototypeOf(Factory);
-
-
         const render: ComponentFactoryRender<T, any> = {
             renderComponent(componentDefinition: ComponentDefinition<T>) {
                 return function (props: any) {
@@ -33,8 +31,11 @@ export function FactoryRegister<T>(Component: ComponentClass, ComponentEditor?: 
             }
         }
 
-        const factory: ComponentFactory<any> = Object.create(prototype);
-        FactoryRenders.register<ComponentFactory<any>>(render, factory.type)
+        const factory: ComponentFactory<T> = new Factory();
+        FactoryRenders.register<T>(render, factory.type)
         FormStudio.registerFactory(factory)
     }
 }
+
+export const LayoutWrapper = require('./LayoutWrapper').default;
+export const ComponentWrapper = require('./ComponentWrapper').default;

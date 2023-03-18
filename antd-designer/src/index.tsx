@@ -1,8 +1,7 @@
 import React, {PureComponent} from 'react';
-import {Layout, Button} from 'antd';
+import {Button, Layout} from 'antd';
 import {render} from 'react-dom';
 import FormDesigner from './designer/FormDesigner';
-import 'antd/dist/antd.css';
 import FormStudio from "../../src/FormStudio";
 
 const {Header, Content} = Layout;

@@ -1,18 +1,11 @@
 import type {Configuration as DevServerConfiguration} from "webpack-dev-server";
 import type {Configuration} from "webpack";
 import * as webpack from "webpack";
-import type {LoaderContext} from "mini-css-extract-plugin/types/utils";
 
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('mini-css-extract-plugin');
-
-function getLocalIdent(context: LoaderContext,
-                       localIdentName: string,
-                       localName: string) {
-    return localName;
-}
 
 
 const devServer: DevServerConfiguration = {
@@ -27,12 +20,14 @@ const config: Configuration = {
     output: {
         path: path.resolve(__dirname, "dist"),
     },
+    stats: {
+        errorDetails: true
+    },
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
+                test: /\.([cm]?ts|tsx)$/,
                 use: 'ts-loader',
-                exclude: /node_modules/,
             },
             {
                 test: /\.js/,
@@ -57,9 +52,7 @@ const config: Configuration = {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 1,
-                            camelCase: true,
                             modules: true,
-                            getLocalIdent: getLocalIdent
                         }
                     },
                 ]
@@ -72,12 +65,10 @@ const config: Configuration = {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 1,
-                            camelCase: true,
                             modules: true,
-                            getLocalIdent: getLocalIdent
                         }
                     }
-                    , {loader: 'less-loader', options: {javascriptEnabled: true}}]
+                    , {loader: 'less-loader', options: {}}]
             },
         ]
     },

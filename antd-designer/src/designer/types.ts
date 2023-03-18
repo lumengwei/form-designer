@@ -1,6 +1,5 @@
 import {ComponentDefinition} from "../../../src/types";
 import {Component, ReactElement} from "react";
-import {InputProps} from "../../../src/props";
 
 export interface ComponentFactoryRender<T, P> {
     renderComponent(definition: ComponentDefinition<T>): (props: P) => ReactElement;
@@ -8,10 +7,19 @@ export interface ComponentFactoryRender<T, P> {
     renderEditor(definition: ComponentDefinition<T>): (props: P) => ReactElement;
 }
 
-export interface ComponentEditor<T> extends Component<ReactComponentProps<T>> {
-    onChange(props: ComponentDefinition<T>): void;
+export interface ComponentEditor<P extends ReactComponentProps<T>, T> extends Component<P> {
+    onChange(props: any): void;
 }
 
 export interface ReactComponentProps<T> {
-    definition: ComponentDefinition<InputProps>
+    definition: ComponentDefinition<T>
 }
+
+export interface ReactComponentState {
+    renderCounter: number;
+}
+
+export interface ReactComponentGroupState<T> extends ReactComponentState {
+    definition: ComponentDefinition<T> | null;
+}
+

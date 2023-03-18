@@ -1,7 +1,8 @@
 import {PureComponent} from 'react';
-import FormStudio from '../util/FormStudio';
+import {ReactComponentGroupState, ReactComponentProps, ReactComponentState} from "./types";
+import {ComponentDefinition} from "../../../src/types";
 
-export class Component extends PureComponent {
+export class ReactComponent<P extends ReactComponentProps<T>, T, S extends ReactComponentState> extends PureComponent<P, S> {
     componentWillMount() {
         const {definition: {type, title}} = this.props;
         if (!type || !title) {
@@ -27,7 +28,7 @@ export class Component extends PureComponent {
     }
 }
 
-export class ComponentGroup extends Component {
+export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>> extends ReactComponent<P, T, S> {
 
     componentWillMount() {
         super.componentWillMount();
@@ -42,9 +43,9 @@ export class ComponentGroup extends Component {
      * @param index
      * @param componentDefinition
      */
-    addChild(index, componentDefinition) {
+    addChild(index: number, componentDefinition: ComponentDefinition<T>) {
         const {definition: {children}, definition} = this.props;
-        children.splice(index, 0, componentDefinition)
+        children!.splice(index, 0, componentDefinition)
         this.setState({
             definition: {
                 ...definition,
@@ -56,10 +57,9 @@ export class ComponentGroup extends Component {
      * 移除子组件
      * @param index
      */
-    removeChild(index) {
-        console.log(`index:${index}`)
+    removeChild(index: number) {
         const {definition: {children}, definition} = this.props;
-        children.splice(index, 1)
+        children!.splice(index, 1)
         this.setState({
             definition: {
                 ...definition,
@@ -68,23 +68,6 @@ export class ComponentGroup extends Component {
     }
 }
 
-export class Layout extends ComponentGroup {
+export class Layout<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>> extends ComponentGroup<P, T, S> {
 
-    onActive = () => {
-        if (FormStudio.activeComponent) {
-            FormStudio.activeComponent.unActive();
-        }
-
-        FormStudio.activeComponent = this;
-
-        this.setState({
-            active: true
-        })
-    }
-
-    unActive = () => {
-        this.setState({
-            active: false
-        })
-    }
 }

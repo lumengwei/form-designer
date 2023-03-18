@@ -1,39 +1,37 @@
 import React, {PureComponent} from 'react';
-import {Button, Checkbox, Form, Input} from 'antd';
-import {ReactComponent} from '../reactComponent';
+import {Button, Checkbox, Form, Input, Radio,} from 'antd';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
+import {ReactComponent} from '../reactComponent';
 import {PropsEditor} from '../fragements';
-import type {ComponentFactory} from '../../../../src/types'
-import {CheckboxProps} from "../../../../src/props";
+import {CheckboxProps, RadioProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
+import {ComponentFactory} from "../../../../src/types";
 
-const CheckboxGroup = Checkbox.Group;
+const RadioGroup = Radio.Group;
 
 @ComponentWrapper
-class CheckboxComponent extends ReactComponent<ReactComponentProps<CheckboxProps>, CheckboxProps, ReactComponentState> {
+class RadioComponent extends ReactComponent<ReactComponentProps<RadioProps>, RadioProps, ReactComponentState> {
 
     render() {
         const definition = this.props.definition;
-        const props: CheckboxProps = definition.props!;
+        const props: RadioProps = definition.props!;
         const defaultValue = props.options.filter(item => {
             return item.checked;
         }).map(item => {
             return item.value;
-        });
+        })[0];
 
         return (
-            <CheckboxGroup options={props.options} value={defaultValue}/>
+            <RadioGroup options={props.options} value={defaultValue}/>
         )
     }
 }
 
-class CheckboxComponentEditor extends PureComponent<ReactComponentProps<CheckboxProps>>
-    implements ComponentEditor<ReactComponentProps<CheckboxProps>, CheckboxProps> {
-
+class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>>
+    implements ComponentEditor<ReactComponentProps<RadioProps>, RadioProps> {
 
     onChange(allValues: any) {
         const {definition: {props}, definition} = this.props;
-        console.log(allValues)
 
         return true;
     }
@@ -66,14 +64,13 @@ class CheckboxComponentEditor extends PureComponent<ReactComponentProps<Checkbox
                     label={index !== 0 ? null : "可选值：显示值 -- 真值 -- 默认-- 禁用"}
                     style={{marginBottom: 0}}
                 >
-
                     <Form.Item style={{
                         display: 'inline-block',
                         width: 'calc(50% - 55px)',
                         marginBottom: 0,
                         marginRight: '3px'
                     }}>
-                        <Input/>
+                        <Input/>)
                     </Form.Item>
                     <Form.Item
                         initialValue={item.value}
@@ -85,10 +82,10 @@ class CheckboxComponentEditor extends PureComponent<ReactComponentProps<Checkbox
                         }}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item initialValue={item.checked}
-                               style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
-
-                        <Checkbox/>
+                    <Form.Item style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
+                        <RadioGroup name='checkedIndex'>
+                            <Radio value={index}/>
+                        </RadioGroup>
                     </Form.Item>
                     <Form.Item initialValue={item.disabled}
                                style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
@@ -115,11 +112,11 @@ class CheckboxComponentEditor extends PureComponent<ReactComponentProps<Checkbox
     }
 }
 
-@FactoryRegister(CheckboxComponent, CheckboxComponentEditor)
-export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
-    readonly type = "Checkbox"
+@FactoryRegister(RadioComponent, RadioComponentEditor)
+class RadioFactory implements ComponentFactory<RadioProps> {
+    readonly type = "Radio"
 
-    title = "多选框"
+    title = "单选框"
 
     /**
      * 初始化一个组件定义
@@ -143,4 +140,7 @@ export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
         }
     }
 }
+
+
+export default RadioFactory;
 

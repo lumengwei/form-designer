@@ -1,14 +1,44 @@
-import React, {ComponentClass} from 'react';
+import React, {ComponentClass, PureComponent} from 'react';
 import className from 'classnames';
 import createReactClass from 'create-react-class';
-import LayoutToolbar from './LayoutToolbar';
+import {ReactComponentProps} from "../types";
+import formViewStyle from "../formView.less";
+import {DeleteOutlined, DragOutlined} from "@ant-design/icons";
 
 const hoistNonReactStatics = require('hoist-non-react-statics');
+
+interface LayoutToolbarProps {
+    disable?: boolean;
+
+    onRemove?(): void;
+}
+
+class LayoutToolbar extends PureComponent<LayoutToolbarProps> {
+
+    render() {
+        const {disable, onRemove} = this.props;
+
+        if (disable) {
+            return;
+        }
+
+        return (
+            <div className={formViewStyle.formLayoutToolbar}>
+        <span className='fm-btn' title="拖动">
+         <DragOutlined/>
+        </span>
+                <span className='fm-btn fm-btn-del' onClick={onRemove} title="删除">
+          <DeleteOutlined/>
+        </span>
+            </div>
+        )
+    }
+}
 
 function LayoutWrapperFactory(opt: any = {}) {
     const options = opt || {};
 
-    return function LayoutWrapper(WrappedComponent: ComponentClass) {
+    return function LayoutWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProps<T>>) {
         // noinspection JSAnnotator
         const componentLayout = createReactClass({
             displayName: 'LayoutWrapper',
