@@ -3,9 +3,10 @@ import {Input} from 'antd';
 import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../reactComponent';
 import {getErasure} from '../../util/MiscUtil';
-import {PropsEditor} from '../fragements';
+import {PropsEditor} from '../widgets/PropsEditor';
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
 import {TextAreaProps} from "../../../../src/props";
+import {FactoryGroup} from "../../../../src/types";
 
 const TexArea = Input.TextArea;
 
@@ -32,7 +33,7 @@ class TextAreaComponentEditor extends PureComponent<ReactComponentProps<TextArea
 
     render() {
         return (
-            <PropsEditor {...this.props} lengthLimit placeholder/>
+            <PropsEditor {...this.props} />
         );
     }
 }
@@ -40,7 +41,7 @@ class TextAreaComponentEditor extends PureComponent<ReactComponentProps<TextArea
 @FactoryRegister(TextAreaComponent, TextAreaComponentEditor)
 class TextAreaFactory {
     readonly type = "TextArea"
-
+    readonly group = FactoryGroup.Component;
     title = "多行输入框"
 
 

@@ -4,6 +4,7 @@ import {render} from 'react-dom';
 import FormDesigner from './designer/FormDesigner';
 import FormStudio from "../../src/FormStudio";
 
+require('./designer/formView.less')
 const {Header, Content} = Layout;
 
 class App extends PureComponent {

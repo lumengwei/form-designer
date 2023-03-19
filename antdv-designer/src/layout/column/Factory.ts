@@ -1,12 +1,12 @@
 import type {ComponentFactory} from "../../../../src/types";
+import {FactoryGroup} from "../../../../src/types";
+import {ColumnLayoutProps} from "../../../../src/props";
 
-export type ColumnLayoutProps = {
-    columnNum: number;
-};
+class Factory implements ComponentFactory<ColumnLayoutProps> {
+    readonly group = FactoryGroup.Layout;
+    readonly type = 'ColumnLayout';
+    title = '列布局';
 
-const Factory: ComponentFactory<ColumnLayoutProps> = {
-    title: '列布局',
-    type: 'ColumnLayout',
     createComponentDefinition() {
         return {
             type: this.type,
@@ -16,7 +16,8 @@ const Factory: ComponentFactory<ColumnLayoutProps> = {
             },
             children: [],
         };
-    },
+    }
+
 };
 
-export default Factory;
+export default new Factory();

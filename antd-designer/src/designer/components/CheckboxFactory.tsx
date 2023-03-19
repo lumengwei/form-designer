@@ -2,10 +2,11 @@ import React, {PureComponent} from 'react';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {ReactComponent} from '../reactComponent';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
-import {PropsEditor} from '../fragements';
 import type {ComponentFactory} from '../../../../src/types'
 import {CheckboxProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
+import {PropsEditor} from '../widgets/PropsEditor';
+import {FactoryGroup} from "../../../../src/types";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -118,6 +119,8 @@ class CheckboxComponentEditor extends PureComponent<ReactComponentProps<Checkbox
 @FactoryRegister(CheckboxComponent, CheckboxComponentEditor)
 export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
     readonly type = "Checkbox"
+
+    readonly group = FactoryGroup.Component;
 
     title = "多选框"
 

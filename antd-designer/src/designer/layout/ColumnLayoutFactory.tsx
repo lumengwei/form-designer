@@ -3,18 +3,18 @@ import {Form, InputNumber} from 'antd';
 import {Layout} from '../reactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import FormStudio from "../../../../src/FormStudio";
-import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
+import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {ColumnLayoutProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentGroupState, ReactComponentProps} from "../types";
-import FactoryRenders from "../FactoryRenders";
+import FactoryRenders from "../helper/FactoryRenders";
+import {sortable} from "../../lib/sortable";
 
 
 @LayoutWrapper()
 class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, ColumnLayoutProps, ReactComponentGroupState<ColumnLayoutProps>> {
 
     renderColumns() {
-        const LinearLayoutFactory = FormStudio.getFactory("LinearLayout")
-        const render = FactoryRenders.getRender("LinearLayout")
+
         const {definition: {props, children}} = this.props;
 
         let es = props!.columnNum - children!.length;
@@ -24,19 +24,34 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
                 children!.splice(children!.length - es, es);
             } else {
                 while (es !== 0) {
-                    children!.splice(children!.length, 0, LinearLayoutFactory.createComponentDefinition());
+                    children!.splice(children!.length, 0);
                     es -= 1;
                 }
             }
         }
 
-        return children!.map(item => {
-            return (
-                <div className="cell">
-                    {render.renderComponent(item)({})}
-                </div>)
-        })
 
+        const segments = [];
+
+        for (let i = 0; i < props!.columnNum; i++) {
+            if (children![i]) {
+                const factory = FormStudio.getFactory(children![i].type)
+                const render = FactoryRenders.getRender(children![i].type)
+                segments.push((<div className="cell">
+                    {render.renderComponent(children![i])(factory.createComponentDefinition)}
+                </div>))
+            } else {
+                const ref = (node: HTMLDivElement) => {
+                    if (node) {
+                        sortable(node, this)
+                    }
+                };
+                segments.push((<div className="cell" ref={ref}/>))
+            }
+
+        }
+
+        return segments;
     }
 
     render() {
@@ -46,7 +61,8 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
     }
 }
 
-class ColumnComponentEditor extends PureComponent<ReactComponentProps<ColumnLayoutProps>>
+class ColumnComponentEditor extends PureComponent
+    <ReactComponentProps<ColumnLayoutProps>>
     implements ComponentEditor<ReactComponentProps<ColumnLayoutProps>, ColumnLayoutProps> {
 
     onChange(allValues: any) {
@@ -80,7 +96,7 @@ class ColumnComponentEditor extends PureComponent<ReactComponentProps<ColumnLayo
 @FactoryRegister(ColumnLayout, ColumnComponentEditor)
 class ColumnLayoutFactory implements ComponentFactory<ColumnLayoutProps> {
     readonly type = "ColumnLayout"
-
+    readonly group = FactoryGroup.Layout;
     title = "列布局"
 
 
@@ -89,17 +105,13 @@ class ColumnLayoutFactory implements ComponentFactory<ColumnLayoutProps> {
      * @returns {{type: string, title: string}}
      */
     createComponentDefinition(): ComponentDefinition<ColumnLayoutProps> {
-        const LinearLayoutFactory = FormStudio.getFactory("LinearLayout")
         return {
             type: this.type,
             title: this.title,
             props: {
                 'columnNum': 2
             },
-            children: [
-                LinearLayoutFactory.createComponentDefinition(),
-                LinearLayoutFactory.createComponentDefinition()
-            ]
+            children: []
         }
     }
 }

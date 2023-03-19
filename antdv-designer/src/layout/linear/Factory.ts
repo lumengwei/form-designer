@@ -1,15 +1,20 @@
 import type {ComponentFactory} from "../../../../src/types";
+import {FactoryGroup} from "../../../../src/types";
+import {ColumnLayoutProps} from "../../../../src/props";
 
-const Factory: ComponentFactory<any> = {
-  title: '流式布局',
-  type: 'LinearLayout',
-  createComponentDefinition() {
-    return {
-      type: this.type,
-      title: this.title,
-      children: [],
-    };
-  },
+class Factory implements ComponentFactory<ColumnLayoutProps> {
+    readonly group = FactoryGroup.Layout;
+    readonly type = 'LinearLayout';
+    title = '流式布局';
+
+    createComponentDefinition() {
+        return {
+            type: this.type,
+            title: this.title,
+            children: [],
+        };
+    }
+
 };
 
-export default Factory;
+export default new Factory();

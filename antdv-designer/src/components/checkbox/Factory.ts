@@ -1,10 +1,12 @@
-import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
+import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {CheckboxProps} from "../../../../src/props";
 
 
-const Factory: ComponentFactory<CheckboxProps> = {
-    title: '多选框',
-    type: 'Checkbox',
+class Factory implements ComponentFactory<CheckboxProps> {
+    readonly group = FactoryGroup.Component;
+    readonly type = 'Checkbox';
+    title = '多选框';
+
     createComponentDefinition(): ComponentDefinition<CheckboxProps> {
         return {
             type: this.type,
@@ -18,7 +20,7 @@ const Factory: ComponentFactory<CheckboxProps> = {
                 options: [{label: '显示值', value: '真值', checked: false, disabled: true}],
             },
         };
-    },
-};
+    }
+}
 
-export default Factory;
+export default new Factory();

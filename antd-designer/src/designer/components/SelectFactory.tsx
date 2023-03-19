@@ -3,10 +3,10 @@ import {Button, Checkbox, Form, Input, Select} from 'antd';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
 import {ReactComponent} from '../reactComponent';
 import {getErasure} from '../../util/MiscUtil';
-import {PropsEditor} from '../fragements';
+import {PropsEditor} from '../widgets/PropsEditor';
 import {CheckboxProps, SelectProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-import {ComponentFactory} from "../../../../src/types";
+import {ComponentFactory, FactoryGroup} from "../../../../src/types";
 
 @ComponentWrapper
 class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, SelectProps, ReactComponentState> {
@@ -124,7 +124,7 @@ class SelectComponentEditor extends PureComponent<ReactComponentProps<SelectProp
 
     render() {
         return (
-            <PropsEditor {...this.props} placeholder>
+            <PropsEditor {...this.props} >
                 {this.renderOptions()}
             </PropsEditor>
         );
@@ -133,8 +133,8 @@ class SelectComponentEditor extends PureComponent<ReactComponentProps<SelectProp
 
 @FactoryRegister(SelectComponent, SelectComponentEditor)
 class SelectFactory implements ComponentFactory<SelectProps> {
-    type = "Select"
-
+    readonly type = "Select"
+    readonly group = FactoryGroup.Component;
     title = "下拉选择"
 
     /**

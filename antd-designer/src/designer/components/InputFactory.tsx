@@ -3,9 +3,9 @@ import {Input} from 'antd';
 import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../reactComponent';
 import {getErasure} from '../../util/MiscUtil';
-import {PropsEditor} from '../fragements';
+import {PropsEditor} from '../widgets/PropsEditor';
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
+import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {InputProps} from "../../../../src/props";
 
 /**
@@ -43,7 +43,7 @@ class InputComponentEditor extends PureComponent<ReactComponentProps<InputProps>
 
     render() {
         return (
-            <PropsEditor {...this.props} lengthLimit placeholder/>
+            <PropsEditor {...this.props} />
         );
     }
 }
@@ -53,7 +53,8 @@ class InputComponentEditor extends PureComponent<ReactComponentProps<InputProps>
  */
 @FactoryRegister(InputComponent, InputComponentEditor)
 class InputFactory implements ComponentFactory<InputProps> {
-    type = "Input"
+    readonly type = "Input"
+    readonly group = FactoryGroup.Component;
 
     title = "单行输入框"
 

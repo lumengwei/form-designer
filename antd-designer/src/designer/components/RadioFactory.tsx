@@ -2,10 +2,10 @@ import React, {PureComponent} from 'react';
 import {Button, Checkbox, Form, Input, Radio,} from 'antd';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
 import {ReactComponent} from '../reactComponent';
-import {PropsEditor} from '../fragements';
+import {PropsEditor} from '../widgets/PropsEditor';
 import {CheckboxProps, RadioProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-import {ComponentFactory} from "../../../../src/types";
+import {ComponentFactory, FactoryGroup} from "../../../../src/types";
 
 const RadioGroup = Radio.Group;
 
@@ -115,6 +115,7 @@ class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>
 @FactoryRegister(RadioComponent, RadioComponentEditor)
 class RadioFactory implements ComponentFactory<RadioProps> {
     readonly type = "Radio"
+    readonly group = FactoryGroup.Component;
 
     title = "单选框"
 

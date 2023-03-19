@@ -1,7 +1,7 @@
 import React, {PureComponent, ReactElement} from 'react'
 import {FormDefinition} from "../../../src/types";
 import FormStudio from "../../../src/FormStudio";
-import FactoryRenders from "./FactoryRenders";
+import {FactoryRenders} from "./helper";
 
 require('./formView.less');
 
@@ -12,7 +12,7 @@ export default class FormView extends PureComponent<{ formDefinition: FormDefini
     componentWillMount() {
         const componentRender = FactoryRenders.getRender("LinearLayout");
         const factory = FormStudio.getFactory("LinearLayout");
-        this.LinearLayout = componentRender.renderComponent(factory.createComponentDefinition())({});
+        this.LinearLayout = componentRender.renderComponent(FormStudio.definition!)({});
     }
 
     render() {

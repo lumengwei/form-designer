@@ -1,26 +1,22 @@
+import $ from "./jquery";
+import {FormHelper} from "../designer/helper";
 import FormStudio from "../../../src/FormStudio";
+import {ComponentGroup} from "../designer/reactComponent";
+import {ReactComponentGroupState, ReactComponentProps} from "../designer/types";
 
-declare let $: any;
-
-export function sortable(node: HTMLElement | null, component: any) {
-    (function (n, c) {
-        const $node = n;
-        const componentInst = c;
+export function sortable<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>>($node: HTMLElement | null
+    , componentInst: ComponentGroup<P, T, S>
+) {
+    if ($node) {
         $($node).sortable({
             connectWith: 'parent',
             placeholder: 'form-placeholder-filed ',
             cancel: '.j_cancel-drag',
             stop(_: any, ui: any) {
-                console.log(FormStudio.draggedFactory, componentInst);
-                if (componentInst && FormStudio.draggedFactory) {
-                    const {definition} = componentInst.props;
-                    definition.children!.push(FormStudio.draggedFactory.createComponentDefinition());
-
-                    console.log(FormStudio.draggedFactory, definition);
-
+                if (componentInst && FormHelper.componentFactory) {
+                    componentInst.addChild($(ui.item).index(), FormHelper.componentFactory.createComponentDefinition())
                     $(ui.item).remove();
                 }
-                // return true;
             },
             over() {
                 console.log('-> over');
@@ -37,12 +33,33 @@ export function sortable(node: HTMLElement | null, component: any) {
         // 移除子元素
         $($node).on('click', '.fm-btn-remove, .fm-btn-del', function (e: Event) {
             e.stopPropagation();
-            // @ts-ignore
             const $com = $(this).closest('.component');
             if ($com.hasClass('active')) {
-                FormStudio.activeComponent = null;
+                FormHelper.activeComponentIns = null;
             }
             componentInst.removeChild($com.index());
         });
-    })(node, component);
+    } else {
+        console.log($node)
+    }
+}
+
+
+export function draggable(node: HTMLElement | null, factoryType: string) {
+    if (node) {
+        $(node).draggable({
+            connectToSortable: ".ui-sortable",
+            helper: "clone",
+            opacity: .8,
+            appendTo: "body",
+            start() {
+                FormHelper.componentFactory = FormStudio.getFactory(factoryType);
+            },
+            stop() {
+                FormHelper.componentFactory = null;
+            }
+        }).disableSelection();
+    } else {
+        console.log(node)
+    }
 }

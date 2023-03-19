@@ -1,13 +1,13 @@
-import React, {ComponentClass} from 'react';
+import React, {ComponentClass, ComponentSpec} from 'react';
 import {CloseCircleOutlined} from '@ant-design/icons';
 import className from 'classnames';
 import createReactClass from 'create-react-class';
-import {ReactComponentProps} from "../types";
+import {Activatable, ReactComponentProps} from "../types";
+import {FormHelper} from "../helper";
 
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
 function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProps<T>>) {
-    // noinspection JSAnnotator
     const componentLayout = createReactClass({
         displayName: 'ComponentWrapper',
         getInitialState() {
@@ -28,32 +28,43 @@ function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProp
             });
         },
 
-        onActive(e: Event) {
-            if (e) {
-                e.stopPropagation();
-            }
-
-            // TODO
-            /* if (FormStudio.activeComponent) {
-                 FormStudio.activeComponent.unActive();
-             }
-
-             FormStudio.activeComponent = this;*/
-
+        onActive() {
             this.setState({
                 active: true
-            })
+            });
         },
         unActive() {
             this.setState({
                 active: false
             })
         },
+
         getWrappedInstance() {
             return this.wrappedInstance;
         },
         setWrappedInstance(ref: any) {
             this.wrappedInstance = ref;
+        },
+
+        renderDel() {
+            const {active} = this.state;
+            if (active) {
+                return (
+                    <>
+                     <span className="fm-btn-remove">
+                              <CloseCircleOutlined/>
+                            </span>
+                    </>
+                )
+            } else {
+                return;
+            }
+        },
+        activeClick(e: Event) {
+            if (e) {
+                e.stopPropagation();
+            }
+            FormHelper.activeComponentIns = this;
         },
         render() {
             const {active, renderCounter} = this.state;
@@ -61,10 +72,8 @@ function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProp
             return (
                 <>
                     <div className={className({'component': true, 'component-field': true, 'active': active})}
-                         onClick={this.onActive}>
-                            <span className="fm-btn-remove">
-                              <CloseCircleOutlined/>
-                            </span>
+                         onClick={this.activeClick}>
+                        {this.renderDel()}
                         <div>
                             <div className="field-title">
                                 <span>{definition.title}</span>
@@ -81,7 +90,7 @@ function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProp
                 </>
             );
         }
-    });
+    } as Activatable & ComponentSpec<any, any>);
 
     componentLayout.displayName = `ComponentWrapper(${WrappedComponent.displayName || WrappedComponent.name || 'WrappedComponent'})`;
 

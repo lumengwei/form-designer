@@ -1,4 +1,4 @@
-import FormStudio from "../../../src/FormStudio";
+import {FormHelper} from "../helper";
 
 declare let $: any;
 
@@ -12,10 +12,10 @@ export function sortable(node: HTMLHtmlElement, component: any) {
             placeholder: 'form-placeholder-filed ',
             cancel: '.j_cancel-drag',
             stop(_: any, ui: any) {
-                if (componentInst && FormStudio.draggedFactory) {
-                    console.log(FormStudio.draggedFactory);
+                if (componentInst && FormHelper.componentFactory) {
+                    console.log(FormHelper.componentFactory);
                     component.definition.children!.push(
-                        FormStudio.draggedFactory.createComponentDefinition()
+                        FormHelper.componentFactory.createComponentDefinition()
                     );
                     $(ui.item).remove();
                 }
@@ -39,7 +39,7 @@ export function sortable(node: HTMLHtmlElement, component: any) {
             // @ts-ignore
             const $com = $(this).closest('.component');
             if ($com.hasClass('active')) {
-                FormStudio.activeComponent = null;
+                FormHelper.activeComponentIns = null;
             }
             componentInst.removeChild($com.index());
         });

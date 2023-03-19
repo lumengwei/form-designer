@@ -1,11 +1,13 @@
 import React, {PureComponent} from 'react'
-import {Card} from 'antd';
-import $ from '../lib/jquery';
+import {Card, Divider} from 'antd';
 import FormView from './FormView';
 import componentStyle from './component.less';
-import PropsEditor from './PropsEditor';
+import FormEditor from './FormEditor';
 import FormStudio from "../../../src/FormStudio";
-import {Component} from "../../../src/types";
+import {Component, FactoryGroup} from "../../../src/types";
+import {draggable} from "../lib/sortable";
+
+require('./component.less')
 
 require('./components');
 
@@ -22,29 +24,16 @@ class FormComponent extends PureComponent<Component> {
     componentDidMount() {
         const {type} = this.props;
 
-        // @ts-ignore
-        $(this._node).draggable({
-            connectToSortable: ".ui-sortable",
-            helper: "clone",
-            opacity: .8,
-            appendTo: "body",
-            start() {
-                FormStudio.draggedFactory = FormStudio.getFactory(type);
-            },
-            stop() {
-                FormStudio.draggedFactory = null;
-            }
-        }).disableSelection();
+        draggable(this._node, type)
     }
 
     render() {
-        const {type, title} = this.props;
+        const {title} = this.props;
         return (
             <div
                 draggable
                 className={componentStyle.widgetItem}
                 ref={this.ref}
-                key={type}
             >
                 {title}
             </div>
@@ -60,9 +49,9 @@ class FormDesigner extends PureComponent {
     }
 
 
-    renderChild() {
-        return FormStudio.factoryFilter(item => item.type !== 'LinearLayout').map(item => {
-            return <FormComponent title={item.title} type={item.type}/>
+    renderChild(group: FactoryGroup) {
+        return FormStudio.getFactoryList(group).filter(item => item.type !== 'LinearLayout').map(item => {
+            return <FormComponent title={item.title} type={item.type} key={item.type}/>
         })
     }
 
@@ -70,10 +59,11 @@ class FormDesigner extends PureComponent {
         return (
             <div className="form-designer">
                 <Card bordered>
-                    <div
-                        className={componentStyle.widgetList}
-                    >
-                        {this.renderChild()}
+                    <div className={componentStyle.widgetList}>
+                        <Divider>{"表单组件"}</Divider>
+                        {this.renderChild(FactoryGroup.Component)}
+                        <Divider>{"布局"}</Divider>
+                        {this.renderChild(FactoryGroup.Layout)}
                     </div>
                 </Card>
 
@@ -82,7 +72,7 @@ class FormDesigner extends PureComponent {
                 </div>
 
                 <Card bordered style={{flexGrow: 1}} title="属性编辑">
-                    <PropsEditor/>
+                    <FormEditor/>
                 </Card>
             </div>
         );

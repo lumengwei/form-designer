@@ -52,7 +52,9 @@ const config: Configuration = {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 1,
-                            modules: true,
+                            modules: {
+                                mode: 'local'
+                            },
                         }
                     },
                 ]
@@ -65,7 +67,9 @@ const config: Configuration = {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 1,
-                            modules: true,
+                            modules: {
+                                mode: 'local'
+                            },
                         }
                     }
                     , {loader: 'less-loader', options: {}}]

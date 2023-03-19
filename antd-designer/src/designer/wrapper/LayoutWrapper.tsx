@@ -1,9 +1,9 @@
-import React, {ComponentClass, PureComponent} from 'react';
+import React, {ComponentClass, ComponentSpec, PureComponent} from 'react';
 import className from 'classnames';
 import createReactClass from 'create-react-class';
-import {ReactComponentProps} from "../types";
-import formViewStyle from "../formView.less";
+import {Activatable, ReactComponentProps} from "../types";
 import {DeleteOutlined, DragOutlined} from "@ant-design/icons";
+import {FormHelper} from "../helper";
 
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
@@ -23,7 +23,7 @@ class LayoutToolbar extends PureComponent<LayoutToolbarProps> {
         }
 
         return (
-            <div className={formViewStyle.formLayoutToolbar}>
+            <div className="layout-tool-bar">
         <span className='fm-btn' title="拖动">
          <DragOutlined/>
         </span>
@@ -35,11 +35,16 @@ class LayoutToolbar extends PureComponent<LayoutToolbarProps> {
     }
 }
 
-function LayoutWrapperFactory(opt: any = {}) {
+export interface FactoryWrapperOptions {
+    focusAble?: boolean;
+    toolbarAble?: boolean;
+    layoutStyle?: any;
+}
+
+function LayoutWrapperFactory(opt: FactoryWrapperOptions = {}) {
     const options = opt || {};
 
     return function LayoutWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProps<T>>) {
-        // noinspection JSAnnotator
         const componentLayout = createReactClass({
             displayName: 'LayoutWrapper',
             getInitialState() {
@@ -63,30 +68,22 @@ function LayoutWrapperFactory(opt: any = {}) {
                 })
             },
 
-            onActive(e: Event) {
-                if (e) {
-                    e.stopPropagation();
-                }
-
-                const {focusAble} = this.state;
-                if (!focusAble) {
-                    return;
-                }
-
-                // TODO
-
+            onActive() {
                 this.setState({
                     active: true
                 })
             },
 
             unActive() {
-                const {focusAble} = this.state;
-                if (focusAble) {
-                    this.setState({
-                        active: false
-                    })
+                this.setState({
+                    active: false
+                })
+            },
+            activeClick(e: Event) {
+                if (e) {
+                    e.stopPropagation();
                 }
+                FormHelper.activeComponentIns = this;
             },
             getWrappedInstance() {
                 return this.wrappedInstance;
@@ -95,23 +92,31 @@ function LayoutWrapperFactory(opt: any = {}) {
                 this.wrappedInstance = ref;
             },
             render() {
-                const {active, renderCounter, focusAble, toolbarAble, layoutStyle} = this.state;
+                const {active, renderCounter, toolbarAble, layoutStyle} = this.state;
                 const {definition} = this.props;
                 return (
                     <div style={layoutStyle}
                          className={className({'component': true, 'component-layout': true, 'active': active})}
-                         onClick={focusAble ? this.onActive : null}>
+                         onClick={this.activeClick}>
                         <WrappedComponent {...this.props} definition={definition} renderCounter={renderCounter}
                                           ref={this.setWrappedInstance}/>
                         {toolbarAble ? <LayoutToolbar/> : null}
                     </div>
                 );
             }
-        });
+        } as Activatable & ComponentSpec<any, any>);
 
         componentLayout.displayName = `LayoutWrapper(${WrappedComponent.displayName || WrappedComponent.name || 'WrappedComponent'})`;
 
+        // componentLayout.prototype.activeClick = function (e: Event) {
+        //     if (e) {
+        //         e.stopPropagation();
+        //     }
+        //     FormHelper.activeComponentIns = this;
+        // };
+
         return hoistNonReactStatics(componentLayout, WrappedComponent);
+
     }
 }
 

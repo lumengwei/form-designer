@@ -1,4 +1,4 @@
-import {ComponentFactoryRender} from "./types";
+import {ComponentFactoryRender} from "../types";
 
 class FactoryRenders {
     private _renders: Map<string, ComponentFactoryRender<any, any>>;

@@ -27,11 +27,18 @@ export interface ComponentDefinition<T> extends Component {
 }
 
 
+export enum FactoryGroup {
+    'Layout' = '布局组件',
+    'Component' = '表单组件'
+}
+
 /**
  * 组件工厂
  * 负责创建组件的定义
  */
 export interface ComponentFactory<T> extends Component {
+    readonly group: FactoryGroup;
+
     createComponentDefinition: () => ComponentDefinition<T>;
 }
 

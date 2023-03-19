@@ -2,9 +2,9 @@ import React, {PureComponent} from 'react';
 import {Form, InputNumber, Rate} from 'antd';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
 import {ReactComponent} from '../reactComponent';
-import {PropsEditor} from '../fragements';
+import {PropsEditor} from '../widgets/PropsEditor';
 import {RateProps} from "../../../../src/props";
-import {ComponentFactory} from "../../../../src/types";
+import {ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
 
 @ComponentWrapper
@@ -57,7 +57,7 @@ class RateComponentEditor extends PureComponent<ReactComponentProps<RateProps>>
 @FactoryRegister(RateComponent, RateComponentEditor)
 class RateFactory implements ComponentFactory<RateProps> {
     readonly type = "Rate"
-
+    readonly group = FactoryGroup.Component;
     title = "评分"
 
     /**

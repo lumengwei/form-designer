@@ -2,10 +2,10 @@ import React from 'react';
 import {sortable} from '../../lib/sortable';
 import {Layout} from '../reactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
-import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
+import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {LinearLayoutProps} from "../../../../src/props";
 import {ReactComponentGroupState, ReactComponentProps} from "../types";
-import FactoryRenders from "../FactoryRenders";
+import FactoryRenders from "../helper/FactoryRenders";
 
 /**
  * 这是一个特殊的布局
@@ -52,8 +52,8 @@ class LinearLayout extends Layout<ReactComponentProps<LinearLayoutProps>,
 
 @FactoryRegister(LinearLayout)
 class LinearLayoutFactory implements ComponentFactory<LinearLayoutProps> {
-    type = "LinearLayout"
-
+    readonly type = "LinearLayout"
+    readonly group = FactoryGroup.Layout;
     title = "流式布局"
 
 

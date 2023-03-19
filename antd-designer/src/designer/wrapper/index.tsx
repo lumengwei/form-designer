@@ -1,7 +1,7 @@
 import React, {Component, ComponentClass} from 'react';
 import {ComponentDefinition, ComponentFactory, ComponentFactoryConstructor} from "../../../../src/types";
 import FormStudio from "../../../../src/FormStudio";
-import FactoryRenders from "../FactoryRenders";
+import FactoryRenders from "../helper/FactoryRenders";
 import {ComponentFactoryRender, ReactComponentProps} from "../types";
 
 

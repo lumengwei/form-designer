@@ -2,7 +2,7 @@
 @primary-color: #1890ff;
 @border-color: #ddd;
 
-.form-view {
+:global .form-view {
   min-height: 93%;
   margin: 0 15px;
   background: #fff;
@@ -31,7 +31,7 @@
     border: 1px solid @primary-color;
   }
 
-  & .formLayoutToolbar {
+  & .layout-tool-bar {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -89,6 +89,7 @@
     margin-bottom: -1px;
     border: 1px dashed @border-color;
     cursor: pointer;
+    min-height: 60px;
 
     & .component-layout {
       border-right: none;
@@ -122,7 +123,7 @@
   & .component-field {
     position: relative;
     background: #fff;
-    padding: 8px 10px 8px;
+    padding: 14px;
     border: 1px dashed rgba(0, 0, 0, 0);
 
     & .fm-btn-remove {
@@ -159,7 +160,7 @@
   }
 }
 
-.form-designer {
+:global .form-designer {
   display: flex;
   height: 100%;
   margin: -24px;

@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
-import FactoryRenders from "./FactoryRenders";
+import {FactoryRenders, FormHelper} from "./helper";
 import {ReactComponentGroupState} from "./types";
-import FormStudio from "../../../src/FormStudio";
+import {ComponentDefinition} from "../../../src/types";
 
 require('./formView.less');
 
@@ -9,34 +9,23 @@ require('./formView.less');
  * 属性编辑器
  */
 class FormEditor extends PureComponent<{}, ReactComponentGroupState<any>> {
-
-    componentIns = null;
-
-    private componentEditor: HTMLElement | null = null;
+    constructor(props: {}, context: any) {
+        super(props, context);
+        this.state = {
+            definition: null,
+            renderCounter: 0
+        }
+    }
 
     componentDidMount() {
-        FormStudio.propsEditor = this;
+        FormHelper.formEditorIns = this;
     }
 
-    componentEditorRef = (node: HTMLElement | null) => {
-        this.componentEditor = node;
-    }
 
-    /**
-     * 设置组件实例
-     * @param componentIns
-     */
-    setComponentIns(componentIns: any) {
-        this.componentIns = componentIns;
-        if (componentIns) {
-            this.setState({
-                definition: componentIns.props.definition
-            });
-        } else {
-            this.setState({
-                definition: null
-            });
-        }
+    setDefinition(definition: ComponentDefinition<any> | null) {
+        this.setState({
+            definition
+        })
     }
 
     onValuesChange(props: any, values: any, _: any) {
@@ -53,18 +42,12 @@ class FormEditor extends PureComponent<{}, ReactComponentGroupState<any>> {
          })*/
     }
 
-    refreshComponent() {
-        if (this.componentIns) {
-        }
-    }
 
     renderProps() {
         const {definition} = this.state;
         if (definition) {
             return FactoryRenders.getRender(definition.type).renderEditor(definition)({
-                componentIns: this.componentIns,
                 onValuesChange: this.onValuesChange.bind(this),
-                wrappedComponentRef: this.componentEditorRef
             });
         }
     }

@@ -23,3 +23,8 @@ export interface ReactComponentGroupState<T> extends ReactComponentState {
     definition: ComponentDefinition<T> | null;
 }
 
+export interface Activatable {
+    onActive(): void;
+
+    unActive(): void;
+}

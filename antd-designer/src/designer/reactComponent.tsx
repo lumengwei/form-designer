@@ -10,12 +10,6 @@ export class ReactComponent<P extends ReactComponentProps<T>, T, S extends React
         }
     }
 
-    /* shouldComponentUpdate(nextProps, nextState, nextContext){
-      const {definition}  = this.props;
-      const {definition: nextDefinition} = this.props;
-      return !deepEal(definition, nextDefinition) || super.shouldComponentUpdate(nextProps, nextState, nextContext);
-    } */
-
     /**
      * shouldComponentUpdate 默认不是对象的深层比较，采用标志位的方式
      * 此方法代替foreUpdate
@@ -43,14 +37,10 @@ export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends React
      * @param index
      * @param componentDefinition
      */
-    addChild(index: number, componentDefinition: ComponentDefinition<T>) {
-        const {definition: {children}, definition} = this.props;
+    addChild(index: number, componentDefinition: ComponentDefinition<any>) {
+        const {definition: {children}} = this.props;
         children!.splice(index, 0, componentDefinition)
-        this.setState({
-            definition: {
-                ...definition,
-            }
-        })
+        this.forceUpdate();
     }
 
     /**
@@ -58,13 +48,9 @@ export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends React
      * @param index
      */
     removeChild(index: number) {
-        const {definition: {children}, definition} = this.props;
+        const {definition: {children}} = this.props;
         children!.splice(index, 1)
-        this.setState({
-            definition: {
-                ...definition,
-            }
-        })
+        this.forceUpdate();
     }
 }
 
