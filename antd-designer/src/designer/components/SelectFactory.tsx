@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Button, Checkbox, Form, Input, Select} from 'antd';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
-import {ReactComponent} from '../reactComponent';
+import {ReactComponent} from '../ReactComponent';
 import {getErasure} from '../../util/MiscUtil';
 import {PropsEditor} from '../widgets/PropsEditor';
 import {CheckboxProps, SelectProps} from "../../../../src/props";

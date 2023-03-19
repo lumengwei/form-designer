@@ -1,17 +1,20 @@
 import React from 'react';
 import {sortable} from '../../lib/sortable';
-import {Layout} from '../reactComponent';
+import {Layout} from '../ReactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {LinearLayoutProps} from "../../../../src/props";
 import {ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
+import className from "classnames";
 
 /**
  * 这是一个特殊的布局
  */
 @LayoutWrapper({
-    focusAble: false, toolbarAble: false, layoutStyle: {
+    focusAble: true,
+    toolbarAble: true,
+    layoutStyle: {
         display: 'flex',
         position: 'relative',
         width: '100%',
@@ -35,15 +38,24 @@ class LinearLayout extends Layout<ReactComponentProps<LinearLayoutProps>,
 
     renderChildren() {
         const definition: ComponentDefinition<any> = this.props.definition;
-        return definition.children!.map(item => {
+        return definition.children!.map((item, index) => {
             const factory = FactoryRenders.getRender<any>(item.type);
-            return factory.renderComponent(item)({});
+            return factory.renderComponent(item)({
+                onRemove: () => {
+                    this.removeChild(index)
+                }
+            });
         });
     }
 
     render() {
+        const {definition} = this.props;
         return (
-            <div className="ui-sortable" ref={this.ref}>
+            <div className={className({
+                'ui-sortable': true,
+                'flex-row': definition.props?.direction == 'row',
+                'flex-column': definition.props?.direction == 'column'
+            })} ref={this.ref}>
                 {this.renderChildren()}
             </div>
         )
@@ -65,7 +77,9 @@ class LinearLayoutFactory implements ComponentFactory<LinearLayoutProps> {
         return {
             type: this.type,
             title: this.title,
-            props: {},
+            props: {
+                direction: 'column'
+            },
             children: []
         }
     }

@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Input} from 'antd';
 import {ComponentWrapper, FactoryRegister} from '../wrapper';
-import {ReactComponent} from '../reactComponent';
+import {ReactComponent} from '../ReactComponent';
 import {getErasure} from '../../util/MiscUtil';
 import {PropsEditor} from '../widgets/PropsEditor';
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";

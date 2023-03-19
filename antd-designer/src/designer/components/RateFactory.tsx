@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Form, InputNumber, Rate} from 'antd';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
-import {ReactComponent} from '../reactComponent';
+import {ReactComponent} from '../ReactComponent';
 import {PropsEditor} from '../widgets/PropsEditor';
 import {RateProps} from "../../../../src/props";
 import {ComponentFactory, FactoryGroup} from "../../../../src/types";

@@ -46,14 +46,27 @@ function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProp
             this.wrappedInstance = ref;
         },
 
+        onDelete(e: React.MouseEvent<HTMLSpanElement>) {
+            e.stopPropagation();
+            const {onRemove} = this.props;
+            if (onRemove) {
+                onRemove()
+            }
+
+            // 如果删除的是当前激活状态的实例，设置null
+            if (FormHelper.activeComponentIns == this) {
+                FormHelper.activeComponentIns = null;
+            }
+        },
         renderDel() {
             const {active} = this.state;
+
             if (active) {
                 return (
                     <>
-                     <span className="fm-btn-remove">
+                     <span className="fm-btn-remove" onClick={(e) => this.onDelete(e)}>
                               <CloseCircleOutlined/>
-                            </span>
+                      </span>
                     </>
                 )
             } else {

@@ -14,23 +14,33 @@ interface LayoutToolbarProps {
 }
 
 class LayoutToolbar extends PureComponent<LayoutToolbarProps> {
+    onDelete(e: React.MouseEvent<HTMLSpanElement>) {
+        e.stopPropagation();
+        const {onRemove} = this.props;
+        if (onRemove) {
+            onRemove()
+        }
+    }
 
     render() {
-        const {disable, onRemove} = this.props;
+        const {disable} = this.props;
 
         if (disable) {
             return;
         }
 
+
         return (
-            <div className="layout-tool-bar">
-        <span className='fm-btn' title="拖动">
-         <DragOutlined/>
-        </span>
-                <span className='fm-btn fm-btn-del' onClick={onRemove} title="删除">
-          <DeleteOutlined/>
-        </span>
-            </div>
+            <>
+                <div className="layout-tool-bar">
+                    <span className='fm-btn' title="拖动">
+                        <DragOutlined/>
+                    </span>
+                    <span className='fm-btn fm-btn-del' onClick={(e) => this.onDelete(e)} title="删除">
+                        <DeleteOutlined/>
+                    </span>
+                </div>
+            </>
         )
     }
 }
@@ -83,7 +93,10 @@ function LayoutWrapperFactory(opt: FactoryWrapperOptions = {}) {
                 if (e) {
                     e.stopPropagation();
                 }
-                FormHelper.activeComponentIns = this;
+                const focusAble = this.props.focusAble == undefined ? this.state.focusAble : this.props.focusAble;
+                if (focusAble) {
+                    FormHelper.activeComponentIns = this;
+                }
             },
             getWrappedInstance() {
                 return this.wrappedInstance;
@@ -91,8 +104,22 @@ function LayoutWrapperFactory(opt: FactoryWrapperOptions = {}) {
             setWrappedInstance(ref: any) {
                 this.wrappedInstance = ref;
             },
+
+            onDelete() {
+                const {onRemove} = this.props;
+                if (onRemove) {
+                    onRemove()
+                }
+
+                // 如果删除的是当前激活状态的实例，设置null
+                if (FormHelper.activeComponentIns == this) {
+                    FormHelper.activeComponentIns = null;
+                }
+            },
+
             render() {
-                const {active, renderCounter, toolbarAble, layoutStyle} = this.state;
+                const {active, renderCounter, layoutStyle} = this.state;
+                const toolbarAble = this.props.toolbarAble == undefined ? this.state.toolbarAble : this.props.toolbarAble
                 const {definition} = this.props;
                 return (
                     <div style={layoutStyle}
@@ -100,20 +127,13 @@ function LayoutWrapperFactory(opt: FactoryWrapperOptions = {}) {
                          onClick={this.activeClick}>
                         <WrappedComponent {...this.props} definition={definition} renderCounter={renderCounter}
                                           ref={this.setWrappedInstance}/>
-                        {toolbarAble ? <LayoutToolbar/> : null}
+                        {toolbarAble ? <LayoutToolbar onRemove={() => this.onDelete()}/> : null}
                     </div>
                 );
             }
         } as Activatable & ComponentSpec<any, any>);
 
         componentLayout.displayName = `LayoutWrapper(${WrappedComponent.displayName || WrappedComponent.name || 'WrappedComponent'})`;
-
-        // componentLayout.prototype.activeClick = function (e: Event) {
-        //     if (e) {
-        //         e.stopPropagation();
-        //     }
-        //     FormHelper.activeComponentIns = this;
-        // };
 
         return hoistNonReactStatics(componentLayout, WrappedComponent);
 

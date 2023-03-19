@@ -37,7 +37,9 @@ export type TextAreaProps = {
     placeholder: string;
 }
 
-export type LinearLayoutProps = {};
+export type LinearLayoutProps = {
+    direction: 'row' | 'column'
+};
 
 export type ColumnLayoutProps = {
     columnNum: number

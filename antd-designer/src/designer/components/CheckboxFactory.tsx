@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Button, Checkbox, Form, Input} from 'antd';
-import {ReactComponent} from '../reactComponent';
+import {ReactComponent} from '../ReactComponent';
 import {FactoryRegister, ComponentWrapper} from '../wrapper';
 import type {ComponentFactory} from '../../../../src/types'
 import {CheckboxProps} from "../../../../src/props";

@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Form, InputNumber} from 'antd';
-import {Layout} from '../reactComponent';
+import {Layout} from '../ReactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import FormStudio from "../../../../src/FormStudio";
 import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
@@ -34,16 +34,21 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
         const segments = [];
 
         for (let i = 0; i < props!.columnNum; i++) {
-            if (children![i]) {
-                const factory = FormStudio.getFactory(children![i].type)
-                const render = FactoryRenders.getRender(children![i].type)
+            const def = this.getChildBySlot(i);
+            if (def) {
+                const factory = FormStudio.getFactory(def.type)
+                const render = FactoryRenders.getRender(def.type)
                 segments.push((<div className="cell">
-                    {render.renderComponent(children![i])(factory.createComponentDefinition)}
+                    {render.renderComponent(factory.createComponentDefinition())({
+                        onRemove: () => {
+                            this.removeChildBySlot(i);
+                        }
+                    })}
                 </div>))
             } else {
                 const ref = (node: HTMLDivElement) => {
                     if (node) {
-                        sortable(node, this)
+                        sortable(node, this, i, 1, true)
                     }
                 };
                 segments.push((<div className="cell" ref={ref}/>))

@@ -12,7 +12,9 @@ export interface ComponentEditor<P extends ReactComponentProps<T>, T> extends Co
 }
 
 export interface ReactComponentProps<T> {
-    definition: ComponentDefinition<T>
+    definition: ComponentDefinition<T>;
+
+    onRemove(): void;
 }
 
 export interface ReactComponentState {

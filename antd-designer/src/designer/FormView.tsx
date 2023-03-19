@@ -11,8 +11,10 @@ export default class FormView extends PureComponent<{ formDefinition: FormDefini
 
     componentWillMount() {
         const componentRender = FactoryRenders.getRender("LinearLayout");
-        const factory = FormStudio.getFactory("LinearLayout");
-        this.LinearLayout = componentRender.renderComponent(FormStudio.definition!)({});
+        this.LinearLayout = componentRender.renderComponent(FormStudio.definition!)({
+            focusAble: false,
+            toolbarAble: false
+        });
     }
 
     render() {

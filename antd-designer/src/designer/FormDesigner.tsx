@@ -50,7 +50,7 @@ class FormDesigner extends PureComponent {
 
 
     renderChild(group: FactoryGroup) {
-        return FormStudio.getFactoryList(group).filter(item => item.type !== 'LinearLayout').map(item => {
+        return FormStudio.getFactoryList(group).map(item => {
             return <FormComponent title={item.title} type={item.type} key={item.type}/>
         })
     }

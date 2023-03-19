@@ -37,10 +37,24 @@ export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends React
      * @param index
      * @param componentDefinition
      */
-    addChild(index: number, componentDefinition: ComponentDefinition<any>) {
+    addChildBySlot(slot: number, componentDefinition: ComponentDefinition<any>) {
         const {definition: {children}} = this.props;
-        children!.splice(index, 0, componentDefinition)
-        this.forceUpdate();
+        componentDefinition.slot = slot;
+        children?.push(componentDefinition);
+        this.forceUpdate()
+    }
+
+    /**
+     * 移除子组件
+     * @param index
+     */
+    removeChildBySlot(slot: number) {
+        const {definition: {children}} = this.props;
+        const child = children?.filter(it => it.slot == slot)[0]
+        if (child) {
+            children!.splice(children?.indexOf(child), 1)
+            this.forceUpdate()
+        }
     }
 
     /**
@@ -50,8 +64,25 @@ export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends React
     removeChild(index: number) {
         const {definition: {children}} = this.props;
         children!.splice(index, 1)
+        this.forceUpdate()
+    }
+
+    addChild(index: number, componentDefinition: ComponentDefinition<any>) {
+        const {definition: {children}} = this.props;
+        children!.splice(index, 0, componentDefinition)
         this.forceUpdate();
     }
+
+    /**
+     * 获取插槽上的组件
+     * @param index
+     * @param componentDefinition
+     */
+    getChildBySlot(slot: number): ComponentDefinition<any> | null {
+        const {definition: {children}} = this.props;
+        return children?.filter(it => it.slot == slot)[0] || null
+    }
+
 }
 
 export class Layout<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>> extends ComponentGroup<P, T, S> {

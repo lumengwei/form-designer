@@ -75,7 +75,7 @@
 
     &.active {
       background: #fff8dc;
-      border-color: #ddd;
+      border: 1px dashed #000 !important;
 
       & .fm-btn-remove {
         display: block !important;
@@ -87,17 +87,30 @@
     position: relative;
     display: flex;
     margin-bottom: -1px;
-    border: 1px dashed @border-color;
+    border-right: 1px dashed rgba(0, 0, 0, 0);
+    border-top: 1px dashed rgba(0, 0, 0, 0);
+    border-left: 1px dashed rgba(0, 0, 0, 0);
+    border-bottom: 1px dashed @border-color;
     cursor: pointer;
     min-height: 60px;
 
-    & .component-layout {
-      border-right: none;
-      border-left: none;
+    &:first-child {
+      border: 1px dashed @border-color;
     }
 
     & .component-layout:first-child {
       border-top: none;
+    }
+
+
+    & .flex-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    & .flex-row {
+      display: flex;
+      flex-direction: row;
     }
   }
 
@@ -111,20 +124,26 @@
       display: table-cell;
       height: 50px;
       vertical-align: top;
+      border-right: 1px dashed rgba(0, 0, 0, 0);
+      border-top: 1px dashed rgba(0, 0, 0, 0);
+      border-bottom: 1px dashed rgba(0, 0, 0, 0);
       border-left: 1px dashed @border-color;
     }
 
     & .cell:first-child {
       border-left: none !important;
     }
-
   }
 
   & .component-field {
     position: relative;
     background: #fff;
     padding: 14px;
-    border: 1px dashed rgba(0, 0, 0, 0);
+
+    border-right: 1px dashed rgba(0, 0, 0, 0);
+    border-top: 1px dashed rgba(0, 0, 0, 0);
+    border-left: 1px dashed rgba(0, 0, 0, 0);
+    border-bottom: 1px dashed @border-color;;
 
     & .fm-btn-remove {
       position: absolute;
