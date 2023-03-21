@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Button, Layout} from 'antd';
-import {render} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import FormDesigner from './designer/FormDesigner';
 import FormStudio from "../../src/FormStudio";
 
@@ -27,7 +27,6 @@ class App extends PureComponent {
     }
 }
 
-render(
-    <App/>,
-    document.getElementsByTagName('body')[0]
-);
+console.log(document)
+const domNode = createRoot(document.getElementsByTagName('body')[0])
+domNode.render(<App/>)

@@ -38,7 +38,7 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
             if (def) {
                 const factory = FormStudio.getFactory(def.type)
                 const render = FactoryRenders.getRender(def.type)
-                segments.push((<div className="cell">
+                segments.push((<div className="cell" key={'cell-' + i}>
                     {render.renderComponent(factory.createComponentDefinition())({
                         onRemove: () => {
                             this.removeChildBySlot(i);
@@ -51,7 +51,7 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
                         sortable(node, this, i, 1, true)
                     }
                 };
-                segments.push((<div className="cell" ref={ref}/>))
+                segments.push((<div className="cell" ref={ref} key={'cell-' + i}/>))
             }
 
         }

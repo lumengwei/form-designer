@@ -17,40 +17,51 @@ export function sortable<P extends ReactComponentProps<T>, T, S extends ReactCom
     , componentInst: ComponentGroup<P, T, S>, slotIndex?: number, limitSize?: number, limitToDisable?: boolean
 ) {
     if ($node) {
+        let sourceIndex = 0;
         $($node).sortable({
             connectWith: 'parent',
             placeholder: 'form-placeholder-filed ',
             cancel: '.j_cancel-drag',
             stop(e: JQueryEventObject, ui: SortableUIParams) {
-                if ($(this).children().length > limitSize!) {
+                console.log('stop', e, ui)
+                if ($($node).children().length > limitSize!) {
                     $(ui.item).remove();
                     return;
                 } else {
                     if (componentInst && FormHelper.componentFactory) {
+                        // 查润新的组件
                         if (slotIndex === undefined) {
                             componentInst.addChild($(ui.item).index(), FormHelper.componentFactory.createComponentDefinition())
                         } else {
                             componentInst.addChildBySlot(slotIndex, FormHelper.componentFactory.createComponentDefinition())
                         }
+                        $(ui.item).remove();
+
+                        if (limitToDisable && $($node).children().length >= limitSize!) {
+                            $($node).sortable("disable")
+                        }
+                    } else {
+                        // 组件排序
+                        componentInst.changeIndex(sourceIndex, $(ui.item).index())
                     }
 
-                    if (limitToDisable && $(this).children().length >= limitSize!) {
-                        $($node).sortable("disable")
-                    }
-                    $(ui.item).remove();
                 }
             },
             over(e: JQueryEventObject, ui: SortableUIParams) {
-                if ($(this).children().length > limitSize!) {
+                if ($($node).children().length > limitSize!) {
                     return;
                 } else {
-                    $(this).find('.form-placeholder-filed').show();
+                    $($node).find('.form-placeholder-filed').show();
                 }
 
             },
-            out() {
+            activate(e: JQueryEventObject, ui: SortableUIParams) {
+                console.log('activate', e, ui)
+                sourceIndex = $(ui.item).index();
             },
-            receive() {
+            out(e: JQueryEventObject, ui: SortableUIParams) {
+            },
+            receive(e: JQueryEventObject, ui: SortableUIParams) {
             },
         });
     } else {

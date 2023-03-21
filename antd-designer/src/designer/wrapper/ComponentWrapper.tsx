@@ -48,6 +48,8 @@ function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProp
 
         onDelete(e: React.MouseEvent<HTMLSpanElement>) {
             e.stopPropagation();
+
+            console.log(this, 'onDelete')
             const {onRemove} = this.props;
             if (onRemove) {
                 onRemove()

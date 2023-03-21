@@ -107,6 +107,7 @@ function LayoutWrapperFactory(opt: FactoryWrapperOptions = {}) {
 
             onDelete() {
                 const {onRemove} = this.props;
+                console.log(this, 'onDelete')
                 if (onRemove) {
                     onRemove()
                 }

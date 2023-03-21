@@ -41,6 +41,7 @@ class LinearLayout extends Layout<ReactComponentProps<LinearLayoutProps>,
         return definition.children!.map((item, index) => {
             const factory = FactoryRenders.getRender<any>(item.type);
             return factory.renderComponent(item)({
+                key: `children-${index}`,
                 onRemove: () => {
                     this.removeChild(index)
                 }

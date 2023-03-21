@@ -73,6 +73,14 @@ export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends React
         this.forceUpdate();
     }
 
+    changeIndex(source: number, target: number) {
+        const {definition: {children}} = this.props;
+        const s = children![source];
+        children![source] = children![target];
+        children![target] = s;
+        this.forceUpdate();
+    }
+
     /**
      * 获取插槽上的组件
      * @param index
