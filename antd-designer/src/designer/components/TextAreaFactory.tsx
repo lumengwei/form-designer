@@ -7,6 +7,7 @@ import {PropsEditor} from '../widgets/PropsEditor';
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
 import {TextAreaProps} from "../../../../src/props";
 import {FactoryGroup} from "../../../../src/types";
+import {makeComponentId} from "../../../../src/utils";
 
 const TexArea = Input.TextArea;
 
@@ -51,6 +52,7 @@ class TextAreaFactory {
      */
     createComponentDefinition() {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             props: {

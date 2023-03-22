@@ -17,6 +17,12 @@ export interface ReactComponentProps<T> {
     onRemove(): void;
 }
 
+export interface PropsEditorProps<T> {
+    definition: ComponentDefinition<T>;
+
+    onChange(): void;
+}
+
 export interface ReactComponentState {
     renderCounter: number;
 }

@@ -8,6 +8,7 @@ import {ColumnLayoutProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
 import {sortable} from "../../lib/sortable";
+import {makeComponentId} from "../../../../src/utils";
 
 
 @LayoutWrapper()
@@ -111,6 +112,7 @@ class ColumnLayoutFactory implements ComponentFactory<ColumnLayoutProps> {
      */
     createComponentDefinition(): ComponentDefinition<ColumnLayoutProps> {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             props: {

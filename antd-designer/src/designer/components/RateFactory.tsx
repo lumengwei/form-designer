@@ -6,6 +6,7 @@ import {PropsEditor} from '../widgets/PropsEditor';
 import {RateProps} from "../../../../src/props";
 import {ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
+import {makeComponentId} from "../../../../src/utils";
 
 @ComponentWrapper
 class RateComponent extends ReactComponent<ReactComponentProps<RateProps>, RateProps, ReactComponentState> {
@@ -66,6 +67,7 @@ class RateFactory implements ComponentFactory<RateProps> {
      */
     createComponentDefinition() {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             props: {

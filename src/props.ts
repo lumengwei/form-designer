@@ -1,21 +1,18 @@
+export type OptionType = {
+    label: string;
+    value: string;
+    checked: boolean;
+    disabled: boolean;
+}
+
 export type CheckboxProps = {
     placeholder: string;
-    options: {
-        label: string;
-        value: string;
-        checked: boolean;
-        disabled: boolean;
-    }[];
+    options: OptionType[];
 };
 
 export type RadioProps = {
     placeholder: string;
-    options: {
-        label: string;
-        value: string;
-        checked: boolean;
-        disabled: boolean;
-    }[];
+    options: OptionType[];
 };
 
 

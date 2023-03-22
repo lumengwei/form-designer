@@ -7,6 +7,7 @@ import {LinearLayoutProps} from "../../../../src/props";
 import {ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
 import className from "classnames";
+import {makeComponentId} from "../../../../src/utils";
 
 /**
  * 这是一个特殊的布局
@@ -76,6 +77,7 @@ class LinearLayoutFactory implements ComponentFactory<LinearLayoutProps> {
      */
     createComponentDefinition(): ComponentDefinition<LinearLayoutProps> {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             props: {

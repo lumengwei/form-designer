@@ -7,6 +7,7 @@ import {PropsEditor} from '../widgets/PropsEditor';
 import {CheckboxProps, SelectProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
 import {ComponentFactory, FactoryGroup} from "../../../../src/types";
+import {makeComponentId} from "../../../../src/utils";
 
 @ComponentWrapper
 class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, SelectProps, ReactComponentState> {
@@ -143,6 +144,7 @@ class SelectFactory implements ComponentFactory<SelectProps> {
      */
     createComponentDefinition() {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             props: {

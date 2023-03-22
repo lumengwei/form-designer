@@ -1,5 +1,6 @@
 import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {CheckboxProps} from "../../../../src/props";
+import {makeComponentId, makeFieldId} from "../../../../src/utils";
 
 
 class Factory implements ComponentFactory<CheckboxProps> {
@@ -9,9 +10,11 @@ class Factory implements ComponentFactory<CheckboxProps> {
 
     createComponentDefinition(): ComponentDefinition<CheckboxProps> {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             fieldDef: {
+                fieldId: makeFieldId(),
                 fieldType: '',
                 fieldName: '',
             },

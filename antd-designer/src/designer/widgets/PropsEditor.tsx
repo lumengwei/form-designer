@@ -1,51 +1,8 @@
 import React, {PropsWithChildren, PureComponent} from "react";
-import {Form, Input, InputNumber} from "antd";
-import {FieldNameInput} from "./FieldNameInput";
+import {Form, Input} from "antd";
 import {ReactComponentProps} from "../types";
 
 export class PropsEditor extends PureComponent<PropsWithChildren<ReactComponentProps<any>>> {
-
-    /**
-     * 长度限制
-     * @returns {*}
-     */
-    renderLengthLimit() {
-        const props = this.props.definition.props;
-        if (!this.props.hasOwnProperty('lengthLimit')) {
-            return null;
-        }
-
-        return (
-            <Form.Item
-                style={{marginBottom: 0}}
-            >
-                <Form.Item
-                    initialValue={props.minLength}
-                    label="最小长度"
-                    style={{display: 'inline-block', width: 'calc(50% - 12px)', marginBottom: 0}}
-                    rules={[{
-                        type: 'number',
-                        min: 1,
-                        message: '不得小于1'
-                    }]}
-                >
-                    <InputNumber/>
-                </Form.Item>
-                <Form.Item
-                    initialValue={props.maxLength}
-                    label="最大长度"
-                    style={{display: 'inline-block', width: 'calc(50% - 12px)', marginBottom: 0}}
-                    rules={[{
-                        type: 'number',
-                        min: 1,
-                        message: '不得小于1'
-                    }]}
-                >
-                    <InputNumber/>
-                </Form.Item>
-            </Form.Item>
-        );
-    }
 
     renderPlaceholder() {
         const props = this.props.definition.props;
@@ -67,12 +24,44 @@ export class PropsEditor extends PureComponent<PropsWithChildren<ReactComponentP
 
         return (
             <Form>
-                <FieldNameInput/>
-                <Form.Item initialValue={definition.title} label="标题" style={{marginBottom: 0}}>
+                <Form.Item
+                    labelCol={{span: 3}}
+                    initialValue={definition.title}
+                    label="字段名"
+                    rules={[
+                        {
+                            type: 'string',
+                            max: 50,
+                            min: 1,
+                        }, {
+                            required: true,
+                        }, {
+                            pattern: new RegExp("[a-zA-Z]*")
+                        }
+                    ]}
+                >
+                    <Input placeholder="字段"/>
+                </Form.Item>
+                <Form.Item labelCol={{span: 3}} initialValue={definition.title} label="类型">
+                    <Input placeholder="类型"/>
+                </Form.Item>
+                <Form.Item
+                    labelCol={{span: 3}}
+                    initialValue={definition.title}
+                    label="标题"
+                    rules={[
+                        {
+                            type: 'string',
+                            max: 50,
+                            min: 1,
+                        }, {
+                            required: true,
+                        }
+                    ]}
+                >
                     <Input placeholder="标题"/>
                 </Form.Item>
                 {this.renderPlaceholder()}
-                {this.renderLengthLimit()}
                 {children}
             </Form>
         );

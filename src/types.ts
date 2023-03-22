@@ -12,6 +12,7 @@ export interface FormDefinition {
  * 字段定义
  */
 export interface FieldDefinition {
+    fieldId: string;
     fieldName: string;
     fieldType: string;
 }
@@ -23,6 +24,7 @@ export interface ComponentDefinition<T> extends Component {
     /**
      * 作为一个子组件时，所在父组件中的位置（这个数据不一定在父组件中起作用）
      */
+    id: string;
     slot?: number;
     props?: T;
     children?: ComponentDefinition<any>[];

@@ -1,11 +1,14 @@
-import React, {PureComponent} from 'react';
-import {Button, Checkbox, Form, Input, Radio,} from 'antd';
-import {FactoryRegister, ComponentWrapper} from '../wrapper';
+import React, {Component, PureComponent, useRef} from 'react';
+import {Button, Checkbox, Form, Input, Radio, Space, Table,} from 'antd';
+import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
 import {PropsEditor} from '../widgets/PropsEditor';
-import {CheckboxProps, RadioProps} from "../../../../src/props";
+import {CheckboxProps, OptionType, RadioProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
 import {ComponentFactory, FactoryGroup} from "../../../../src/types";
+import {makeComponentId, makeFieldId} from "../../../../src/utils";
+import {ColumnsType} from "antd/es/table";
+import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 
 const RadioGroup = Radio.Group;
 
@@ -30,6 +33,62 @@ class RadioComponent extends ReactComponent<ReactComponentProps<RadioProps>, Rad
 class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>>
     implements ComponentEditor<ReactComponentProps<RadioProps>, RadioProps> {
 
+    private tableRef = useRef<Component>();
+
+    private columns: ColumnsType<OptionType> = [
+        {
+            title: '显示',
+            dataIndex: 'label',
+            width: '25%',
+            render(_, record: OptionType, index) {
+                return (
+                    <>
+                        <Input onChange={(e) => record.label = e.target.value}/>
+                    </>
+                )
+            }
+        },
+        {
+            title: '真值',
+            dataIndex: 'value',
+            width: '15%',
+            render(_, record: OptionType, index) {
+                return (
+                    <>
+                        <Input onChange={(e) => record.value = e.target.value}/>
+                    </>
+                )
+            }
+        },
+        {
+            title: '是否默认',
+            dataIndex: 'checked',
+            width: '15%',
+            render(_, record: OptionType, index) {
+                return (
+                    <>
+                        <Checkbox onChange={(e) => record.checked = e.target.checked}/>
+                    </>
+                )
+            }
+        },
+        {
+            title: '操作',
+            width: '15%',
+            render: (_, record: OptionType, index) => {
+                return (
+                    <>
+                        <Space>
+                            {index > 0 ? <Button icon={<DeleteOutlined/>} type="link" danger
+                                                 onClick={() => this.removeOption(index)}/> : null}
+                            <Button icon={<PlusOutlined/>} type="link" onClick={() => this.addOption(index)}/>
+                        </Space>
+                    </>
+                )
+            }
+        },
+    ];
+
     onChange(allValues: any) {
         const {definition: {props}, definition} = this.props;
 
@@ -40,7 +99,7 @@ class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>
         const definition = this.props.definition;
         const props: CheckboxProps = definition.props!;
         props.options.splice(index, 1);
-        this.forceUpdate();
+        this.tableRef.current!.forceUpdate();
     }
 
     addOption(index: number) {
@@ -52,7 +111,7 @@ class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>
             checked: false,
             disabled: false
         })
-        this.forceUpdate();
+        this.tableRef.current!.forceUpdate();
     }
 
     renderOptions() {
@@ -60,53 +119,64 @@ class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>
         const props: CheckboxProps = definition.props!;
         return props.options.map((item, index) => {
             return (
-                <Form.Item
-                    label={index !== 0 ? null : "可选值：显示值 -- 真值 -- 默认-- 禁用"}
-                    style={{marginBottom: 0}}
-                >
-                    <Form.Item style={{
-                        display: 'inline-block',
-                        width: 'calc(50% - 55px)',
-                        marginBottom: 0,
-                        marginRight: '3px'
-                    }}>
-                        <Input/>)
-                    </Form.Item>
+                <>
+
                     <Form.Item
-                        initialValue={item.value}
-                        style={{
+                        label={index !== 0 ? null : "可选值：显示值 -- 真值 -- 默认-- 禁用"}
+                        style={{marginBottom: 0}}
+                    >
+                        <Form.Item style={{
                             display: 'inline-block',
                             width: 'calc(50% - 55px)',
                             marginBottom: 0,
                             marginRight: '3px'
                         }}>
-                        <Input/>
+                            <Input/>)
+                        </Form.Item>
+                        <Form.Item
+                            initialValue={item.value}
+                            style={{
+                                display: 'inline-block',
+                                width: 'calc(50% - 55px)',
+                                marginBottom: 0,
+                                marginRight: '3px'
+                            }}>
+                            <Input/>
+                        </Form.Item>
+                        <Form.Item style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
+                            <RadioGroup name='checkedIndex'>
+                                <Radio value={index}/>
+                            </RadioGroup>
+                        </Form.Item>
+                        <Form.Item initialValue={item.disabled}
+                                   style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
+                            <Checkbox/>
+                        </Form.Item>
+                        <Form.Item style={{display: 'inline-block', width: '48px', marginBottom: 0}}>
+                            <Button type="primary" shape="circle" icon="plus" size="small"
+                                    onClick={() => this.addOption(index)}/>
+                            {index !== 0 ? (<Button danger shape="circle" icon="minus" size="small"
+                                                    onClick={() => this.removeOption(index)}/>
+                            ) : null}
+                        </Form.Item>
                     </Form.Item>
-                    <Form.Item style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
-                        <RadioGroup name='checkedIndex'>
-                            <Radio value={index}/>
-                        </RadioGroup>
-                    </Form.Item>
-                    <Form.Item initialValue={item.disabled}
-                               style={{display: 'inline-block', marginBottom: 0, marginRight: '3px'}}>
-                        <Checkbox/>
-                    </Form.Item>
-                    <Form.Item style={{display: 'inline-block', width: '48px', marginBottom: 0}}>
-                        <Button type="primary" shape="circle" icon="plus" size="small"
-                                onClick={() => this.addOption(index)}/>
-                        {index !== 0 ? (<Button danger shape="circle" icon="minus" size="small"
-                                                onClick={() => this.removeOption(index)}/>
-                        ) : null}
-                    </Form.Item>
-                </Form.Item>
+                </>
             );
         })
     }
 
     render() {
+        const definition = this.props.definition;
+        const props: CheckboxProps = definition.props!;
         return (
             <PropsEditor {...this.props}>
-                {this.renderOptions()}
+                <Table
+                    bordered
+                    dataSource={props.options}
+                    columns={this.columns}
+                    pagination={false}
+                    key="value"
+                />
             </PropsEditor>
         );
     }
@@ -125,10 +195,11 @@ class RadioFactory implements ComponentFactory<RadioProps> {
      */
     createComponentDefinition() {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             fieldDef: {
-                fieldTitle: this.title,
+                fieldId: makeFieldId(),
                 fieldType: '',
                 fieldName: '',
             },

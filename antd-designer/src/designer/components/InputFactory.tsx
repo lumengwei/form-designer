@@ -7,6 +7,7 @@ import {PropsEditor} from '../widgets/PropsEditor';
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
 import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {InputProps} from "../../../../src/props";
+import {makeComponentId} from "../../../../src/utils";
 
 /**
  * 组件
@@ -64,6 +65,7 @@ class InputFactory implements ComponentFactory<InputProps> {
      */
     createComponentDefinition() {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             props: {

@@ -1,6 +1,7 @@
 import type {ComponentFactory} from "../../../../src/types";
 import {FactoryGroup} from "../../../../src/types";
 import {ColumnLayoutProps} from "../../../../src/props";
+import {makeComponentId} from "../../../../src/utils";
 
 class Factory implements ComponentFactory<ColumnLayoutProps> {
     readonly group = FactoryGroup.Layout;
@@ -9,6 +10,7 @@ class Factory implements ComponentFactory<ColumnLayoutProps> {
 
     createComponentDefinition() {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             children: [],

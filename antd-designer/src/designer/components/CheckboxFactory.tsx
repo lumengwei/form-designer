@@ -7,6 +7,7 @@ import {CheckboxProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
 import {PropsEditor} from '../widgets/PropsEditor';
 import {FactoryGroup} from "../../../../src/types";
+import {makeComponentId, makeFieldId} from "../../../../src/utils";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -130,10 +131,11 @@ export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
      */
     createComponentDefinition() {
         return {
+            id: makeComponentId(),
             type: this.type,
             title: this.title,
             fieldDef: {
-                fieldTitle: this.title,
+                fieldId: makeFieldId(),
                 fieldType: '',
                 fieldName: '',
             },
