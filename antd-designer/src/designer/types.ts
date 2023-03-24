@@ -8,7 +8,6 @@ export interface ComponentFactoryRender<T, P> {
 }
 
 export interface ComponentEditor<P extends ReactComponentProps<T>, T> extends Component<P> {
-    onChange(props: any): void;
 }
 
 export interface ReactComponentProps<T> {

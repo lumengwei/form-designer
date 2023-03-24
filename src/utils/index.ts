@@ -13,3 +13,24 @@ export function makeComponentId() {
     }
     return 'CP' + date
 }
+
+export function mergeObject(fieldPath: string, value: any, obj: Object) {
+    const fields: string[] = fieldPath.split('.');
+
+    let co: any = obj;
+    let i = 1;
+    for (const field of fields) {
+        if (co.hasOwnProperty(field)) {
+            if (i == fields.length) {
+                co[field] = value;
+            } else {
+                co = co[field];
+            }
+            i++;
+        } else {
+            throw Error(`[${fieldPath}] unreachable`);
+        }
+
+
+    }
+}

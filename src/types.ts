@@ -8,13 +8,16 @@ export interface FormDefinition {
     width: string;
 }
 
+
 /**
  * 字段定义
  */
-export interface FieldDefinition {
+export type FieldDefinition = {
     fieldId: string;
     fieldName: string;
-    fieldType: string;
+    fieldType: FieldType;
+    length?: number,
+    scale?: number
 }
 
 /**
@@ -28,6 +31,7 @@ export interface ComponentDefinition<T> extends Component {
     slot?: number;
     props?: T;
     children?: ComponentDefinition<any>[];
+    title: string;
     fieldDef?: FieldDefinition;
     rules?: FieldRule[];
 }
@@ -48,9 +52,48 @@ export interface ComponentFactory<T> extends Component {
     createComponentDefinition: () => ComponentDefinition<T>;
 }
 
+
+/**
+ * 组件工厂
+ * 负责创建组件的定义
+ */
+export interface FieldFactory<T> extends ComponentFactory<T> {
+    readonly group: FactoryGroup;
+
+    createComponentDefinition: () => ComponentDefinition<T> & { fieldDef: FieldDefinition };
+}
+
+
 export interface ComponentFactoryConstructor<T> {
     new(): ComponentFactory<T>;
 }
+
+export const FieldTypes: { [key: string]: string } = {
+    'string': 'STRING',
+    'timestamp': 'TIMESTAMP',
+    'date': 'DATE',
+    'varchar': 'VARCHAR',
+    'decimal': 'DECIMAL',
+    'int8': 'INT8',
+    'int16': 'INT16',
+    'int32': 'INT32',
+    'int64': 'INT64',
+    'boolean': 'BOOLEAN',
+    'array': 'ARRAY'
+};
+
+export type FieldType =
+    'string'
+    | 'timestamp'
+    | 'date'
+    | 'varchar'
+    | 'decimal'
+    | 'int8'
+    | 'int16'
+    | 'int32'
+    | 'int64'
+    | 'boolean'
+    | 'array';
 
 export type FieldRuleType =
     'string'
@@ -65,7 +108,8 @@ export type FieldRuleType =
     | 'date'
     | 'url'
     | 'hex'
-    | 'email';
+    | 'email'
+    ;
 
 export interface FieldRule {
     type?: FieldRuleType;

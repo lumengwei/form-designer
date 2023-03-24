@@ -1,12 +1,12 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {Form, InputNumber, Rate} from 'antd';
-import {FactoryRegister, ComponentWrapper} from '../wrapper';
+import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
 import {PropsEditor} from '../widgets/PropsEditor';
 import {RateProps} from "../../../../src/props";
-import {ComponentFactory, FactoryGroup} from "../../../../src/types";
-import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-import {makeComponentId} from "../../../../src/utils";
+import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
+import {ReactComponentProps, ReactComponentState} from "../types";
+import {makeComponentId, makeFieldId} from "../../../../src/utils";
 
 @ComponentWrapper
 class RateComponent extends ReactComponent<ReactComponentProps<RateProps>, RateProps, ReactComponentState> {
@@ -21,42 +21,32 @@ class RateComponent extends ReactComponent<ReactComponentProps<RateProps>, RateP
     }
 }
 
-class RateComponentEditor extends PureComponent<ReactComponentProps<RateProps>>
-    implements ComponentEditor<ReactComponentProps<RateProps>, RateProps> {
-
-
-    onChange(allValues: any) {
-        const {definition: {props}, definition} = this.props;
-
-        return true;
-    }
-
-    render() {
+class RateComponentEditor extends PropsEditor<RateProps> {
+    doRender() {
         const definition = this.props.definition;
         const props: RateProps = definition.props!;
         return (
-            <PropsEditor {...this.props}>
-                <Form.Item label="总数 1~10"
-                           initialValue={props.count}
-                           rules={[{
-                               type: 'number',
-                               min: 1,
-                               message: '不得小于1'
-                           }, {
-                               type: 'number',
-                               max: 10,
-                               message: '不得大于10'
-                           }]}
-                >
-                    <InputNumber/>
-                </Form.Item>
-            </PropsEditor>
+            <Form.Item label="总数 1~10"
+                       name="props.count"
+                       initialValue={props.count}
+                       rules={[{
+                           type: 'number',
+                           min: 1,
+                           message: '不得小于1'
+                       }, {
+                           type: 'number',
+                           max: 10,
+                           message: '不得大于10'
+                       }]}
+            >
+                <InputNumber/>
+            </Form.Item>
         );
     }
 }
 
 @FactoryRegister(RateComponent, RateComponentEditor)
-class RateFactory implements ComponentFactory<RateProps> {
+class RateFactory implements FieldFactory<RateProps> {
     readonly type = "Rate"
     readonly group = FactoryGroup.Component;
     title = "评分"
@@ -70,6 +60,11 @@ class RateFactory implements ComponentFactory<RateProps> {
             id: makeComponentId(),
             type: this.type,
             title: this.title,
+            fieldDef: {
+                fieldId: makeFieldId(),
+                fieldType: 'varchar' as FieldType,
+                fieldName: '',
+            },
             props: {
                 count: 5
             },

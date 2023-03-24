@@ -1,13 +1,12 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {Input} from 'antd';
 import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
-import {getErasure} from '../../util/MiscUtil';
 import {PropsEditor} from '../widgets/PropsEditor';
-import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
+import {ReactComponentProps, ReactComponentState} from "../types";
+import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
 import {InputProps} from "../../../../src/props";
-import {makeComponentId} from "../../../../src/utils";
+import {makeComponentId, makeFieldId} from "../../../../src/utils";
 
 /**
  * 组件
@@ -26,25 +25,10 @@ class InputComponent extends ReactComponent<ReactComponentProps<InputProps>, Inp
 /**
  * 组件属性编辑器
  */
-class InputComponentEditor extends PureComponent<ReactComponentProps<InputProps>>
-    implements ComponentEditor<ReactComponentProps<InputProps>, InputProps> {
-
-    /**
-     * 当编辑器改变时，此方法被调用
-     * @param _
-     * @param allValues
-     * @returns {boolean}
-     */
-    onChange(allValues: ComponentDefinition<InputProps>) {
-        const definition: ComponentDefinition<InputProps> = this.props.definition;
-        definition.title = getErasure(allValues, 'title');
-
-        return true;
-    }
-
-    render() {
+class InputComponentEditor extends PropsEditor<InputProps> {
+    doRender() {
         return (
-            <PropsEditor {...this.props} />
+            <></>
         );
     }
 }
@@ -53,7 +37,7 @@ class InputComponentEditor extends PureComponent<ReactComponentProps<InputProps>
  * 组件工厂
  */
 @FactoryRegister(InputComponent, InputComponentEditor)
-class InputFactory implements ComponentFactory<InputProps> {
+class InputFactory implements FieldFactory<InputProps> {
     readonly type = "Input"
     readonly group = FactoryGroup.Component;
 
@@ -68,6 +52,11 @@ class InputFactory implements ComponentFactory<InputProps> {
             id: makeComponentId(),
             type: this.type,
             title: this.title,
+            fieldDef: {
+                fieldId: makeFieldId(),
+                fieldType: 'varchar' as FieldType,
+                fieldName: ''
+            },
             props: {
                 placeholder: '请输入'
             },

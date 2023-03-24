@@ -4,10 +4,10 @@ import {FactoryRegister, ComponentWrapper} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
 import {getErasure} from '../../util/MiscUtil';
 import {PropsEditor} from '../widgets/PropsEditor';
-import {CheckboxProps, SelectProps} from "../../../../src/props";
+import {CheckboxProps, RateProps, SelectProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-import {ComponentFactory, FactoryGroup} from "../../../../src/types";
-import {makeComponentId} from "../../../../src/utils";
+import {ComponentFactory, FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
+import {makeComponentId, makeFieldId} from "../../../../src/utils";
 
 @ComponentWrapper
 class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, SelectProps, ReactComponentState> {
@@ -42,16 +42,7 @@ class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, S
     }
 }
 
-class SelectComponentEditor extends PureComponent<ReactComponentProps<SelectProps>>
-    implements ComponentEditor<ReactComponentProps<SelectProps>, SelectProps> {
-
-
-    onChange(allValues: any) {
-        const {definition: {props}, definition} = this.props;
-        definition.title = getErasure(allValues, 'title');
-
-        return true;
-    }
+class SelectComponentEditor extends PropsEditor<SelectProps> {
 
     removeOption(index: number) {
         const definition = this.props.definition;
@@ -123,17 +114,17 @@ class SelectComponentEditor extends PureComponent<ReactComponentProps<SelectProp
         })
     }
 
-    render() {
+    doRender() {
         return (
-            <PropsEditor {...this.props} >
+            <>
                 {this.renderOptions()}
-            </PropsEditor>
+            </>
         );
     }
 }
 
 @FactoryRegister(SelectComponent, SelectComponentEditor)
-class SelectFactory implements ComponentFactory<SelectProps> {
+class SelectFactory implements FieldFactory<SelectProps> {
     readonly type = "Select"
     readonly group = FactoryGroup.Component;
     title = "下拉选择"
@@ -147,6 +138,11 @@ class SelectFactory implements ComponentFactory<SelectProps> {
             id: makeComponentId(),
             type: this.type,
             title: this.title,
+            fieldDef: {
+                fieldId: makeFieldId(),
+                fieldType: '' as FieldType,
+                fieldName: '',
+            },
             props: {
                 placeholder: '请输入',
                 options: [

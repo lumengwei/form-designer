@@ -1,12 +1,11 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {ReactComponent} from '../ReactComponent';
-import {FactoryRegister, ComponentWrapper} from '../wrapper';
-import type {ComponentFactory} from '../../../../src/types'
+import {ComponentWrapper, FactoryRegister} from '../wrapper';
+import {FactoryGroup, FieldFactory, FieldType, FieldTypes} from "../../../../src/types";
 import {CheckboxProps} from "../../../../src/props";
-import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
+import {ReactComponentProps, ReactComponentState} from "../types";
 import {PropsEditor} from '../widgets/PropsEditor';
-import {FactoryGroup} from "../../../../src/types";
 import {makeComponentId, makeFieldId} from "../../../../src/utils";
 
 const CheckboxGroup = Checkbox.Group;
@@ -29,16 +28,7 @@ class CheckboxComponent extends ReactComponent<ReactComponentProps<CheckboxProps
     }
 }
 
-class CheckboxComponentEditor extends PureComponent<ReactComponentProps<CheckboxProps>>
-    implements ComponentEditor<ReactComponentProps<CheckboxProps>, CheckboxProps> {
-
-
-    onChange(allValues: any) {
-        const {definition: {props}, definition} = this.props;
-        console.log(allValues)
-
-        return true;
-    }
+class CheckboxComponentEditor extends PropsEditor<CheckboxProps> {
 
     removeOption(index: number) {
         const definition = this.props.definition;
@@ -108,17 +98,17 @@ class CheckboxComponentEditor extends PureComponent<ReactComponentProps<Checkbox
         })
     }
 
-    render() {
+    doRender() {
         return (
-            <PropsEditor {...this.props}>
+            <>
                 {this.renderOptions()}
-            </PropsEditor>
+            </>
         );
     }
 }
 
 @FactoryRegister(CheckboxComponent, CheckboxComponentEditor)
-export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
+export class CheckboxFactory implements FieldFactory<CheckboxProps> {
     readonly type = "Checkbox"
 
     readonly group = FactoryGroup.Component;
@@ -136,7 +126,7 @@ export class CheckboxFactory implements ComponentFactory<CheckboxProps> {
             title: this.title,
             fieldDef: {
                 fieldId: makeFieldId(),
-                fieldType: '',
+                fieldType: "string" as FieldType,
                 fieldName: '',
             },
             props: {

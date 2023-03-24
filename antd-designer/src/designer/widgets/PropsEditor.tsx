@@ -1,70 +1,158 @@
-import React, {PropsWithChildren, PureComponent} from "react";
-import {Form, Input} from "antd";
-import {ReactComponentProps} from "../types";
+import React, {PropsWithChildren, PureComponent, ReactElement} from "react";
+import {Form, FormInstance, Input, Select} from "antd";
+import {ComponentEditor, ReactComponentProps} from "../types";
+import {FormHelper} from "../helper";
+import {mergeObject} from "../../../../src/utils";
+import {FieldType, FieldTypes} from "../../../../src/types";
 
-export class PropsEditor extends PureComponent<PropsWithChildren<ReactComponentProps<any>>> {
+const lengthFields: FieldType[] = ['varchar', 'string'];
+const scaleFields: FieldType[] = ['decimal'];
 
-    renderPlaceholder() {
-        const props = this.props.definition.props;
+export type PropsEditorState = {
+    scaleDisabled: boolean,
+    lengthDisabled: boolean
+}
 
-        if (!this.props.hasOwnProperty('placeholder')) {
-            return null;
+export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<ReactComponentProps<T>>, PropsEditorState>
+    implements ComponentEditor<ReactComponentProps<T>, T> {
+
+
+    private writeFields: string[] = ["props", "title", "fieldDef.fieldName", "fieldDef.fieldType"];
+
+    private fieldTypeList: { value: string, label: string }[] = Object.keys(FieldTypes).map(field => {
+        return {
+            value: field,
+            label: FieldTypes[field]
+        }
+    })
+
+    private readonly refForm = React.createRef<FormInstance>();
+
+    constructor(props: React.PropsWithChildren<ReactComponentProps<T>>, context: any) {
+        super(props, context);
+        this.state = {
+            scaleDisabled: false,
+            lengthDisabled: false,
+        }
+    }
+
+    onValuesChange(changedValues: any, allValues: any) {
+        const {definition} = this.props;
+        for (const field of Object.keys(changedValues)) {
+            const canMerge = this.writeFields.filter(it => field.startsWith(it)).length;
+            if (canMerge) {
+                mergeObject(field, changedValues[field], definition);
+            } else {
+                throw new Error(`the field [${field}] is readonly`)
+            }
+
         }
 
-        return (
-            <Form.Item initialValue={props.placeholder} label="占位符" style={{marginBottom: 0}}>
-                <Input min={1}/>
-            </Form.Item>
-        );
+        FormHelper.activeComponentIns!.forceUpdate();
+    }
+
+    onSelectType(val: string) {
+        this.setState({
+            scaleDisabled: scaleFields.indexOf(val as FieldType) < 0,
+            lengthDisabled: lengthFields.indexOf(val as FieldType) < 0
+        })
+        this.refForm.current!.setFieldsValue({
+            'fieldDef.length': null,
+            'fieldDef.scale': null
+        })
+    }
+
+    renderFieldDef() {
+        const {definition} = this.props;
+        const {lengthDisabled, scaleDisabled} = this.state
+        if (definition.fieldDef) {
+            return (
+                <div>
+                    <Form.Item
+                        labelCol={{span: 3}}
+                        initialValue={definition.fieldDef.fieldName}
+                        name="fieldDef.fieldName"
+                        label="字段名"
+                        rules={[
+                            {
+                                type: 'string',
+                                max: 50,
+                                min: 1,
+                                message: '长度1~50'
+                            }, {
+                                required: true,
+                                message: '字段必填'
+                            }, {
+                                type: 'string',
+                                pattern: new RegExp("[a-zA-Z]*"),
+                                message: '只能输入字母'
+                            }
+                        ]}
+                    >
+                        <Input placeholder="字段"/>
+                    </Form.Item>
+                    <div>
+                        <Form.Item labelCol={{span: 3}}
+                                   initialValue={definition.fieldDef.fieldType}
+                                   label="类型"
+                                   name="fieldDef.fieldType"
+                        >
+                            <Select options={this.fieldTypeList} onChange={(val) => this.onSelectType(val)}/>
+                        </Form.Item>
+                        <Form.Item labelCol={{span: 3}}
+                                   initialValue={definition.fieldDef.length}
+                                   label="长度或精度"
+                                   name="fieldDef.length"
+                        >
+                            <Input placeholder="长度或精度" disabled={lengthDisabled}/>
+                        </Form.Item>
+                        <Form.Item labelCol={{span: 3}}
+                                   initialValue={definition.fieldDef.scale}
+                                   label="小数"
+                                   name="fieldDef.scale"
+                        >
+                            <Input placeholder="小数" disabled={scaleDisabled}/>
+                        </Form.Item>
+                    </div>
+
+                    <Form.Item
+                        labelCol={{span: 3}}
+                        initialValue={definition.title}
+                        name="title"
+                        label="标题"
+                        rules={[
+                            {
+                                type: 'string',
+                                max: 50,
+                                min: 1,
+                            }, {
+                                required: true,
+                            }
+                        ]}
+                    >
+                        <Input placeholder="标题"/>
+                    </Form.Item>
+                </div>
+            )
+        } else {
+            return null;
+        }
     }
 
     render() {
-        const {definition, children} = this.props;
-
-
         return (
-            <Form>
-                <Form.Item
-                    labelCol={{span: 3}}
-                    initialValue={definition.title}
-                    label="字段名"
-                    rules={[
-                        {
-                            type: 'string',
-                            max: 50,
-                            min: 1,
-                        }, {
-                            required: true,
-                        }, {
-                            pattern: new RegExp("[a-zA-Z]*")
-                        }
-                    ]}
+            <>
+                <Form
+                    ref={this.refForm}
+                    size="middle"
+                    onValuesChange={(changedValues, allValues) => this.onValuesChange(changedValues, allValues)}
                 >
-                    <Input placeholder="字段"/>
-                </Form.Item>
-                <Form.Item labelCol={{span: 3}} initialValue={definition.title} label="类型">
-                    <Input placeholder="类型"/>
-                </Form.Item>
-                <Form.Item
-                    labelCol={{span: 3}}
-                    initialValue={definition.title}
-                    label="标题"
-                    rules={[
-                        {
-                            type: 'string',
-                            max: 50,
-                            min: 1,
-                        }, {
-                            required: true,
-                        }
-                    ]}
-                >
-                    <Input placeholder="标题"/>
-                </Form.Item>
-                {this.renderPlaceholder()}
-                {children}
-            </Form>
-        );
+                    {this.renderFieldDef()}
+                    {this.doRender()}
+                </Form>
+            </>
+        )
     }
 
+    abstract doRender(): ReactElement;
 }

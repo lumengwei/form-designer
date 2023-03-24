@@ -5,9 +5,9 @@ import {ReactComponent} from '../ReactComponent';
 import {getErasure} from '../../util/MiscUtil';
 import {PropsEditor} from '../widgets/PropsEditor';
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-import {TextAreaProps} from "../../../../src/props";
-import {FactoryGroup} from "../../../../src/types";
-import {makeComponentId} from "../../../../src/utils";
+import {RadioProps, SelectProps, TextAreaProps} from "../../../../src/props";
+import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
+import {makeComponentId, makeFieldId} from "../../../../src/utils";
 
 const TexArea = Input.TextArea;
 
@@ -22,25 +22,17 @@ class TextAreaComponent extends ReactComponent<ReactComponentProps<TextAreaProps
     }
 }
 
-class TextAreaComponentEditor extends PureComponent<ReactComponentProps<TextAreaProps>>
-    implements ComponentEditor<ReactComponentProps<TextAreaProps>, TextAreaProps> {
-
-    onChange(allValues: any) {
-        const {definition: {props}, definition} = this.props;
-        definition.title = getErasure(allValues, 'title');
-
-        return true;
-    }
-
-    render() {
+class TextAreaComponentEditor extends PropsEditor<TextAreaProps> {
+    doRender() {
         return (
-            <PropsEditor {...this.props} />
+            <>
+            </>
         );
     }
 }
 
 @FactoryRegister(TextAreaComponent, TextAreaComponentEditor)
-class TextAreaFactory {
+class TextAreaFactory implements FieldFactory<TextAreaProps> {
     readonly type = "TextArea"
     readonly group = FactoryGroup.Component;
     title = "多行输入框"
@@ -55,6 +47,11 @@ class TextAreaFactory {
             id: makeComponentId(),
             type: this.type,
             title: this.title,
+            fieldDef: {
+                fieldId: makeFieldId(),
+                fieldType: 'varchar' as FieldType,
+                fieldName: '',
+            },
             props: {
                 placeholder: '请输入'
             },

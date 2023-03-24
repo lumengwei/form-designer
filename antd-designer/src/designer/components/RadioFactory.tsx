@@ -3,9 +3,9 @@ import {Button, Checkbox, Form, Input, Radio, Space, Table,} from 'antd';
 import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
 import {PropsEditor} from '../widgets/PropsEditor';
-import {CheckboxProps, OptionType, RadioProps} from "../../../../src/props";
+import {CheckboxProps, InputProps, OptionType, RadioProps} from "../../../../src/props";
 import {ComponentEditor, ReactComponentProps, ReactComponentState} from "../types";
-import {ComponentFactory, FactoryGroup} from "../../../../src/types";
+import {ComponentFactory, FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
 import {makeComponentId, makeFieldId} from "../../../../src/utils";
 import {ColumnsType} from "antd/es/table";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
@@ -30,8 +30,7 @@ class RadioComponent extends ReactComponent<ReactComponentProps<RadioProps>, Rad
     }
 }
 
-class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>>
-    implements ComponentEditor<ReactComponentProps<RadioProps>, RadioProps> {
+class RadioComponentEditor extends PropsEditor<RadioProps> {
 
     private tableRef = useRef<Component>();
 
@@ -89,11 +88,6 @@ class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>
         },
     ];
 
-    onChange(allValues: any) {
-        const {definition: {props}, definition} = this.props;
-
-        return true;
-    }
 
     removeOption(index: number) {
         const definition = this.props.definition;
@@ -165,7 +159,7 @@ class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>
         })
     }
 
-    render() {
+    doRender() {
         const definition = this.props.definition;
         const props: CheckboxProps = definition.props!;
         return (
@@ -183,7 +177,7 @@ class RadioComponentEditor extends PureComponent<ReactComponentProps<RadioProps>
 }
 
 @FactoryRegister(RadioComponent, RadioComponentEditor)
-class RadioFactory implements ComponentFactory<RadioProps> {
+class RadioFactory implements FieldFactory<RadioProps> {
     readonly type = "Radio"
     readonly group = FactoryGroup.Component;
 
@@ -200,7 +194,7 @@ class RadioFactory implements ComponentFactory<RadioProps> {
             title: this.title,
             fieldDef: {
                 fieldId: makeFieldId(),
-                fieldType: '',
+                fieldType: 'varchar' as FieldType,
                 fieldName: '',
             },
             props: {

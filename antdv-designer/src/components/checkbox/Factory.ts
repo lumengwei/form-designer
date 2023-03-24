@@ -1,4 +1,4 @@
-import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
+import {ComponentDefinition, ComponentFactory, FactoryGroup, FieldType} from "../../../../src/types";
 import {CheckboxProps} from "../../../../src/props";
 import {makeComponentId, makeFieldId} from "../../../../src/utils";
 
@@ -15,7 +15,7 @@ class Factory implements ComponentFactory<CheckboxProps> {
             title: this.title,
             fieldDef: {
                 fieldId: makeFieldId(),
-                fieldType: '',
+                fieldType: 'array' as FieldType,
                 fieldName: '',
             },
             props: {

@@ -9,6 +9,7 @@ import {ComponentEditor, ReactComponentGroupState, ReactComponentProps} from "..
 import FactoryRenders from "../helper/FactoryRenders";
 import {sortable} from "../../lib/sortable";
 import {makeComponentId} from "../../../../src/utils";
+import {PropsEditor} from "../widgets/PropsEditor";
 
 
 @LayoutWrapper()
@@ -67,22 +68,17 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
     }
 }
 
-class ColumnComponentEditor extends PureComponent
-    <ReactComponentProps<ColumnLayoutProps>>
-    implements ComponentEditor<ReactComponentProps<ColumnLayoutProps>, ColumnLayoutProps> {
+class ColumnComponentEditor extends PropsEditor<ColumnLayoutProps> {
 
-    onChange(allValues: any) {
-        const {definition: {props}} = this.props;
-    }
-
-    render() {
+    doRender() {
         const {definition: {props}} = this.props;
         return (
-            <Form>
+            <>
                 <Form.Item
                     initialValue={props!.columnNum}
                     label="列数目"
                     style={{marginBottom: 0}}
+                    name="props.column"
                     rules={[{
                         type: 'number',
                         min: 1,
@@ -95,7 +91,7 @@ class ColumnComponentEditor extends PureComponent
                 >
                     <InputNumber/>
                 </Form.Item>
-            </Form>);
+            </>);
     }
 }
 
