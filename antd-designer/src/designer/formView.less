@@ -2,11 +2,21 @@
 @primary-color: #1890ff;
 @border-color: #ddd;
 
+body {
+  margin: 0;
+  height: 100vh;
+}
+
 :global .form-view {
-  min-height: 93%;
-  margin: 0 15px;
+  min-height: 100%;
+  min-width: 778px;
+  margin: 0 auto;
   background: #fff;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+
+  & .scroll-wrapper {
+    height: 100%;
+  }
 
   & .form-head {
     position: relative;
@@ -182,7 +192,34 @@
 :global .form-designer {
   display: flex;
   height: 100%;
-  margin: -24px;
   background: #f0f2f5;
+  justify-content: space-between;
+
+  .form-view-wrapper {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .form-editor {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-left: 1px solid #efefef;
+    background: white;
+    width: 450px;
+
+    .ant-tabs-nav-wrap {
+      justify-content: center;
+    }
+  }
+
+  .form-widget {
+    border-right: 1px solid #efefef;
+    background: white;
+
+    .ant-tabs-nav-wrap {
+      justify-content: center;
+    }
+  }
 }
 

@@ -37,6 +37,7 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
     }
 
     onValuesChange(changedValues: any, allValues: any) {
+        console.log('onValuesChange', changedValues)
         const {definition} = this.props;
         for (const field of Object.keys(changedValues)) {
             const canMerge = this.writeFields.filter(it => field.startsWith(it)).length;
@@ -48,7 +49,7 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
 
         }
 
-        FormHelper.activeComponentIns!.forceUpdate();
+        FormHelper.activeComponentIns!.forceRender();
     }
 
     onSelectType(val: string) {
@@ -69,7 +70,6 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
             return (
                 <div>
                     <Form.Item
-                        labelCol={{span: 3}}
                         initialValue={definition.fieldDef.fieldName}
                         name="fieldDef.fieldName"
                         label="字段名"
@@ -92,21 +92,21 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
                         <Input placeholder="字段"/>
                     </Form.Item>
                     <div>
-                        <Form.Item labelCol={{span: 3}}
+                        <Form.Item
                                    initialValue={definition.fieldDef.fieldType}
                                    label="类型"
                                    name="fieldDef.fieldType"
                         >
                             <Select options={this.fieldTypeList} onChange={(val) => this.onSelectType(val)}/>
                         </Form.Item>
-                        <Form.Item labelCol={{span: 3}}
+                        <Form.Item
                                    initialValue={definition.fieldDef.length}
                                    label="长度或精度"
                                    name="fieldDef.length"
                         >
                             <Input placeholder="长度或精度" disabled={lengthDisabled}/>
                         </Form.Item>
-                        <Form.Item labelCol={{span: 3}}
+                        <Form.Item
                                    initialValue={definition.fieldDef.scale}
                                    label="小数"
                                    name="fieldDef.scale"
@@ -116,7 +116,6 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
                     </div>
 
                     <Form.Item
-                        labelCol={{span: 3}}
                         initialValue={definition.title}
                         name="title"
                         label="标题"
@@ -145,6 +144,7 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
                 <Form
                     ref={this.refForm}
                     size="middle"
+                    layout="vertical"
                     onValuesChange={(changedValues, allValues) => this.onValuesChange(changedValues, allValues)}
                 >
                     {this.renderFieldDef()}

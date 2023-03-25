@@ -21,19 +21,15 @@ export default class FormView extends PureComponent<{ formDefinition: FormDefini
         const {formDefinition} = this.props;
 
         return (
-            <div style={{width: formDefinition.width || '778px'}}>
-                <div className="scroll-wrapper">
-                    <div className="form-view">
-                        <div className="form-head">
-                            <p className="form-name"/>
-                            <div className="form-description">{formDefinition.description}</div>
-                        </div>
-                        <div
-                            className="form-content"
-                        >
-                            {this.LinearLayout}
-                        </div>
-                    </div>
+            <div className="form-view" style={{width: formDefinition.width || '778px'}}>
+                <div className="form-head">
+                    <p className="form-name"/>
+                    <div className="form-description">{formDefinition.description}</div>
+                </div>
+                <div
+                    className="form-content"
+                >
+                    {this.LinearLayout}
                 </div>
             </div>
         );

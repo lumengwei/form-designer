@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {Card, Divider} from 'antd';
+import {Card, Divider, Tabs} from 'antd';
 import FormView from './FormView';
 import componentStyle from './component.less';
 import FormEditor from './FormEditor';
@@ -44,11 +44,6 @@ class FormComponent extends PureComponent<Component> {
 
 class FormDesigner extends PureComponent {
 
-    componentDidMount() {
-
-    }
-
-
     renderChild(group: FactoryGroup) {
         return FormStudio.getFactoryList(group).map(item => {
             return <FormComponent title={item.title} type={item.type} key={item.type}/>
@@ -58,22 +53,34 @@ class FormDesigner extends PureComponent {
     render() {
         return (
             <div className="form-designer">
-                <Card bordered>
-                    <div className={componentStyle.widgetList}>
-                        <Divider>{"表单组件"}</Divider>
-                        {this.renderChild(FactoryGroup.Component)}
-                        <Divider>{"布局"}</Divider>
-                        {this.renderChild(FactoryGroup.Layout)}
-                    </div>
-                </Card>
-
-                <div>
+                <div className="form-widget">
+                    <Tabs>
+                        <Tabs.TabPane tab="表单组件" key='1'>
+                            <div className={componentStyle.widgetList}>
+                                {this.renderChild(FactoryGroup.Component)}
+                            </div>
+                        </Tabs.TabPane>
+                        <Tabs.TabPane tab="布局" key='2'>
+                            <div className={componentStyle.widgetList}>
+                                {this.renderChild(FactoryGroup.Layout)}
+                            </div>
+                        </Tabs.TabPane>
+                    </Tabs>
+                </div>
+                <div className="form-view-wrapper">
                     <FormView formDefinition={{description: '', width: ''}}/>
                 </div>
 
-                <Card bordered style={{flexGrow: 1}} title="属性编辑">
-                    <FormEditor/>
-                </Card>
+                <div className="form-editor">
+                    <Tabs>
+                        <Tabs.TabPane tab="控件属性" key='1'>
+                            <FormEditor/>
+                        </Tabs.TabPane>
+                        <Tabs.TabPane tab="表单属性" key='2'>
+
+                        </Tabs.TabPane>
+                    </Tabs>
+                </div>
             </div>
         );
     }

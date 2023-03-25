@@ -15,18 +15,21 @@ class App extends PureComponent {
     render() {
         return (
             <Layout className="layout">
-                <Header style={{background: 'white'}}>
-                    <div className="logo"/>
-                    <Button type="primary" onClick={this.getJsonData}>获取数据</Button>
+                <Header style={{
+                    background: 'white',
+                    height: '60px',
+                    lineHeight: '60px',
+                    borderBottom: '1px solid #efefef'
+                }}>
+                    <Button type="primary" onClick={this.getJsonData} size="middle">获取数据</Button>
                 </Header>
-                <Content style={{padding: '50px 50px'}}>
+                <div style={{height:'calc(100vh - 60px)'}}>
                     <FormDesigner/>
-                </Content>
+                </div>
             </Layout>
         );
     }
 }
 
-console.log(document)
 const domNode = createRoot(document.getElementsByTagName('body')[0])
 domNode.render(<App/>)

@@ -78,7 +78,7 @@ class ColumnComponentEditor extends PropsEditor<ColumnLayoutProps> {
                     initialValue={props!.columnNum}
                     label="列数目"
                     style={{marginBottom: 0}}
-                    name="props.column"
+                    name="props.columnNum"
                     rules={[{
                         type: 'number',
                         min: 1,

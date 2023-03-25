@@ -32,68 +32,10 @@ class RadioComponent extends ReactComponent<ReactComponentProps<RadioProps>, Rad
 
 class RadioComponentEditor extends PropsEditor<RadioProps> {
 
-    private tableRef = useRef<Component>();
-
-    private columns: ColumnsType<OptionType> = [
-        {
-            title: '显示',
-            dataIndex: 'label',
-            width: '25%',
-            render(_, record: OptionType, index) {
-                return (
-                    <>
-                        <Input onChange={(e) => record.label = e.target.value}/>
-                    </>
-                )
-            }
-        },
-        {
-            title: '真值',
-            dataIndex: 'value',
-            width: '15%',
-            render(_, record: OptionType, index) {
-                return (
-                    <>
-                        <Input onChange={(e) => record.value = e.target.value}/>
-                    </>
-                )
-            }
-        },
-        {
-            title: '是否默认',
-            dataIndex: 'checked',
-            width: '15%',
-            render(_, record: OptionType, index) {
-                return (
-                    <>
-                        <Checkbox onChange={(e) => record.checked = e.target.checked}/>
-                    </>
-                )
-            }
-        },
-        {
-            title: '操作',
-            width: '15%',
-            render: (_, record: OptionType, index) => {
-                return (
-                    <>
-                        <Space>
-                            {index > 0 ? <Button icon={<DeleteOutlined/>} type="link" danger
-                                                 onClick={() => this.removeOption(index)}/> : null}
-                            <Button icon={<PlusOutlined/>} type="link" onClick={() => this.addOption(index)}/>
-                        </Space>
-                    </>
-                )
-            }
-        },
-    ];
-
-
     removeOption(index: number) {
         const definition = this.props.definition;
         const props: CheckboxProps = definition.props!;
         props.options.splice(index, 1);
-        this.tableRef.current!.forceUpdate();
     }
 
     addOption(index: number) {
@@ -105,7 +47,6 @@ class RadioComponentEditor extends PropsEditor<RadioProps> {
             checked: false,
             disabled: false
         })
-        this.tableRef.current!.forceUpdate();
     }
 
     renderOptions() {
@@ -160,18 +101,10 @@ class RadioComponentEditor extends PropsEditor<RadioProps> {
     }
 
     doRender() {
-        const definition = this.props.definition;
-        const props: CheckboxProps = definition.props!;
         return (
-            <PropsEditor {...this.props}>
-                <Table
-                    bordered
-                    dataSource={props.options}
-                    columns={this.columns}
-                    pagination={false}
-                    key="value"
-                />
-            </PropsEditor>
+            <>
+                {this.renderOptions()}
+            </>
         );
     }
 }

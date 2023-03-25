@@ -14,9 +14,12 @@ class RateComponent extends ReactComponent<ReactComponentProps<RateProps>, RateP
     render() {
         const {definition: {props}} = this.props;
         return (
-            <Rate
-                count={props!.count}
-            />
+            <>
+                <Rate
+                    count={props!.count}
+                />
+            </>
+
         )
     }
 }
