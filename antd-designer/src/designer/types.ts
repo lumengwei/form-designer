@@ -16,11 +16,6 @@ export interface ReactComponentProps<T> {
     onRemove(): void;
 }
 
-export interface PropsEditorProps<T> {
-    definition: ComponentDefinition<T>;
-
-    onChange(): void;
-}
 
 export interface ReactComponentState {
     renderCounter: number;
@@ -29,6 +24,7 @@ export interface ReactComponentState {
 export interface ReactComponentGroupState<T> extends ReactComponentState {
     definition: ComponentDefinition<T> | null;
 }
+
 
 export interface Activatable {
     onActive(): void;

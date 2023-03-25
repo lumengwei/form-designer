@@ -1,10 +1,16 @@
-import {ComponentDefinition, ComponentFactory, FactoryGroup} from './types';
+import {ComponentDefinition, ComponentFactory, FactoryGroup, FormDefinition} from './types';
 
 
 class FormStudio {
     private factoryList: ComponentFactory<any>[] = [];
     private factoryStore = new Map<string, ComponentFactory<any>>();
     private _definition: ComponentDefinition<any> | null = null;
+    private _formDef: FormDefinition = {
+        title: '',
+        description: '',
+        width: ''
+    };
+
 
     /**
      * 注册组件工厂
@@ -43,6 +49,10 @@ class FormStudio {
 
     get definition() {
         return this._definition;
+    }
+
+    get fromDef() {
+        return this._formDef;
     }
 
 

@@ -1,12 +1,13 @@
 import {Activatable, ReactComponentProps} from "../types";
-import FormEditor from "../FormEditor";
+import ComponentPropsEditor from "../ComponentPropsEditor";
 import {ComponentFactory} from "../../../../src/types";
-import {ComponentSpec} from "react";
+import {Component, ComponentSpec} from "react";
 
 class FormHelper {
     private _activeComponentIns: Activatable & ComponentSpec<ReactComponentProps<any>, any> | null = null;
-    private _formEditorIns: FormEditor | null = null;
+    private _formEditorIns: ComponentPropsEditor | null = null;
     private _componentFactory: ComponentFactory<any> | null = null;
+    private _formView: ComponentSpec<any, any> | null = null;
 
     get activeComponentIns() {
         return this._activeComponentIns;
@@ -40,6 +41,13 @@ class FormHelper {
         this._componentFactory = inst;
     }
 
+    get formView() {
+        return this._formView;
+    }
+
+    set formView(inst) {
+        this._formView = inst;
+    }
 
 }
 

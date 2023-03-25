@@ -4,6 +4,7 @@ export interface Component {
 }
 
 export interface FormDefinition {
+    title: string;
     description: string;
     width: string;
 }

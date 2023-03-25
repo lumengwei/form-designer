@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, PureComponent, ReactElement} from "react";
-import {Form, FormInstance, Input, Select} from "antd";
+import {Form, FormInstance, Input, InputNumber, Select} from "antd";
 import {ComponentEditor, ReactComponentProps} from "../types";
 import {FormHelper} from "../helper";
 import {mergeObject} from "../../../../src/utils";
@@ -104,14 +104,14 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
                                    label="长度或精度"
                                    name="fieldDef.length"
                         >
-                            <Input placeholder="长度或精度" disabled={lengthDisabled}/>
+                            <InputNumber placeholder="长度或精度" disabled={lengthDisabled}/>
                         </Form.Item>
                         <Form.Item
                                    initialValue={definition.fieldDef.scale}
                                    label="小数"
                                    name="fieldDef.scale"
                         >
-                            <Input placeholder="小数" disabled={scaleDisabled}/>
+                            <InputNumber placeholder="小数" disabled={scaleDisabled}/>
                         </Form.Item>
                     </div>
 

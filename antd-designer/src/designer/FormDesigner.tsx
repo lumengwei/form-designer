@@ -1,11 +1,12 @@
 import React, {PureComponent} from 'react'
-import {Card, Divider, Tabs} from 'antd';
+import {Tabs} from 'antd';
 import FormView from './FormView';
 import componentStyle from './component.less';
-import FormEditor from './FormEditor';
+import ComponentPropsEditor from './ComponentPropsEditor';
 import FormStudio from "../../../src/FormStudio";
 import {Component, FactoryGroup} from "../../../src/types";
 import {draggable} from "../lib/sortable";
+import FormPropsEditor from "./FormPropsEditor";
 
 require('./component.less')
 
@@ -68,16 +69,16 @@ class FormDesigner extends PureComponent {
                     </Tabs>
                 </div>
                 <div className="form-view-wrapper">
-                    <FormView formDefinition={{description: '', width: ''}}/>
+                    <FormView formDefinition={FormStudio.fromDef}/>
                 </div>
 
                 <div className="form-editor">
                     <Tabs>
                         <Tabs.TabPane tab="控件属性" key='1'>
-                            <FormEditor/>
+                            <ComponentPropsEditor/>
                         </Tabs.TabPane>
                         <Tabs.TabPane tab="表单属性" key='2'>
-
+                            <FormPropsEditor definition={FormStudio.fromDef}/>
                         </Tabs.TabPane>
                     </Tabs>
                 </div>

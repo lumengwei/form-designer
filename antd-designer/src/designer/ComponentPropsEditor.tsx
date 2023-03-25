@@ -8,7 +8,7 @@ require('./formView.less');
 /**
  * 属性编辑器
  */
-class FormEditor extends PureComponent<{}, ReactComponentGroupState<any>> {
+class ComponentPropsEditor extends PureComponent<{}, ReactComponentGroupState<any>> {
     constructor(props: {}, context: any) {
         super(props, context);
         this.state = {
@@ -61,4 +61,4 @@ class FormEditor extends PureComponent<{}, ReactComponentGroupState<any>> {
     }
 }
 
-export default FormEditor;
+export default ComponentPropsEditor;
