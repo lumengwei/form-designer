@@ -57,7 +57,10 @@ class FormStudio {
 
 
     getJsonData() {
-        return JSON.parse(JSON.stringify(this._definition));
+        return {
+            props: JSON.parse(JSON.stringify(this._definition)),
+            form: JSON.parse(JSON.stringify(this._formDef)),
+        };
     }
 }
 
