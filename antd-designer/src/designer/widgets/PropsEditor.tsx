@@ -49,8 +49,17 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
 
         }
 
+        this.refreshFormView();
+    }
+
+    /**
+     * 强制刷新FormView
+     * @protected
+     */
+    protected refreshFormView() {
         FormHelper.activeComponentIns!.forceRender();
     }
+
 
     onSelectType(val: string) {
         this.setState({
@@ -93,23 +102,23 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
                     </Form.Item>
                     <div>
                         <Form.Item
-                                   initialValue={definition.fieldDef.fieldType}
-                                   label="类型"
-                                   name="fieldDef.fieldType"
+                            initialValue={definition.fieldDef.fieldType}
+                            label="类型"
+                            name="fieldDef.fieldType"
                         >
                             <Select options={this.fieldTypeList} onChange={(val) => this.onSelectType(val)}/>
                         </Form.Item>
                         <Form.Item
-                                   initialValue={definition.fieldDef.length}
-                                   label="长度或精度"
-                                   name="fieldDef.length"
+                            initialValue={definition.fieldDef.length}
+                            label="长度或精度"
+                            name="fieldDef.length"
                         >
                             <InputNumber placeholder="长度或精度" disabled={lengthDisabled}/>
                         </Form.Item>
                         <Form.Item
-                                   initialValue={definition.fieldDef.scale}
-                                   label="小数"
-                                   name="fieldDef.scale"
+                            initialValue={definition.fieldDef.scale}
+                            label="小数"
+                            name="fieldDef.scale"
                         >
                             <InputNumber placeholder="小数" disabled={scaleDisabled}/>
                         </Form.Item>

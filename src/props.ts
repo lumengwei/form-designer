@@ -5,6 +5,7 @@ export type OptionType = {
     disabled: boolean;
 }
 
+
 export type CheckboxProps = {
     placeholder: string;
     options: OptionType[];
