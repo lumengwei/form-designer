@@ -1,12 +1,32 @@
 import type {Configuration} from "webpack";
-import * as path from 'path';
-import * as defaultConfig from '../build/config'
+import defaultConfig from '../build/config'
 
+const {VueLoaderPlugin} = require('vue-loader');
+
+const path = require('path')
 const config: Configuration = {
     ...defaultConfig,
-    mode: "development",
-    entry: path.resolve(__dirname, 'src/index.vue'),
-};
+    module: {
+        ...defaultConfig.module,
+        rules: [
+            ...defaultConfig.module!.rules!,
+            {
+                test: /\.vue$/,
+                use: [{
+                    loader: 'vue-loader',
+                    options: {}
+                }],
 
+            }
+        ]
+    },
+    devtool: 'source-map',
+    mode: "development",
+    entry: path.resolve(__dirname, 'src/main.ts'),
+    plugins: [
+        ...defaultConfig.plugins!,
+        new VueLoaderPlugin(),
+    ]
+};
 
 export default config;

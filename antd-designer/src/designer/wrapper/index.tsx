@@ -1,4 +1,4 @@
-import React, {Component, ComponentClass} from 'react';
+import React, {ComponentClass} from 'react';
 import {ComponentDefinition, ComponentFactory, ComponentFactoryConstructor} from "../../../../src/types";
 import FormStudio from "../../../../src/FormStudio";
 import FactoryRenders from "../helper/FactoryRenders";
@@ -16,14 +16,21 @@ export function FactoryRegister<P extends ReactComponentProps<T>, T>(Component: 
     return function FactoryWrapper(Factory: ComponentFactoryConstructor<T>) {
         const render: ComponentFactoryRender<T, any> = {
             renderComponent(componentDefinition: ComponentDefinition<T>) {
+
                 return function (props: any) {
-                    return <Component {...props} definition={componentDefinition}/>
+                    return React.createElement(Component, {
+                        ...props,
+                        definition: componentDefinition
+                    })
                 }
             },
             renderEditor(componentDefinition: ComponentDefinition<T>) {
                 return function (props: any) {
                     if (ComponentEditor) {
-                        return <ComponentEditor {...props} definition={componentDefinition}/>
+                        return React.createElement(ComponentEditor, {
+                            ...props,
+                            definition: componentDefinition
+                        });
                     } else {
                         return (<></>);
                     }

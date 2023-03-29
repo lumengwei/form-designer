@@ -15,6 +15,7 @@ import LayoutWrapper from '../../wrapper/LayoutWrapper.vue';
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {sortable} from '../../util/sortable';
 import Factory from './Factory';
+import {getComponent} from "../../ComponentDef";
 
 export default {
   name: Factory.type,

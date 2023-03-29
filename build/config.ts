@@ -17,6 +17,10 @@ const devServer: DevServerConfiguration = {
 };
 
 const config: Configuration = {
+    infrastructureLogging: {
+        appendOnly: true,
+        level: 'verbose',
+    },
     output: {
         path: path.resolve(__dirname, "dist"),
     },
@@ -28,6 +32,7 @@ const config: Configuration = {
             {
                 test: /\.([cm]?ts|tsx)$/,
                 use: 'ts-loader',
+                exclude: /node_modules/,
             },
             {
                 test: /\.js/,
