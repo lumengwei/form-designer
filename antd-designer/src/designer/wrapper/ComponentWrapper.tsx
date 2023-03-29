@@ -66,8 +66,10 @@ function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProp
             if (active) {
                 return (
                     <>
-                     <span className="fm-btn-remove" onClick={(e) => this.onDelete(e)}>
-                              <CloseCircleOutlined/>
+                     <span className="fm-btn-remove"
+                           onClick={(e) => this.onDelete(e)}
+                     >
+                          <CloseCircleOutlined/>
                       </span>
                     </>
                 )

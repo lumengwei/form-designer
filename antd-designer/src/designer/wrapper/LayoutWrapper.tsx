@@ -29,7 +29,6 @@ class LayoutToolbar extends PureComponent<LayoutToolbarProps> {
             return;
         }
 
-
         return (
             <>
                 <div className="layout-tool-bar">
