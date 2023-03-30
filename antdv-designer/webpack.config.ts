@@ -23,6 +23,12 @@ const config: Configuration = {
     devtool: 'source-map',
     mode: "development",
     entry: path.resolve(__dirname, 'src/main.ts'),
+    resolve: {
+        extensions: [".js", ".vue", ".json", ".ts", ".tsx", ".mjs"],
+        alias: {
+            "@": path.join(__dirname, 'src'),
+        },
+    },
     plugins: [
         ...defaultConfig.plugins!,
         new VueLoaderPlugin(),

@@ -3,10 +3,12 @@
   "exclude": [
     "node_modules"
   ],
+
   "include": [
     "./**/*.d.ts",
     "./**/*.ts",
     "./**/*.tsx",
+    "./**/*.vue",
     "../src/**/*.ts",
     "../src/**/*.d.ts"
   ]

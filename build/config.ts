@@ -82,7 +82,7 @@ const config: Configuration = {
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+        extensions: ['.tsx', '.ts', '.js', 'vue']
     },
     devServer,
     plugins: [

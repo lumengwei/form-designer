@@ -1,4 +1,4 @@
-import {FormHelper} from "../helper";
+import {FormHelper} from "/@/helper";
 
 declare let $: any;
 

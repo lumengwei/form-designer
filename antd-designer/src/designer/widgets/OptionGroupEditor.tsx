@@ -1,11 +1,7 @@
-import React, {PropsWithChildren, PureComponent, ReactElement} from "react";
-import {Button, Checkbox, Form, FormInstance, Input, InputNumber, Radio, Select} from "antd";
-import {ComponentEditor, ReactComponentProps} from "../types";
-import {FormHelper} from "../helper";
-import {mergeObject} from "../../../../src/utils";
-import {FieldType, FieldTypes} from "../../../../src/types";
+import React from "react";
+import {Button, Checkbox, Form, Input, Radio} from "antd";
 import {PropsEditor} from "./PropsEditor";
-import {CheckboxProps, OptionType, RadioProps} from "../../../../src/props";
+import {OptionType} from "../../../../src/props";
 import {CloseOutlined, PlusOutlined} from "@ant-design/icons";
 
 
