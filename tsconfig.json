@@ -21,12 +21,17 @@
     "lib": [
       "dom",
       "es2017"
-    ]
+    ],
+    "paths": {
+      "@@/*": [
+        "./src/*"
+      ]
+    }
   },
   "path": [],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.js"
-  ],
+  ]
 }

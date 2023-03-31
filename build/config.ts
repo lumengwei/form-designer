@@ -1,6 +1,5 @@
 import type {Configuration as DevServerConfiguration} from "webpack-dev-server";
 import type {Configuration} from "webpack";
-import * as webpack from "webpack";
 
 const path = require('path')
 
@@ -13,6 +12,7 @@ const devServer: DevServerConfiguration = {
         directory: path.join(__dirname, 'public'),
     },
     compress: true,
+    hot: true,
     port: 9001
 };
 
@@ -31,7 +31,13 @@ const config: Configuration = {
         rules: [
             {
                 test: /\.([cm]?ts|tsx)$/,
-                use: 'ts-loader',
+                use: {
+                    loader: 'ts-loader',
+                    options: {
+                        logLevel: 'info',
+                        logInfoToStdOut: true,
+                    }
+                },
                 exclude: /node_modules/,
             },
             {
@@ -82,16 +88,13 @@ const config: Configuration = {
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js', 'vue']
+        extensions: ['.tsx', '.ts', '.js', '.jsx']
     },
     devServer,
     plugins: [
         new ExtractTextPlugin({filename: "[name].css",}),
         new HtmlWebpackPlugin({
             title: 'Form Designer'
-        }),
-        new webpack.HotModuleReplacementPlugin({
-            // Options...
         })
     ]
 };

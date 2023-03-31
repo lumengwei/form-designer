@@ -5,6 +5,7 @@
   "scripts": {
     "start": "npx webpack serve"
   },
+  "main": "./src/main.ts",
   "dependencies": {
     "ant-design-vue": "3.2.15",
     "jquery": "^3.4.0",
