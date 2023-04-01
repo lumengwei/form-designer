@@ -3,6 +3,30 @@
   "exclude": [
     "node_modules"
   ],
+  "compilerOptions": {
+    "sourceMap": true,
+    //    "outDir": "./dist",
+    "target": "es6",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "jsx": "react",
+    "strict": true,
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
   "include": [
     "./**/*.d.ts",
     "./**/*.ts",

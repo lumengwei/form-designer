@@ -13,7 +13,7 @@
 import LayoutWrapper from '../../wrapper/LayoutWrapper.vue';
 
 import {getCurrentInstance, onMounted, ref} from 'vue';
-import {sortable} from '../../util/sortable';
+import {sortable} from "@/lib/sortable";
 import Factory from './Factory';
 import {getComponent} from "../../ComponentDef";
 

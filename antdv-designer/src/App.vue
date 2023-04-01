@@ -31,8 +31,8 @@ import {defineComponent} from 'vue';
 import {Layout, LayoutContent, LayoutHeader, LayoutSider} from 'ant-design-vue';
 import installModule from './installModule';
 import FormStudio from "../../src/FormStudio";
-import FormWidget from "./FormWidget"
-import LinearLayout from "./layout/linear"
+import FormWidget from "./FormWidget.vue"
+import LinearLayout from "./layout/linear/index.vue"
 
 installModule(['components', 'layout']);
 

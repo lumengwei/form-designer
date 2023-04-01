@@ -36,6 +36,7 @@ const config: Configuration = {
                     options: {
                         logLevel: 'info',
                         logInfoToStdOut: true,
+                        appendTsSuffixTo: [/\.vue$/]
                     }
                 },
                 exclude: /node_modules/,

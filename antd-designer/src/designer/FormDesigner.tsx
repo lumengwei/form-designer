@@ -1,14 +1,14 @@
 import React, {PureComponent} from 'react'
 import {Tabs} from 'antd';
 import FormView from './FormView';
-import componentStyle from './component.less';
+import componentStyle from '../../../src/style/component.less';
 import ComponentPropsEditor from './ComponentPropsEditor';
 import FormStudio from "../../../src/FormStudio";
 import {Component, FactoryGroup} from "../../../src/types";
 import {draggable} from "../lib/sortable";
 import FormPropsEditor from "./FormPropsEditor";
 
-require('./component.less')
+require('../../../src/style/component.less')
 
 require('./components');
 

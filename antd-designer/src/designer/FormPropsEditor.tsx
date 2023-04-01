@@ -6,7 +6,7 @@ import {Form, FormInstance, Input, InputNumber} from "antd";
 import {mergeObject} from "../../../src/utils";
 import TextArea from "antd/es/input/TextArea";
 
-require('./formView.less');
+require('../../../src/style/formView.less');
 
 type FormPropsEditorProps = {
     definition: FormDefinition;

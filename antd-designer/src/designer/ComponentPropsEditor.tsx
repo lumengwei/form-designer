@@ -3,7 +3,7 @@ import {FactoryRenders, FormHelper} from "./helper";
 import {ReactComponentGroupState} from "./types";
 import {ComponentDefinition} from "../../../src/types";
 
-require('./formView.less');
+require('../../../src/style/formView.less');
 
 /**
  * 属性编辑器

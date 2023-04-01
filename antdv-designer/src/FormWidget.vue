@@ -1,10 +1,8 @@
 <template>
   <div
       title
-      class="widget-item"
+      class="widgetItem"
       draggable="true"
-      @mousedown="onMouseDown"
-      @mouseup="onMouseUp"
       ref="refNode"
   >
     {{ componentFactory.title }}
@@ -12,57 +10,32 @@
 </template>
 
 <script lang="ts">
-import {onMounted, ref} from 'vue';
-import FormStudio from "../../src/FormStudio";
-import {ComponentFactory} from "../../src/types";
+import {defineComponent, onMounted, ref} from 'vue';
+import {draggable} from "@/lib/sortable";
 
-export default {
+export default defineComponent({
   name: 'FormWidget',
   props: {
-    componentFactory: Object,
+    type: String,
+    title: String,
   },
 
   setup(props) {
     const refNode = ref(null);
 
-    function onMouseDown() {
-    }
-
-    function onMouseUp() {
-    }
-
     onMounted(() => {
-      $(refNode.value).draggable({
-        connectToSortable: '.ui-sortable',
-        helper: 'clone',
-        opacity: 0.8,
-        appendTo: 'body',
-        start() {
-          FormStudio.draggedFactory = props.componentFactory as ComponentFactory<any>;
-        },
-        stop() {
-          FormStudio.draggedFactory = null;
-        },
-      });
+      draggable(refNode, props.type!)
     });
+
     return {
       onMouseDown,
       onMouseUp,
       refNode,
     };
   },
-};
+})
 </script>
 
 <style scoped lang="less">
-.widget-item {
-  width: 150px;
-  height: 35px;
-  padding: 5px 15px;
-  margin: 6px 10px;
-  cursor: move;
-  background-color: #f5f5f5;
-  border: 1px dashed #999;
-  border-radius: 2px;
-}
+@import "../src/style/component.less";
 </style>

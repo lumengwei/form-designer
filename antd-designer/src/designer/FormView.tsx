@@ -4,7 +4,7 @@ import FormStudio from "../../../src/FormStudio";
 import {FactoryRenders, FormHelper} from "./helper";
 import {ReactComponentState} from "./types";
 
-require('./formView.less');
+require('../../../src/style/formView.less');
 
 type FormViewProps = {
     formDefinition: FormDefinition

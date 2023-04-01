@@ -6,7 +6,7 @@
   },
   "compilerOptions": {
     "sourceMap": true,
-    "outDir": "./dist",
+//    "outDir": "./dist",
     "target": "es6",
     "module": "esnext",
     "moduleResolution": "node",
