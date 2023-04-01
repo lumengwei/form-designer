@@ -15,9 +15,10 @@
 <script lang="ts">
 import Factory from './Factory';
 import LayoutWrapper from '../../wrapper/LayoutWrapper.vue';
-import {getComponent} from "../../ComponentDef";
+import {FormHelper} from "@/helper";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   name: Factory.type,
   components: {
     LayoutWrapper,
@@ -31,11 +32,16 @@ export default {
     },
   },
   setup() {
+
+    function getComponent(type: string) {
+      return FormHelper.getComponent(type)
+    }
+
     return {
       getComponent,
     };
   },
-};
+})
 </script>
 
 <style scoped lang="less">

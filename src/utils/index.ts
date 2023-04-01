@@ -20,7 +20,7 @@ export function makeComponentId() {
  * @param value
  * @param obj
  */
-export function mergeObject(fieldPath: string, value: any, obj: Object) {
+export function mergeObject(fieldPath: string, value: any, obj: any) {
     const fields: string[] = fieldPath.split('.');
 
     let co: any = obj;

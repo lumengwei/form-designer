@@ -1,11 +1,10 @@
-import {ReactComponentGroupState, ReactComponentProps} from "../../../antd-designer/src/designer/types";
+import {ReactComponentProps} from "../../../antd-designer/src/designer/types";
+import {FormHelper} from "@/helper";
+import FormStudio from "@@/FormStudio";
+import {ComponentGroup} from "../VueComponents";
 import SortableUIParams = JQueryUI.SortableUIParams;
 
 declare let $: any;
-
-import {FormHelper} from "@/helper";
-import {ComponentGroup} from "../../../antd-designer/src/designer/ReactComponent";
-import FormStudio from "../../../src/FormStudio";
 
 
 /**
@@ -16,8 +15,8 @@ import FormStudio from "../../../src/FormStudio";
  * @param limitSize 子元素最大个数
  * @param limitToDisable 如果子元素满额时，禁用sortable
  */
-export function sortable<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>>($node: HTMLElement | null
-    , componentInst: ComponentGroup<P, T, S>, slotIndex?: number, limitSize?: number, limitToDisable?: boolean
+export function sortable<P extends ReactComponentProps<T>, T>($node: HTMLElement | null
+    , componentInst: ComponentGroup, slotIndex?: number, limitSize?: number, limitToDisable?: boolean
 ) {
     if ($node) {
         let sourceIndex = 0;

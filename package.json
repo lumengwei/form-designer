@@ -36,6 +36,7 @@
     "webpack-dev-server": "^4.11.1",
     "webpack-cli": "^5.0.1",
     "eslint": "^8.37.0",
-    "eslint-plugin-import": "^2.27.5"
+    "eslint-plugin-import": "^2.27.5",
+    "webpack-merge": "^5.8.0"
   }
 }

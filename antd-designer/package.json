@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npx webpack serve"
+    "start": "npx webpack serve",
+    "build": "npx webpack build"
   },
   "main": "./src/index.tsx",
   "dependencies": {

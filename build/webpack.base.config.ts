@@ -21,9 +21,6 @@ const config: Configuration = {
         appendOnly: true,
         level: 'verbose',
     },
-    output: {
-        path: path.resolve(__dirname, "dist"),
-    },
     stats: {
         errorDetails: true
     },
@@ -89,7 +86,10 @@ const config: Configuration = {
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js', '.jsx']
+        extensions: ['.tsx', '.ts', '.js', '.jsx'],
+        alias: {
+            '@@': path.resolve(__dirname, '../src')
+        }
     },
     devServer,
     plugins: [

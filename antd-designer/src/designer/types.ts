@@ -1,4 +1,4 @@
-import {ComponentDefinition} from "../../../src/types";
+import type {ComponentDefinition} from "@@/types";
 import {Component, ReactElement} from "react";
 
 export interface ComponentFactoryRender<T, P> {

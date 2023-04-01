@@ -12,12 +12,13 @@
 <script lang="ts">
 import LayoutWrapper from '../../wrapper/LayoutWrapper.vue';
 
-import {getCurrentInstance, onMounted, ref} from 'vue';
+import {defineComponent, getCurrentInstance, onMounted, ref} from 'vue';
 import {sortable} from "@/lib/sortable";
 import Factory from './Factory';
-import {getComponent} from "../../ComponentDef";
+import {FormHelper, useVueComponentGroup} from "@/helper";
+import {ComponentGroup} from "../../VueComponents";
 
-export default {
+export default defineComponent({
   name: Factory.type,
   components: {
     LayoutWrapper,
@@ -37,25 +38,31 @@ export default {
     },
   },
   setup() {
-    const refNode = ref(null);
-    const isActive = ref(false);
+    const refNode = ref<HTMLElement | null>(null);
+    const isActive = ref<boolean>(false);
+
+    const groupMethods = useVueComponentGroup();
 
     onMounted(() => {
-      sortable(refNode.value, getCurrentInstance());
+      const inst = getCurrentInstance();
+      if (inst) {
+        sortable(refNode.value, inst as ComponentGroup);
+      }
+
     });
 
-    function setActive(active) {
-      isActive.value = active;
+    function getComponent(type: string) {
+      return FormHelper.getComponent(type)
     }
 
     return {
       refNode,
       isActive,
-      setActive,
       getComponent,
+      ...groupMethods
     };
   },
-};
+})
 </script>
 
 <style scoped lang="less">

@@ -21,15 +21,13 @@ export default defineComponent({
   },
 
   setup(props) {
-    const refNode = ref(null);
+    const refNode = ref<HTMLElement | null>(null);
 
     onMounted(() => {
-      draggable(refNode, props.type!)
+      draggable(refNode.value, props.type!)
     });
 
     return {
-      onMouseDown,
-      onMouseUp,
       refNode,
     };
   },
@@ -37,5 +35,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-@import "../src/style/component.less";
+@import "@@/style/component.less";
 </style>
