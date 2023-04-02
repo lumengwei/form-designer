@@ -1,7 +1,37 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "sourceMap": true,
+    //    "outDir": "./dist",
+    "target": "es6",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noImplicitOverride": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "jsx": "react",
+    "strict": true,
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@@/*": [
+        "../src/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
   "exclude": [
-    "node_modules"
+    "./node_modules"
   ],
   "include": [
     "./**/*.d.ts",

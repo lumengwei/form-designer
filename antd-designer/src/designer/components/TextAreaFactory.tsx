@@ -14,7 +14,7 @@ const TexArea = Input.TextArea;
 @ComponentWrapper
 class TextAreaComponent extends ReactComponent<ReactComponentProps<TextAreaProps>, TextAreaProps, ReactComponentState> {
 
-    render() {
+    override render() {
         const {definition: {props}} = this.props;
         return (
             <TexArea placeholder={props!.placeholder}/>

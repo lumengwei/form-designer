@@ -1,12 +1,10 @@
 import type {Configuration} from "webpack";
-import defaultConfig from '../build/webpack.base.config'
+import defaultConfig from '../config/webpack.base.config'
 
 const {merge} = require('webpack-merge');
 const path = require('path')
 const config: Configuration = {
-    devtool: 'source-map',
     entry: path.resolve(__dirname, './src/index.tsx'),
-    mode: "development",
     output: {
         path: path.resolve(__dirname, "dist"),
     },
@@ -15,6 +13,14 @@ const config: Configuration = {
             '@': path.resolve(__dirname, 'src')
         }
     },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'public'),
+        },
+        compress: true,
+        hot: true,
+        port: 9002
+    }
 };
 
 const finalConfig = merge(defaultConfig, config);

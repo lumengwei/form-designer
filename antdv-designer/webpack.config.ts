@@ -1,5 +1,5 @@
-import type {Configuration} from "webpack";
-import defaultConfig from '../build/webpack.base.config'
+import {Configuration, DefinePlugin} from "webpack";
+import defaultConfig from '../config/webpack.base.config'
 
 const {merge} = require('webpack-merge');
 
@@ -7,8 +7,6 @@ const {VueLoaderPlugin} = require('vue-loader');
 const path = require('path');
 
 const config: Configuration = {
-    devtool: 'source-map',
-    mode: "development",
     entry: './src/main.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -46,6 +44,10 @@ const config: Configuration = {
     },
     plugins: [
         new VueLoaderPlugin(),
+        new DefinePlugin({
+            __VUE_PROD_DEVTOOLS__: process.env.NODE_ENV == 'development',
+            __VUE_OPTIONS_API__: process.env.NODE_ENV == 'development',
+        }),
     ]
 };
 

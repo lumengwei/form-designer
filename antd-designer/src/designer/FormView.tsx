@@ -32,7 +32,7 @@ export default class FormView extends PureComponent<FormViewProps, ReactComponen
         });
     }
 
-    componentWillMount() {
+    override componentWillMount() {
         const componentRender = FactoryRenders.getRender("LinearLayout");
         this.LinearLayout = componentRender.renderComponent(FormStudio.definition!)({
             focusAble: false,
@@ -42,7 +42,7 @@ export default class FormView extends PureComponent<FormViewProps, ReactComponen
         FormHelper.formView = this;
     }
 
-    render() {
+    override render() {
         const {formDefinition} = this.props;
 
         return (

@@ -3,7 +3,7 @@ import {ReactComponentGroupState, ReactComponentProps, ReactComponentState} from
 import {ComponentDefinition} from "../../../src/types";
 
 export class ReactComponent<P extends ReactComponentProps<T>, T, S extends ReactComponentState> extends PureComponent<P, S> {
-    componentWillMount() {
+    override componentWillMount() {
         const {definition: {type, title}} = this.props;
         if (!type || !title) {
             throw new Error(`type:${type}, title:${title} not defined in definition`);
@@ -24,7 +24,7 @@ export class ReactComponent<P extends ReactComponentProps<T>, T, S extends React
 
 export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>> extends ReactComponent<P, T, S> {
 
-    componentWillMount() {
+    override componentWillMount() {
         super.componentWillMount();
         const {definition: {children}} = this.props;
         if (!children || !Array.isArray(children)) {

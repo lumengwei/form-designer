@@ -61,7 +61,7 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
         return segments;
     }
 
-    render() {
+    override render() {
         return (
             <div className="column-layout">{this.renderColumns()}</div>
         )

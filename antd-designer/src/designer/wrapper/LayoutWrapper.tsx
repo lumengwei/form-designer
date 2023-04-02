@@ -22,7 +22,7 @@ class LayoutToolbar extends PureComponent<LayoutToolbarProps> {
         }
     }
 
-    render() {
+    override render() {
         const {disable} = this.props;
 
         if (disable) {

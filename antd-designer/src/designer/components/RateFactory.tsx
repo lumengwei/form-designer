@@ -11,7 +11,7 @@ import {makeComponentId, makeFieldId} from "../../../../src/utils";
 @ComponentWrapper
 class RateComponent extends ReactComponent<ReactComponentProps<RateProps>, RateProps, ReactComponentState> {
 
-    render() {
+    override render() {
         const {definition: {props}} = this.props;
         return (
             <>

@@ -1,14 +1,12 @@
 import React, {PureComponent} from 'react'
 import {Tabs} from 'antd';
 import FormView from './FormView';
-import componentStyle from '../../../src/style/component.less';
+import componentStyle from '@@/style/component.module.less';
 import ComponentPropsEditor from './ComponentPropsEditor';
-import FormStudio from "../../../src/FormStudio";
-import {Component, FactoryGroup} from "../../../src/types";
-import {draggable} from "../lib/sortable";
+import FormStudio from "@@/FormStudio";
+import {Component, FactoryGroup} from "@@/types";
+import {draggable} from "@/lib/sortable";
 import FormPropsEditor from "./FormPropsEditor";
-
-require('../../../src/style/component.less')
 
 require('./components');
 
@@ -22,13 +20,13 @@ class FormComponent extends PureComponent<Component> {
         this._node = node;
     }
 
-    componentDidMount() {
+    override componentDidMount() {
         const {type} = this.props;
 
         draggable(this._node, type)
     }
 
-    render() {
+    override render() {
         const {title} = this.props;
         return (
             <div
@@ -51,7 +49,7 @@ class FormDesigner extends PureComponent {
         })
     }
 
-    render() {
+    override render() {
         return (
             <div className="form-designer">
                 <div className="form-widget">

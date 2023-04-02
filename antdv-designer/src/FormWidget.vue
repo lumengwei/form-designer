@@ -5,7 +5,7 @@
       draggable="true"
       ref="refNode"
   >
-    {{ componentFactory.title }}
+    {{ title }}
   </div>
 </template>
 

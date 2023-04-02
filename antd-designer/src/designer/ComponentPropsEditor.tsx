@@ -17,7 +17,7 @@ class ComponentPropsEditor extends PureComponent<{}, ReactComponentGroupState<an
         }
     }
 
-    componentDidMount() {
+    override componentDidMount() {
         FormHelper.formEditorIns = this;
     }
 
@@ -52,7 +52,7 @@ class ComponentPropsEditor extends PureComponent<{}, ReactComponentGroupState<an
         }
     }
 
-    render() {
+    override render() {
         return (
             <div>
                 {this.renderProps()}

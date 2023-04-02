@@ -18,7 +18,7 @@ class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, S
         })
     }
 
-    render() {
+    override render() {
         const {definition: {props}} = this.props;
         const defaultValue = props!.options.filter(item => {
             return item.checked;

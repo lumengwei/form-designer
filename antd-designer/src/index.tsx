@@ -4,15 +4,15 @@ import {createRoot} from 'react-dom/client';
 import FormDesigner from './designer/FormDesigner';
 import FormStudio from "../../src/FormStudio";
 
-require('../../src/style/formView.less')
-const {Header, Content} = Layout;
+require('@@/style/formView.less')
+const {Header} = Layout;
 
 class App extends PureComponent {
     getJsonData() {
         alert(JSON.stringify(FormStudio.getJsonData()));
     }
 
-    render() {
+    override render() {
         return (
             <Layout className="layout">
                 <Header style={{
@@ -23,7 +23,7 @@ class App extends PureComponent {
                 }}>
                     <Button type="primary" onClick={this.getJsonData} size="middle">获取数据</Button>
                 </Header>
-                <div style={{height:'calc(100vh - 60px)'}}>
+                <div style={{height: 'calc(100vh - 60px)'}}>
                     <FormDesigner/>
                 </div>
             </Layout>

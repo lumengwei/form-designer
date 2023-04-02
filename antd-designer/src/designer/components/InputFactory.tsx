@@ -14,7 +14,7 @@ import {makeComponentId, makeFieldId} from "../../../../src/utils";
 @ComponentWrapper
 class InputComponent extends ReactComponent<ReactComponentProps<InputProps>, InputProps, ReactComponentState> {
 
-    render() {
+    override render() {
         const {definition: {props}} = this.props;
         return (
             <Input placeholder={props!.placeholder}/>

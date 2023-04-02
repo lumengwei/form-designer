@@ -14,7 +14,7 @@ import {OptionGroupEditor} from "../widgets/OptionGroupEditor";
 @ComponentWrapper
 class RadioComponent extends ReactComponent<ReactComponentProps<RadioProps>, RadioProps, ReactComponentState> {
 
-    render() {
+    override render() {
         const definition = this.props.definition;
         const props: RadioProps = definition.props!;
         const defaultValue = props.options.filter(item => {

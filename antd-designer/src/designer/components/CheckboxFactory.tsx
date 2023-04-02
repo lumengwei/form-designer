@@ -13,7 +13,7 @@ const CheckboxGroup = Checkbox.Group;
 @ComponentWrapper
 class CheckboxComponent extends ReactComponent<ReactComponentProps<CheckboxProps>, CheckboxProps, ReactComponentState> {
 
-    render() {
+    override render() {
         const definition = this.props.definition;
         const props: CheckboxProps = definition.props!;
         const defaultValue = props.options.filter(item => {

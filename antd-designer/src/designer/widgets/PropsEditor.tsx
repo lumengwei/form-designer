@@ -147,7 +147,7 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
         }
     }
 
-    render() {
+    override render() {
         return (
             <>
                 <Form

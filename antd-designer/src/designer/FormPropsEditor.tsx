@@ -30,7 +30,7 @@ class FormPropsEditor extends PureComponent<FormPropsEditorProps, ReactComponent
         FormHelper.formView!.forceRender();
     }
 
-    render() {
+    override render() {
         const {definition} = this.props;
         return (
             <div>

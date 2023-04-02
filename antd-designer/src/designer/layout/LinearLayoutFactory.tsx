@@ -29,7 +29,7 @@ class LinearLayout extends Layout<ReactComponentProps<LinearLayoutProps>,
     private _node: HTMLElement | null = null;
 
 
-    componentDidMount() {
+    override componentDidMount() {
         sortable(this._node, this);
     }
 
@@ -50,7 +50,7 @@ class LinearLayout extends Layout<ReactComponentProps<LinearLayoutProps>,
         });
     }
 
-    render() {
+    override render() {
         const {definition} = this.props;
         return (
             <div className={className({
