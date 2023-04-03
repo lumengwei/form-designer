@@ -18,6 +18,7 @@
     "skipLibCheck": true,
     "stripInternal": true,
     "experimentalDecorators": true,
+    "noImplicitAny": false,
     "lib": [
       "dom",
       "es2017"

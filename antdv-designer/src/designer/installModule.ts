@@ -1,5 +1,5 @@
-import {FormHelper} from '@/helper';
-import FormStudio from "../../src/FormStudio";
+import {FormHelper} from '@/designer/helper';
+import FormStudio from "@@/FormStudio";
 
 function installFactory(modules: __WebpackModuleApi.RequireContext) {
     modules.keys().forEach((key) => {

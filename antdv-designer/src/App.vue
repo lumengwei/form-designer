@@ -1,60 +1,50 @@
 <template>
-  <Layout class="form-design-wrapper">
-    <LayoutHeader theme="light"> 操作</LayoutHeader>
-    <Layout class="form-design">
-      <LayoutSider width="360" theme="light">
-        <div class="widget-list">
-          <FormWidget v-for="comp in componentList" :key="comp.type" :component-factory="comp"/>
-        </div>
-      </LayoutSider>
-      <LayoutContent>
-        <div>
-          <div class="scroll-wrapper">
-            <div class="form-view">
-              <div class="form-head">
-                <p class="form-name"></p>
-                <div class="form-description">表单描述</div>
-              </div>
-              <div class="form-content">
-                <LinearLayout :toolbar-able="false"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </LayoutContent>
-      <LayoutSider width="360" theme="light"> right sidebar</LayoutSider>
-    </Layout>
+  <Layout>
+    <LayoutHeader theme="light" class="layout-header">
+      <Button type="primary" v-on:click="getJsonData">获取数据</Button>
+    </LayoutHeader>
+    <div class="layout-content">
+      <form-designer/>
+    </div>
   </Layout>
 </template>
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {Layout, LayoutContent, LayoutHeader, LayoutSider} from 'ant-design-vue';
-import installModule from './installModule';
-import FormStudio from "../../src/FormStudio";
-import FormWidget from "./FormWidget.vue"
-import LinearLayout from "./layout/linear/index.vue"
+import {Button, Layout, LayoutHeader} from 'ant-design-vue';
+import installModule from './designer/installModule';
+import FormDesigner from "@/designer/FormDesigner.vue";
+import FormStudio from "@@/FormStudio";
 
 installModule(['components', 'layout']);
 
 export default defineComponent({
-  name: 'FormDesigner',
+  name: 'App',
   components: {
-    FormWidget,
-    LinearLayout,
-    LayoutContent,
-    LayoutSider,
+    FormDesigner,
     Layout,
     LayoutHeader,
+    Button
   },
-  emits: ['success', 'register'],
   setup() {
-    const componentList = FormStudio.factoryFilter((it) => true);
+    function getJsonData() {
+      alert(JSON.stringify(FormStudio.getJsonData()));
+    }
+
     return {
-      componentList,
+      getJsonData
     };
   },
 });
 </script>
-<style lang="less">
-@import "@@/style/formView.less";
+<style lang="less" scoped>
+.layout-header {
+  background: white;
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 1px solid #efefef
+}
+
+.layout-content {
+  height: calc(100vh - 60px);
+}
 </style>

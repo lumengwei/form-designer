@@ -1,6 +1,6 @@
-import {ComponentDefinition, ComponentFactory, FactoryGroup, FieldType} from "../../../../src/types";
-import {CheckboxProps} from "../../../../src/props";
-import {makeComponentId, makeFieldId} from "../../../../src/utils";
+import {ComponentDefinition, ComponentFactory, FactoryGroup, FieldType} from "@@/types";
+import {CheckboxProps} from "@@/props";
+import {makeComponentId, makeFieldId} from "@@/utils";
 
 class Factory implements ComponentFactory<CheckboxProps> {
     readonly group = FactoryGroup.Component;

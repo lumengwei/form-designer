@@ -1,15 +1,21 @@
 import type {Configuration as DevServerConfiguration} from "webpack-dev-server";
 import type {Configuration} from "webpack";
+import envs from "./envs";
 
 const path = require('path')
 const dotenv = require('dotenv')
 const webpack = require('webpack')
 
-const env = dotenv.config({path: path.resolve(__dirname, '../.env.' + process.env.NODE_ENV)}).parsed
+const env = dotenv.config({path: path.resolve(__dirname, '../.env.' + process.env.ENV_MODE)}).parsed
 const envKeys = Object.keys(env).reduce((prev: any, next) => {
     prev[`process.env.${next}`] = JSON.stringify(env[next])
     return prev
-}, {})
+}, {
+    'process.env.ENV_MODE': `'${process.env.ENV_MODE}'`
+})
+
+
+console.log(envKeys)
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('mini-css-extract-plugin');
@@ -19,8 +25,8 @@ const cssModuleRegex = /\.module\.css$/;
 const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 
-export const isEnvDevelopment = process.env.NODE_ENV === 'dev';
-export const isEnvProduction = process.env.NODE_ENV === 'prod';
+export const isEnvDevelopment = process.env.ENV_MODE === envs.DEV;
+export const isEnvProduction = process.env.ENV_MODE === envs.PROD;
 
 const devServer: DevServerConfiguration = {
     static: {
@@ -32,10 +38,10 @@ const devServer: DevServerConfiguration = {
 };
 
 function getWebpackMode() {
-    switch (process.env.NODE_ENV) {
-        case 'prod':
+    switch (process.env.ENV_MODE) {
+        case envs.PROD:
             return 'production';
-        case 'dev':
+        case envs.DEV:
         default:
             return 'development';
     }

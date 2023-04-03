@@ -1,6 +1,6 @@
 import formHelper from "./FormHelper";
 import {ComponentPublicInstance, getCurrentInstance} from "vue";
-import {ComponentGroupMethods} from "../VueComponents";
+import {ComponentGroupMethods} from "../../VueComponents";
 import {ComponentDefinition} from "@@/types";
 
 export const FormHelper = formHelper;

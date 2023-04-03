@@ -10,13 +10,13 @@
   </layout-wrapper>
 </template>
 <script lang="ts">
-import LayoutWrapper from '../../wrapper/LayoutWrapper.vue';
+import LayoutWrapper from '../../../wrapper/LayoutWrapper.vue';
 
 import {defineComponent, getCurrentInstance, onMounted, ref} from 'vue';
 import {sortable} from "@/lib/sortable";
 import Factory from './Factory';
-import {FormHelper, useVueComponentGroup} from "@/helper";
-import {ComponentGroup} from "../../VueComponents";
+import {FormHelper, useVueComponentGroup} from "@/designer/helper";
+import {ComponentGroup} from "../../../VueComponents";
 
 export default defineComponent({
   name: Factory.type,

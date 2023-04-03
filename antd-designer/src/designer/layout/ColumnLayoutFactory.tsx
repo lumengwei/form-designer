@@ -33,7 +33,7 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
         }
 
 
-        const segments = [];
+        const segments: any[] = [];
 
         for (let i = 0; i < props!.columnNum; i++) {
             const def = this.getChildBySlot(i);

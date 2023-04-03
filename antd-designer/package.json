@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "cross-env NODE_ENV=dev npx webpack serve",
-    "build": "cross-env NODE_ENV=prod npx webpack build"
+    "start": "cross-env ENV_MODE=dev npx webpack serve",
+    "build": "cross-env ENV_MODE=prod npx webpack build"
   },
   "main": "./src/index.tsx",
   "dependencies": {

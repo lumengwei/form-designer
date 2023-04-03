@@ -1,6 +1,6 @@
 import $ from "./jquery";
 import {ReactComponentProps} from "../../../antd-designer/src/designer/types";
-import {FormHelper} from "@/helper";
+import {FormHelper} from "@/designer/helper";
 import FormStudio from "@@/FormStudio";
 import {ComponentGroup} from "../VueComponents";
 import SortableUIParams = JQueryUI.SortableUIParams;

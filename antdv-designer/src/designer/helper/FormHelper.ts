@@ -1,4 +1,4 @@
-import {ComponentFactory} from "../../../src/types";
+import {ComponentFactory} from "@@/types";
 import {DefineComponent} from "@vue/runtime-core";
 
 class FormHelper {

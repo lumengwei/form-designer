@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import Factory from './Factory';
-import LayoutWrapper from '../../wrapper/LayoutWrapper.vue';
-import {FormHelper} from "@/helper";
+import LayoutWrapper from '../../../wrapper/LayoutWrapper.vue';
+import {FormHelper} from "@/designer/helper";
 import {defineComponent} from "vue";
 
 export default defineComponent({

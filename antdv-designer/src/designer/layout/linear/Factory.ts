@@ -1,7 +1,7 @@
-import type {ComponentFactory} from "../../../../src/types";
-import {FactoryGroup} from "../../../../src/types";
-import {ColumnLayoutProps} from "../../../../src/props";
-import {makeComponentId} from "../../../../src/utils";
+import type {ComponentFactory} from "@@/types";
+import {FactoryGroup} from "@@/types";
+import {ColumnLayoutProps} from "@@/props";
+import {makeComponentId} from "@@/utils";
 
 class Factory implements ComponentFactory<ColumnLayoutProps> {
     readonly group = FactoryGroup.Layout;
