@@ -1,11 +1,11 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {Form, InputNumber} from 'antd';
 import {Layout} from '../ReactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import FormStudio from "../../../../src/FormStudio";
 import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {ColumnLayoutProps} from "../../../../src/props";
-import {ComponentEditor, ReactComponentGroupState, ReactComponentProps} from "../types";
+import {ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
 import {sortable} from "../../lib/sortable";
 import {makeComponentId} from "../../../../src/utils";

@@ -28,8 +28,8 @@ class FormHelper {
         this._componentDefine.set(defineComponent.name, defineComponent);
     }
 
-    getComponent(type: string) {
-        return this._componentDefine.get(type);
+    getComponent(type: string): DefineComponent {
+        return this._componentDefine.get(type) as DefineComponent;
     }
 
 

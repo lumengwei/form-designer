@@ -14,7 +14,7 @@ class Factory implements ComponentFactory<ColumnLayoutProps> {
             type: this.type,
             title: this.title,
             props: {
-                columnNum: 3,
+                columnNum: 2,
             },
             children: [],
         };

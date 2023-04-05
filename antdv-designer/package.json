@@ -11,7 +11,8 @@
     "ant-design-vue": "3.2.15",
     "jquery": "^3.4.0",
     "jquery-ui-dist": "^1.12.1",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "@ant-design/icons-vue": "^6.1.0"
   },
   "devDependencies": {
     "vue-loader": "^17.0.1",

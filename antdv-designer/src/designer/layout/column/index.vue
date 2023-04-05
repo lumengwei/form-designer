@@ -1,27 +1,30 @@
 <template>
-  <layout-wrapper>
-    <div class="column-layout">
-      <template v-if="definition.children">
-        <template v-for="it in definition.children" :key="it.type">
-          <div class="cell">
-            <Component :is="getComponent(it.type)"/>
-          </div>
-        </template>
-      </template>
-    </div>
-  </layout-wrapper>
+  <div class="column-layout">
+    <Cell
+        v-if="definition.children"
+        v-for="index in definition.props.columnNum"
+        :key="index"
+        :definition="getChildBySlot(index)"
+        v-on:on-delete="removeChild(index)"
+        v-on:on-active="activeChild(index)"
+        :active="activeIndex == index"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import Factory from './Factory';
-import LayoutWrapper from '../../../wrapper/LayoutWrapper.vue';
-import {FormHelper} from "@/designer/helper";
-import {defineComponent} from "vue";
+import ComponentRender from '../../wrapper/ComponentRender.vue';
+import {useVueComponentGroup} from "@/designer/helper";
+import {defineComponent, ref} from "vue";
+import {FactoryGroup} from "@@/types";
+import Cell from "@/designer/layout/column/Cell.vue";
 
 export default defineComponent({
   name: Factory.type,
   components: {
-    LayoutWrapper,
+    Cell,
+    ComponentRender
   },
   props: {
     definition: {
@@ -33,12 +36,18 @@ export default defineComponent({
   },
   setup() {
 
-    function getComponent(type: string) {
-      return FormHelper.getComponent(type)
+    const activeIndex = ref(0);
+    const groupMethods = useVueComponentGroup();
+
+    function activeChild(index: number) {
+      activeIndex.value = index;
     }
 
     return {
-      getComponent,
+      ...groupMethods,
+      activeChild,
+      activeIndex,
+      FactoryGroup
     };
   },
 })

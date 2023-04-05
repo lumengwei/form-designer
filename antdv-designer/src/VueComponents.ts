@@ -1,14 +1,17 @@
 import type {ComponentDefinition} from "@@/types";
-import {ComponentInternalInstance} from "@vue/runtime-core";
+import {ComponentInternalInstance, DefineComponent} from "@vue/runtime-core";
+import {ComponentPublicInstance} from "vue";
 
-export interface VueComponents extends ComponentInternalInstance {
+
+export type VueComponents<T = {}> = {
 
     /**
      * shouldComponentUpdate 默认不是对象的深层比较，采用标志位的方式
      * 此方法代替foreUpdate
      */
     forceRender(): void;
-}
+} & ComponentPublicInstance<T>;
+
 
 export interface ComponentGroupMethods {
 
@@ -44,12 +47,10 @@ export interface ComponentGroupMethods {
 
     forceRender(): void;
 
-}
-
-export interface ComponentGroup extends VueComponents, ComponentGroupMethods {
+    getComponent(type: string): DefineComponent;
 
 }
 
-export interface Layout extends ComponentGroup {
+export type ComponentGroup<T = {}> = {} & VueComponents<T> & ComponentGroupMethods;
 
-}
+export type Layout<T> = ComponentGroup<T>;

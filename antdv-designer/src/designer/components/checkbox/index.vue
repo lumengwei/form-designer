@@ -1,36 +1,37 @@
 <template>
   <div class="column-layout">
-    <CheckboxGroup v-model:value="value">
-      <Checkbox
+    <CheckboxGroup>
+      <a-checkbox
           v-for="item in definition.props.options"
           :disabled="item.disabled"
           :value="item.value"
           :key="item.value"
       >
         {{ item.label }}
-      </Checkbox>
+      </a-checkbox>
     </CheckboxGroup>
   </div>
 </template>
 <script lang="ts">
 import {Checkbox, CheckboxGroup} from 'ant-design-vue';
 import Factory from './Factory';
-import {defineComponent} from "vue";
+import {defineComponent, onMounted} from "vue";
 
 export default defineComponent({
   name: Factory.type,
   components: {
-    Checkbox,
+    ACheckbox: Checkbox,
     CheckboxGroup,
   },
   props: {
-    definition: {
-      type: Object,
-      default() {
-        return Factory.createComponentDefinition();
-      },
-    },
+    definition: Object,
   },
+  setup(props: any) {
+    onMounted(() => {
+      window.console.log(props.definition)
+    })
+    return {}
+  }
 })
 </script>
 

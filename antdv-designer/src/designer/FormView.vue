@@ -5,20 +5,34 @@
       <div class="form-description">{{ formDefinition.description }}</div>
     </div>
     <div class="form-content">
+      <LayoutWrapper :toolbarAble="false">
+        <Component :is="getComponent(definition.type)"/>
+      </LayoutWrapper>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
+import {FormHelper} from "@/designer/helper";
+import FormStudio from "@@/FormStudio";
+import LayoutWrapper from "@/designer/wrapper/LayoutWrapper.vue";
 
 export default defineComponent({
   name: "FormView",
+  components: {LayoutWrapper},
   props: {
-    formDefinition: Object
+    formDefinition: Object,
   },
   setup() {
-    return {}
+    function getComponent(type: string) {
+      return FormHelper.getComponent(type)
+    }
+
+    return {
+      getComponent,
+      definition: FormStudio.definition
+    }
   }
 })
 </script>
