@@ -8,6 +8,7 @@ import {ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
 import className from "classnames";
 import {makeComponentId} from "../../../../src/utils";
+import LinearLayoutFactory from "@@/factory/LinearLayoutFactory";
 
 /**
  * 这是一个特殊的布局
@@ -64,30 +65,5 @@ class LinearLayout extends Layout<ReactComponentProps<LinearLayoutProps>,
     }
 }
 
-@FactoryRegister(LinearLayout)
-class LinearLayoutFactory implements ComponentFactory<LinearLayoutProps> {
-    readonly type = "LinearLayout"
-    readonly group = FactoryGroup.Layout;
-    title = "流式布局"
-
-
-    /**
-     * 初始化一个组件定义
-     * @returns {{type: string, title: string}}
-     */
-    createComponentDefinition(): ComponentDefinition<LinearLayoutProps> {
-        return {
-            id: makeComponentId(),
-            type: this.type,
-            title: this.title,
-            props: {
-                direction: 'column'
-            },
-            children: []
-        }
-    }
-}
-
-
-export default LinearLayoutFactory;
+FactoryRegister(LinearLayout)(LinearLayoutFactory)
 

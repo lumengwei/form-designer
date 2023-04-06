@@ -1,5 +1,5 @@
 <template>
-  <div class="cell">
+  <div class="cell" ref="refNode">
     <ComponentRender
         v-if="definition != null"
         :definition="definition"
@@ -9,8 +9,10 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, getCurrentInstance, onMounted, ref} from "vue";
 import ComponentRender from "@/designer/wrapper/ComponentRender.vue";
+import {sortable} from "@/lib/sortable";
+import {ComponentGroup} from "@/VueComponents";
 
 export default defineComponent({
   name: "Cell",
@@ -18,10 +20,22 @@ export default defineComponent({
     ComponentRender
   },
   props: {
-    definition: Object
+    definition: Object,
+    slotIndex: Number,
   },
-  setup() {
-    return {}
+  setup(props: any) {
+    const refNode = ref<HTMLElement | null>(null);
+
+    onMounted(() => {
+      const inst = getCurrentInstance();
+      if (inst) {
+        sortable(refNode.value, inst.parent?.proxy as ComponentGroup, props.slotIndex, 1, true);
+      }
+    });
+
+    return {
+      refNode,
+    }
   }
 })
 </script>

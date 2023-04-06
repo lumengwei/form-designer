@@ -13,7 +13,7 @@ export interface ComponentEditor<P extends VueComponentProps<T>, T> extends Comp
 export interface VueComponentProps<T> {
     definition: ComponentDefinition<T>;
 
-    onRemove(): void;
+    onRemove?: () => void;
 }
 
 

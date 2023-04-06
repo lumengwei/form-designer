@@ -13,7 +13,7 @@ import {ComponentFactoryRender, ReactComponentProps} from "../types";
 export function FactoryRegister<P extends ReactComponentProps<T>, T>(Component: ComponentClass<P>
     , ComponentEditor?: ComponentClass<ReactComponentProps<T>>) {
 
-    return function FactoryWrapper(Factory: ComponentFactoryConstructor<T>) {
+    return function FactoryWrapper(factory: ComponentFactory<T>) {
         const render: ComponentFactoryRender<T, any> = {
             renderComponent(componentDefinition: ComponentDefinition<T>) {
 
@@ -38,7 +38,7 @@ export function FactoryRegister<P extends ReactComponentProps<T>, T>(Component: 
             }
         }
 
-        const factory: ComponentFactory<T> = new Factory();
+        //const factory: ComponentFactory<T> = new Factory();
         FactoryRenders.register<T>(render, factory.type)
         FormStudio.registerFactory(factory)
     }

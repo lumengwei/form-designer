@@ -15,8 +15,7 @@ function installDef(modules: __WebpackModuleApi.RequireContext) {
     });
 }
 
-installFactory(require.context('./components', true, /Factory.ts/))
-installFactory(require.context('./layout', true, /Factory.ts/))
+installFactory(require.context('@@/factory', true, /Factory.ts/))
 installDef(require.context('./components', true, /index.vue/))
 installDef(require.context('./layout', true, /index.vue/))
 

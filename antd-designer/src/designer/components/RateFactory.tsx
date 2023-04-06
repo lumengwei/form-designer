@@ -7,6 +7,7 @@ import {RateProps} from "../../../../src/props";
 import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
 import {ReactComponentProps, ReactComponentState} from "../types";
 import {makeComponentId, makeFieldId} from "../../../../src/utils";
+import RateFactory from "@@/factory/RateFactory";
 
 @ComponentWrapper
 class RateComponent extends ReactComponent<ReactComponentProps<RateProps>, RateProps, ReactComponentState> {
@@ -48,33 +49,5 @@ class RateComponentEditor extends PropsEditor<RateProps> {
     }
 }
 
-@FactoryRegister(RateComponent, RateComponentEditor)
-class RateFactory implements FieldFactory<RateProps> {
-    readonly type = "Rate"
-    readonly group = FactoryGroup.Component;
-    title = "评分"
-
-    /**
-     * 初始化一个组件定义
-     * @returns {{type: string, title: string}}
-     */
-    createComponentDefinition() {
-        return {
-            id: makeComponentId(),
-            type: this.type,
-            title: this.title,
-            fieldDef: {
-                fieldId: makeFieldId(),
-                fieldType: 'varchar' as FieldType,
-                fieldName: '',
-            },
-            props: {
-                count: 5
-            },
-        }
-    }
-}
-
-
-export default RateFactory
+FactoryRegister(RateComponent, RateComponentEditor)(RateFactory)
 

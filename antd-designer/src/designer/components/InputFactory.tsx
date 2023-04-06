@@ -4,9 +4,8 @@ import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
 import {PropsEditor} from '../widgets/PropsEditor';
 import {ReactComponentProps, ReactComponentState} from "../types";
-import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
 import {InputProps} from "../../../../src/props";
-import {makeComponentId, makeFieldId} from "../../../../src/utils";
+import InputFactory from "@@/factory/InputFactory";
 
 /**
  * 组件
@@ -36,33 +35,5 @@ class InputComponentEditor extends PropsEditor<InputProps> {
 /**
  * 组件工厂
  */
-@FactoryRegister(InputComponent, InputComponentEditor)
-class InputFactory implements FieldFactory<InputProps> {
-    readonly type = "Input"
-    readonly group = FactoryGroup.Component;
-
-    title = "单行输入框"
-
-    /**
-     * 初始化一个组件定义
-     * @returns {{type: string, title: string}}
-     */
-    createComponentDefinition() {
-        return {
-            id: makeComponentId(),
-            type: this.type,
-            title: this.title,
-            fieldDef: {
-                fieldId: makeFieldId(),
-                fieldType: 'varchar' as FieldType,
-                fieldName: ''
-            },
-            props: {
-                placeholder: '请输入'
-            },
-        }
-    }
-}
-
-export default InputFactory;
+FactoryRegister(InputComponent, InputComponentEditor)(InputFactory)
 

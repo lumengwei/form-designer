@@ -1,3 +1,7 @@
+export type PropConstructor<T> = {
+    (): T;
+}
+
 export type OptionType = {
     label: string;
     value: string;

@@ -3,13 +3,12 @@ import {Form, InputNumber} from 'antd';
 import {Layout} from '../ReactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import FormStudio from "../../../../src/FormStudio";
-import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
 import {ColumnLayoutProps} from "../../../../src/props";
 import {ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
 import {sortable} from "../../lib/sortable";
-import {makeComponentId} from "../../../../src/utils";
 import {PropsEditor} from "../widgets/PropsEditor";
+import ColumnLayoutFactory from "@@/factory/ColumnLayoutFactory";
 
 
 @LayoutWrapper()
@@ -95,30 +94,6 @@ class ColumnComponentEditor extends PropsEditor<ColumnLayoutProps> {
     }
 }
 
-@FactoryRegister(ColumnLayout, ColumnComponentEditor)
-class ColumnLayoutFactory implements ComponentFactory<ColumnLayoutProps> {
-    readonly type = "ColumnLayout"
-    readonly group = FactoryGroup.Layout;
-    title = "列布局"
+FactoryRegister(ColumnLayout, ColumnComponentEditor)(ColumnLayoutFactory)
 
-
-    /**
-     * 初始化一个组件定义
-     * @returns {{type: string, title: string}}
-     */
-    createComponentDefinition(): ComponentDefinition<ColumnLayoutProps> {
-        return {
-            id: makeComponentId(),
-            type: this.type,
-            title: this.title,
-            props: {
-                'columnNum': 2
-            },
-            children: []
-        }
-    }
-}
-
-
-export default ColumnLayoutFactory;
 

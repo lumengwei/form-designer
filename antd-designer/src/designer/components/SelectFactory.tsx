@@ -7,6 +7,7 @@ import {ReactComponentProps, ReactComponentState} from "../types";
 import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
 import {makeComponentId, makeFieldId} from "../../../../src/utils";
 import {OptionGroupEditor} from "../widgets/OptionGroupEditor";
+import SelectFactory from "@@/factory/SelectFactory";
 
 @ComponentWrapper
 class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, SelectProps, ReactComponentState> {
@@ -52,36 +53,5 @@ class SelectComponentEditor extends OptionGroupEditor<SelectProps> {
     }
 }
 
-@FactoryRegister(SelectComponent, SelectComponentEditor)
-class SelectFactory implements FieldFactory<SelectProps> {
-    readonly type = "Select"
-    readonly group = FactoryGroup.Component;
-    title = "下拉选择"
-
-    /**
-     * 初始化一个组件定义
-     * @returns {{type: string, title: string}}
-     */
-    createComponentDefinition() {
-        return {
-            id: makeComponentId(),
-            type: this.type,
-            title: this.title,
-            fieldDef: {
-                fieldId: makeFieldId(),
-                fieldType: '' as FieldType,
-                fieldName: '',
-            },
-            props: {
-                placeholder: '请输入',
-                options: [
-                    {label: '显示值', value: '真值', checked: false, disabled: false}
-                ]
-            },
-        }
-    }
-}
-
-
-export default SelectFactory;
+FactoryRegister(SelectComponent, SelectComponentEditor)(SelectFactory)
 

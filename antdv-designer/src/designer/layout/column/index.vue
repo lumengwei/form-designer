@@ -8,12 +8,13 @@
         v-on:on-delete="removeChild(index)"
         v-on:on-active="activeChild(index)"
         :active="activeIndex == index"
+        :slot-index="index"
     />
   </div>
 </template>
 
 <script lang="ts">
-import Factory from './Factory';
+import Factory from '@@/factory/ColumnLayoutFactory';
 import ComponentRender from '../../wrapper/ComponentRender.vue';
 import {useVueComponentGroup} from "@/designer/helper";
 import {defineComponent, ref} from "vue";

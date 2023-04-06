@@ -16,7 +16,7 @@ import LayoutWrapper from '../../wrapper/LayoutWrapper.vue';
 
 import {defineComponent, getCurrentInstance, onMounted, ref} from 'vue';
 import {sortable} from "@/lib/sortable";
-import Factory from './Factory';
+import LinearLayoutFactory from '@@/factory/LinearLayoutFactory';
 import {useVueComponentGroup} from "@/designer/helper";
 import {ComponentGroup} from "../../../VueComponents";
 import ComponentWrapper from "@/designer/wrapper/ComponentWrapper.vue";
@@ -24,7 +24,7 @@ import {FactoryGroup} from "@@/types";
 import ComponentRender from "@/designer/wrapper/ComponentRender.vue";
 
 export default defineComponent({
-  name: Factory.type,
+  name: LinearLayoutFactory.type,
   components: {
     ComponentRender,
     ComponentWrapper,
@@ -34,7 +34,7 @@ export default defineComponent({
     definition: {
       type: Object,
       default() {
-        return Factory.createComponentDefinition();
+        return LinearLayoutFactory.createComponentDefinition();
       },
     },
   },
