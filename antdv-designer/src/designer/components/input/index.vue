@@ -4,7 +4,15 @@
 <script lang="ts">
 import {Input} from 'ant-design-vue';
 import Factory from '@@/factory/InputFactory';
-import {defineComponent, onMounted} from "vue";
+import {defineComponent} from "vue";
+import {RateProps} from "@@/props";
+import {ComponentDefinition} from "@@/types";
+
+
+function Definition() {
+  return {} as ComponentDefinition<RateProps>
+}
+
 
 export default defineComponent({
   name: Factory.type,
@@ -12,12 +20,9 @@ export default defineComponent({
     AInput: Input,
   },
   props: {
-    definition: Object,
+    definition: Definition,
   },
   setup(props: any) {
-    onMounted(() => {
-      window.console.log(props.definition)
-    })
     return {}
   }
 })

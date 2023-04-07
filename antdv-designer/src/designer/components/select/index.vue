@@ -13,7 +13,14 @@
 <script lang="ts">
 import {Select} from 'ant-design-vue';
 import Factory from '@@/factory/SelectFactory';
-import {defineComponent, onMounted} from "vue";
+import {defineComponent} from "vue";
+import {SelectProps} from "@@/props";
+import {ComponentDefinition} from "@@/types";
+
+
+function Definition() {
+  return {} as ComponentDefinition<SelectProps>
+}
 
 export default defineComponent({
   name: Factory.type,
@@ -22,12 +29,11 @@ export default defineComponent({
     ASelectOption: Select.Option,
   },
   props: {
-    definition: Object,
+    definition: {
+      type: Definition,
+    },
   },
   setup(props: any) {
-    onMounted(() => {
-      window.console.log(props.definition)
-    })
     return {}
   }
 })

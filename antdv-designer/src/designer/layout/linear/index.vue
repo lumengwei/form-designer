@@ -20,8 +20,15 @@ import LinearLayoutFactory from '@@/factory/LinearLayoutFactory';
 import {useVueComponentGroup} from "@/designer/helper";
 import {ComponentGroup} from "../../../VueComponents";
 import ComponentWrapper from "@/designer/wrapper/ComponentWrapper.vue";
-import {FactoryGroup} from "@@/types";
+import {ComponentDefinition, FactoryGroup} from "@@/types";
 import ComponentRender from "@/designer/wrapper/ComponentRender.vue";
+import {LinearLayoutProps} from "@@/props";
+
+
+function Definition() {
+  return {} as ComponentDefinition<LinearLayoutProps>
+}
+
 
 export default defineComponent({
   name: LinearLayoutFactory.type,
@@ -32,7 +39,7 @@ export default defineComponent({
   },
   props: {
     definition: {
-      type: Object,
+      type: Definition,
       default() {
         return LinearLayoutFactory.createComponentDefinition();
       },

@@ -18,8 +18,14 @@ import Factory from '@@/factory/ColumnLayoutFactory';
 import ComponentRender from '../../wrapper/ComponentRender.vue';
 import {useVueComponentGroup} from "@/designer/helper";
 import {defineComponent, ref} from "vue";
-import {FactoryGroup} from "@@/types";
+import {ComponentDefinition, FactoryGroup} from "@@/types";
 import Cell from "@/designer/layout/column/Cell.vue";
+import {ColumnLayoutProps} from "@@/props";
+
+
+function Definition() {
+  return {} as ComponentDefinition<ColumnLayoutProps>
+}
 
 export default defineComponent({
   name: Factory.type,
@@ -29,7 +35,7 @@ export default defineComponent({
   },
   props: {
     definition: {
-      type: Object,
+      type: Definition,
       default() {
         return Factory.createComponentDefinition();
       },

@@ -15,7 +15,13 @@
 <script lang="ts">
 import {Checkbox, CheckboxGroup} from 'ant-design-vue';
 import Factory from '@@/factory/CheckboxFactory';
-import {defineComponent, onMounted} from "vue";
+import {defineComponent, PropType} from "vue";
+import {CheckboxProps} from "@@/props";
+import {ComponentDefinition} from "@@/types";
+
+function Definition() {
+  return {} as ComponentDefinition<CheckboxProps>
+}
 
 export default defineComponent({
   name: Factory.type,
@@ -24,12 +30,9 @@ export default defineComponent({
     CheckboxGroup,
   },
   props: {
-    definition: Object,
+    definition: Definition,
   },
   setup(props: any) {
-    onMounted(() => {
-      window.console.log(props.definition)
-    })
     return {}
   }
 })

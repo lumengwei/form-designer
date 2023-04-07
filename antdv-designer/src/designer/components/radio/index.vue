@@ -15,7 +15,13 @@
 <script lang="ts">
 import {Radio, RadioGroup} from 'ant-design-vue';
 import Factory from '@@/factory/RadioFactory';
-import {defineComponent, onMounted} from "vue";
+import {defineComponent} from "vue";
+import {RadioProps} from "@@/props";
+import {ComponentDefinition} from "@@/types";
+
+function Definition() {
+  return {} as ComponentDefinition<RadioProps>
+}
 
 export default defineComponent({
   name: Factory.type,
@@ -24,12 +30,9 @@ export default defineComponent({
     RadioGroup,
   },
   props: {
-    definition: Object,
+    definition: Definition,
   },
   setup(props: any) {
-    onMounted(() => {
-      window.console.log(props.definition)
-    })
     return {}
   }
 })
