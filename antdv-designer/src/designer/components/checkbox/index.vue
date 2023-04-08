@@ -15,7 +15,7 @@
 <script lang="ts">
 import {Checkbox, CheckboxGroup} from 'ant-design-vue';
 import Factory from '@@/factory/CheckboxFactory';
-import {defineComponent, PropType} from "vue";
+import {defineComponent} from "vue";
 import {CheckboxProps} from "@@/props";
 import {ComponentDefinition} from "@@/types";
 

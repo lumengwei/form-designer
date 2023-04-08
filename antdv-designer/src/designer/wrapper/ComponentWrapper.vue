@@ -17,8 +17,6 @@
 <script lang="ts">
 import {CloseCircleOutlined} from '@ant-design/icons-vue';
 import {defineComponent} from "vue";
-import {DefineComponent} from "@vue/runtime-core";
-import {FormHelper} from "@/designer/helper";
 
 export default defineComponent({
   name: "ComponentWrapper",

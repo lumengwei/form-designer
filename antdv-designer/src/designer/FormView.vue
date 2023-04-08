@@ -6,7 +6,7 @@
     </div>
     <div class="form-content">
       <LayoutWrapper :toolbarAble="false">
-        <Component :is="getComponent(definition.type)"/>
+        <Component :is="getComponent(definition.type)" :definition="definition"/>
       </LayoutWrapper>
     </div>
   </div>
@@ -15,14 +15,23 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {FormHelper} from "@/designer/helper";
-import FormStudio from "@@/FormStudio";
 import LayoutWrapper from "@/designer/wrapper/LayoutWrapper.vue";
+import {ComponentDefinition, FormDefinition} from "@@/types";
+
+function FormDefinition() {
+  return {} as FormDefinition
+}
+
+function Definition() {
+  return {} as ComponentDefinition<any>;
+}
 
 export default defineComponent({
   name: "FormView",
   components: {LayoutWrapper},
   props: {
-    formDefinition: Object,
+    formDefinition: FormDefinition,
+    definition: Definition
   },
   setup() {
     function getComponent(type: string) {
@@ -31,7 +40,6 @@ export default defineComponent({
 
     return {
       getComponent,
-      definition: FormStudio.definition
     }
   }
 })

@@ -7,12 +7,10 @@ export type OptionType = {
 
 
 export type CheckboxProps = {
-    placeholder: string;
     options: OptionType[];
 };
 
 export type RadioProps = {
-    placeholder: string;
     options: OptionType[];
 };
 

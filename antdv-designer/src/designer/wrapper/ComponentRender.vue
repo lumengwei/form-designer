@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-import {defineComponent} from "vue";
+import {defineComponent, getCurrentInstance} from "vue";
 import {DefineComponent} from "@vue/runtime-core";
 import {FormHelper} from "../helper";
 import FormStudio from "@@/FormStudio";
@@ -41,11 +41,14 @@ export default defineComponent({
   emits: ['onDelete', 'onActive'],
   setup(props: any, ctx: any) {
 
+    const inst = getCurrentInstance();
+
     function onDelete() {
       ctx.emit('onDelete')
     }
 
     function onActive() {
+      FormHelper.activeComponentIns = inst?.proxy
       ctx.emit('onActive')
     }
 

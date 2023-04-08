@@ -15,19 +15,15 @@
       </Tabs>
     </div>
     <div class="form-view-wrapper">
-      <form-view :formDefinition="fromDef"></form-view>
+      <form-view :formDefinition="fromDef" :definition="definition"></form-view>
     </div>
     <div class="form-editor">
       <Tabs v-model:activeKey="activeKeyRight">
         <tab-pane tab="控件属性" key='1'>
-          <!--          <ComponentPropsEditor/>-->
-          <div class="widgetList">
-          </div>
+          <ComponentPropsEditor/>
         </tab-pane>
         <tab-pane tab="表单属性" key='2'>
           <!--          <FormPropsEditor definition={FormStudio.fromDef}/>-->
-          <div class="widgetList">
-          </div>
         </tab-pane>
       </Tabs>
     </div>
@@ -41,10 +37,12 @@ import FormView from './FormView.vue'
 import FormStudio from "@@/FormStudio";
 import {FactoryGroup} from "@@/types";
 import FormWidget from "@/designer/FormWidget.vue";
+import ComponentPropsEditor from "@/designer/ComponentPropsEditor.vue";
 
 export default defineComponent({
   name: "FormDesigner",
   components: {
+    ComponentPropsEditor,
     FormWidget,
     Tabs,
     FormView,
@@ -65,6 +63,7 @@ export default defineComponent({
       layoutList,
       compList,
       fromDef: FormStudio.fromDef,
+      definition: FormStudio.definition,
       activeKey: ref('1'),
       activeKeyRight: ref('1')
     }

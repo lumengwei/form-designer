@@ -1,5 +1,5 @@
 <template>
-  <a-select style="width:100%">
+  <a-select style="width:100%" :placeholder="definition.props.placeholder">
     <a-select-option
         v-for="item in definition.props.options"
         :disabled="item.disabled"

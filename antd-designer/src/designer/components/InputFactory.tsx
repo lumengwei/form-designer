@@ -4,7 +4,7 @@ import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
 import {PropsEditor} from '../widgets/PropsEditor';
 import {ReactComponentProps, ReactComponentState} from "../types";
-import {InputProps} from "../../../../src/props";
+import {InputProps} from "@@/props";
 import InputFactory from "@@/factory/InputFactory";
 
 /**

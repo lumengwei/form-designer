@@ -1,23 +1,23 @@
 <template>
-  <a-input style="width:100%" :placeholder="definition.props.placeholder"/>
+  <a-textarea style="width:100%" :placeholder="definition.props.placeholder"/>
 </template>
 <script lang="ts">
-import {Input} from 'ant-design-vue';
-import Factory from '@@/factory/InputFactory';
+import {Textarea} from 'ant-design-vue';
+import Factory from '@@/factory/TextAreaFactory';
 import {defineComponent} from "vue";
-import {InputProps} from "@@/props";
+import {TextAreaProps} from "@@/props";
 import {ComponentDefinition} from "@@/types";
 
 
 function Definition() {
-  return {} as ComponentDefinition<InputProps>
+  return {} as ComponentDefinition<TextAreaProps>
 }
 
 
 export default defineComponent({
   name: Factory.type,
   components: {
-    AInput: Input,
+    ATextarea: Textarea,
   },
   props: {
     definition: Definition,

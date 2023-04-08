@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
-import {FactoryRenders, FormHelper} from "./helper";
+import {FormHelper} from "./helper";
 import {ReactComponentGroupState} from "./types";
-import {ComponentDefinition, FormDefinition} from "../../../src/types";
+import {FormDefinition} from "../../../src/types";
 import {Form, FormInstance, Input, InputNumber} from "antd";
 import {mergeObject} from "../../../src/utils";
 import TextArea from "antd/es/input/TextArea";

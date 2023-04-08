@@ -1,7 +1,7 @@
 import {Activatable, ReactComponentProps} from "../types";
 import ComponentPropsEditor from "../ComponentPropsEditor";
 import {ComponentFactory} from "../../../../src/types";
-import {Component, ComponentSpec} from "react";
+import {ComponentSpec} from "react";
 
 class FormHelper {
     private _activeComponentIns: Activatable & ComponentSpec<ReactComponentProps<any>, any> | null = null;
