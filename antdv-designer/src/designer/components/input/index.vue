@@ -4,7 +4,7 @@
 <script lang="ts">
 import {Input} from 'ant-design-vue';
 import Factory from '@@/factory/InputFactory';
-import {defineComponent} from "vue";
+import {defineComponent, onUpdated} from "vue";
 import {InputProps} from "@@/props";
 import {ComponentDefinition} from "@@/types";
 
@@ -23,6 +23,7 @@ export default defineComponent({
     definition: Definition,
   },
   setup(props: any) {
+
     return {}
   }
 })

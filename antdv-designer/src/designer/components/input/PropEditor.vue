@@ -1,6 +1,6 @@
 <template>
   <a-form-item label="占位符">
-    <a-input v-model:value="props.placeholder"/>
+    <a-input v-model:value="props.placeholder" v-on:change="fieldChange('props.placeholder')"/>
   </a-form-item>
 </template>
 
@@ -24,8 +24,15 @@ export default defineComponent({
   props: {
     props: Definition
   },
-  setup() {
-    return {}
+  emits: ['fieldChange'],
+  setup(props, ctx) {
+    function fieldChange(fieldPath: string) {
+      ctx.emit('fieldChange', fieldPath)
+    }
+
+    return {
+      fieldChange
+    }
   }
 })
 </script>

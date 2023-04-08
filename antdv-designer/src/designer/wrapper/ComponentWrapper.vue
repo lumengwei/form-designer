@@ -5,7 +5,7 @@
     </span>
     <div>
       <div class="field-title">
-        <span>{{ definition.title }}</span>
+        <span>{{ title }}</span>
       </div>
       <div class="field-content">
         <slot/>
@@ -25,7 +25,7 @@ export default defineComponent({
   },
   props: {
     active: Boolean,
-    definition: Object
+    title: String
   },
   emits: ['onDelete', 'onActive'],
   setup(props: any, ctx: any) {

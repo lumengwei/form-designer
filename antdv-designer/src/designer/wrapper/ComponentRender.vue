@@ -1,12 +1,12 @@
 <template>
   <ComponentWrapper
       v-if="isGroup(FactoryGroup.Component)"
-      :definition="definition"
+      :title="definition.title"
       v-on:on-delete="onDelete"
       v-on:on-active="onActive"
       :active="active"
   >
-    <Component :is="getComponent(definition.type)" :definition="definition"/>
+    <Component :is="getComponent(definition.type)" :definition="definition" ref="refCom"/>
   </ComponentWrapper>
   <LayoutWrapper
       v-else
@@ -14,13 +14,13 @@
       v-on:on-active="onActive"
       :active="active"
   >
-    <Component :is="getComponent(definition.type)" :definition="definition"/>
+    <Component :is="getComponent(definition.type)" :definition="definition" ref="refCom"/>
   </LayoutWrapper>
 </template>
 
 <script lang="ts">
 
-import {defineComponent, getCurrentInstance} from "vue";
+import {defineComponent, getCurrentInstance, onUpdated, ref} from "vue";
 import {DefineComponent} from "@vue/runtime-core";
 import {FormHelper} from "../helper";
 import FormStudio from "@@/FormStudio";
@@ -41,6 +41,7 @@ export default defineComponent({
   emits: ['onDelete', 'onActive'],
   setup(props: any, ctx: any) {
 
+    const refCom = ref();
     const inst = getCurrentInstance();
 
     function onDelete() {
@@ -52,6 +53,10 @@ export default defineComponent({
       ctx.emit('onActive')
     }
 
+    onUpdated(() => {
+      refCom.value!.$forceUpdate();
+    })
+
     function isGroup(group: FactoryGroup) {
       return FormStudio.getFactory(props.definition.type).group == group;
     }
@@ -61,6 +66,7 @@ export default defineComponent({
     }
 
     return {
+      refCom,
       getComponent,
       isGroup,
       FactoryGroup,

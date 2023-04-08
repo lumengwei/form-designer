@@ -17,7 +17,9 @@ export default defineComponent(
       setup() {
 
         function getComponent(type: string): DefineComponent {
-          return FormHelper.getEditor(type)
+          const editor = FormHelper.getEditor(type)
+          window.console.log(editor)
+          return editor;
         }
 
         return {
