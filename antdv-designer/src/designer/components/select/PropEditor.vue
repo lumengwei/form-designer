@@ -7,12 +7,12 @@
 <script lang="ts">
 
 import {defineComponent} from "vue";
-import {RadioProps} from "@@/props";
-import Factory from "@@/factory/CheckboxFactory";
+import {SelectProps} from "@@/props";
+import Factory from "@@/factory/SelectFactory";
 import OptionsEditor from "@/designer/widget/OptionsEditor.vue";
 
 function Definition() {
-  return {} as RadioProps
+  return {} as SelectProps
 }
 
 export default defineComponent({

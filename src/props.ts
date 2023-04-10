@@ -21,12 +21,7 @@ export type RateProps = {
 
 export type SelectProps = {
     placeholder: string;
-    options: {
-        label: string;
-        value: string;
-        checked: boolean;
-        disabled: boolean;
-    }[];
+    options: OptionType[];
 }
 
 export type TextAreaProps = {
