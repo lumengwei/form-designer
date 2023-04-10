@@ -8,7 +8,7 @@
   },
   "main": "./src/main.ts",
   "dependencies": {
-    "ant-design-vue": "3.2.15",
+    "ant-design-vue": "3.2.17",
     "jquery": "^3.4.0",
     "jquery-ui-dist": "^1.12.1",
     "vue": "^3.2.47",

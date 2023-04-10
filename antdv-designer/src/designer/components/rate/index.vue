@@ -3,7 +3,7 @@
 </template>
 <script lang="ts">
 import {Rate} from 'ant-design-vue';
-import Factory from '@@/factory/RadioFactory';
+import Factory from '@@/factory/RateFactory';
 import {RateProps} from '@@/props';
 import {defineComponent} from "vue";
 import {ComponentDefinition} from "@@/types";

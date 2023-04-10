@@ -18,7 +18,6 @@ export default defineComponent(
 
         function getComponent(type: string): DefineComponent {
           const editor = FormHelper.getEditor(type)
-          window.console.log(editor)
           return editor;
         }
 

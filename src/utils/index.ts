@@ -70,6 +70,20 @@ export function mergeObj2Obj(fieldPath: string, source: any, target: any) {
     mergeObject(fieldPath, value, target);
 }
 
+
+function isRefObj(value: any) {
+    switch (typeof value) {
+        case "bigint":
+        case "boolean":
+        case "number":
+        case "string":
+        case "undefined":
+            return false;
+        default:
+            return true;
+    }
+}
+
 /**
  *
  * @param fieldPath
@@ -90,7 +104,7 @@ export function mergeObject(fieldPath: string, value: any, obj: any) {
 
             if (co.hasOwnProperty(fieldName)) {
                 if (i == fields.length) {
-                    co[fieldName][arrIndex] = value;
+                    co[fieldName][arrIndex] = isRefObj(value) ? JSON.parse(JSON.stringify(value)) : value;
                 } else {
                     co = co[fieldName][arrIndex] || {};
                 }
@@ -101,7 +115,7 @@ export function mergeObject(fieldPath: string, value: any, obj: any) {
         } else if (co.hasOwnProperty(field)) {
             // 普通字段处理
             if (i == fields.length) {
-                co[field] = value;
+                co[field] = isRefObj(value) ? JSON.parse(JSON.stringify(value)) : value;
             } else {
                 co = co[field];
             }

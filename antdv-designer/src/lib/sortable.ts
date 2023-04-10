@@ -24,7 +24,6 @@ export function sortable<P extends ReactComponentProps<T>, T>($node: HTMLElement
             placeholder: 'form-placeholder-filed ',
             cancel: '.j_cancel-drag',
             stop(e: JQueryEventObject, ui: SortableUIParams) {
-                console.log('stop', e, ui)
                 if ($($node).children().length > limitSize!) {
                     $(ui.item).remove();
                     return;
@@ -57,7 +56,6 @@ export function sortable<P extends ReactComponentProps<T>, T>($node: HTMLElement
 
             },
             activate(e: JQueryEventObject, ui: SortableUIParams) {
-                console.log('activate', e, ui)
                 sourceIndex = $(ui.item).index();
             },
             out(e: JQueryEventObject, ui: SortableUIParams) {

@@ -1,3 +1,4 @@
+@border-color: #efefef;
 
 .widgetList {
   display: flex;
@@ -18,3 +19,21 @@
   cursor: move;
 }
 
+
+.optionsTools {
+  margin-bottom: 5px;
+}
+
+.options {
+  border-top: 1px solid @border-color;
+  border-left: 1px solid @border-color;
+
+  thead th,
+  tbody td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid @border-color;
+    border-right: 1px solid @border-color;
+    font-size: 12px;
+  }
+}

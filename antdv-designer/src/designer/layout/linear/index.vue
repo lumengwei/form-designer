@@ -3,7 +3,7 @@
     <ComponentRender
         v-if="definition.children"
         v-for="(it, index) in definition.children"
-        :key="it.type"
+        :key="it.type+'-'+it.id"
         :definition="it"
         v-on:on-delete="removeChild(index)"
         v-on:on-active="activeChild(index)"

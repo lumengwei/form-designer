@@ -1,14 +1,14 @@
 <template>
   <div>
-    <RadioGroup>
-      <a-radio
-          v-for="item in definition.props.options"
-          :disabled="item.disabled"
-          :value="item.value"
-          :key="item.value"
-      >
-        {{ item.label }}
-      </a-radio>
+    <RadioGroup :options="definition.props.options">
+<!--      <a-radio-->
+<!--          v-for="item in definition.props.options"-->
+<!--          :disabled="item.disabled"-->
+<!--          :value="item.value"-->
+<!--          :key="item.value"-->
+<!--      >-->
+<!--        {{ item.label }}-->
+<!--      </a-radio>-->
     </RadioGroup>
   </div>
 </template>

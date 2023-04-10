@@ -2,8 +2,9 @@ import React from "react";
 import {Button, Checkbox, Form, Input, Radio} from "antd";
 import {PropsEditor} from "./PropsEditor";
 import {OptionType} from "../../../../src/props";
-import {CloseOutlined, PlusOutlined} from "@ant-design/icons";
+import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 
+const styles = require('@@/style/component.module.less')
 
 type OptionGroupProps = {
     options: OptionType[]
@@ -35,35 +36,34 @@ export abstract class OptionGroupEditor<T extends OptionGroupProps> extends Prop
     protected renderOptions() {
         const definition = this.props.definition;
         const props: OptionGroupProps = definition.props!;
-        return props.options.map((item, index) => {
+        const opts = props.options.map((item, index) => {
             return (
-                <>
-                    <Form.Item
-                        label={index !== 0 ? null : "可选值：显示值 -- 真值 -- 默认-- 禁用"}
-                        style={{marginBottom: 0}}
-                    >
+                <tr>
+                    <td>
                         <Form.Item
                             name={`props.options[${index}].label`}
                             initialValue={item.label}
                             style={{
                                 display: 'inline-block',
-                                width: 'calc(50% - 55px)',
                                 marginBottom: 0,
                                 marginRight: '3px'
                             }}>
                             <Input/>
                         </Form.Item>
+                    </td>
+                    <td>
                         <Form.Item
                             name={`props.options[${index}].value`}
                             initialValue={item.value}
                             style={{
                                 display: 'inline-block',
-                                width: 'calc(50% - 55px)',
                                 marginBottom: 0,
                                 marginRight: '3px'
                             }}>
                             <Input/>
                         </Form.Item>
+                    </td>
+                    <td>
                         <Form.Item
                             name={`props.options[${index}].checked`}
                             initialValue={item.checked}
@@ -74,6 +74,8 @@ export abstract class OptionGroupEditor<T extends OptionGroupProps> extends Prop
                                 <Radio value={index}/>
                             </Radio.Group>
                         </Form.Item>
+                    </td>
+                    <td>
                         <Form.Item
                             name={`props.options[${index}].disabled`}
                             initialValue={item.disabled}
@@ -82,16 +84,59 @@ export abstract class OptionGroupEditor<T extends OptionGroupProps> extends Prop
                         >
                             <Checkbox/>
                         </Form.Item>
+                    </td>
+                    <td>
                         <Form.Item style={{display: 'inline-block', width: '48px', marginBottom: 0}}>
-                            <Button type="primary" shape="circle" icon={<PlusOutlined/>} size="small"
-                                    onClick={() => this.addOption(index)}/>
-                            {index !== 0 ? (<Button danger shape="circle" icon={<CloseOutlined/>} size="small"
+                            {/*<Button type="primary" shape="circle" icon={<PlusOutlined/>} size="small"*/}
+                            {/*        onClick={() => this.addOption(index)}/>*/}
+                            {index !== 0 ? (<Button type="text" danger icon={<DeleteOutlined/>} size="small"
                                                     onClick={() => this.removeOption(index)}/>
                             ) : null}
                         </Form.Item>
-                    </Form.Item>
-                </>
+                    </td>
+                </tr>
             );
         })
+
+        return (
+            <div>
+                <div className={styles.optionsTools}>
+                    <Button size="small" icon={<PlusOutlined/>}
+                            onClick={() => this.addOption(props.options.length - 1)}>
+                        添加
+                    </Button>
+                </div>
+                <table className={styles.options}>
+                    <colgroup>
+                        <col style={{width: '200px'}}/>
+                        <col style={{width: '200px'}}/>
+                        <col style={{width: '50px'}}/>
+                        <col style={{width: '50px'}}/>
+                        <col style={{width: '50px'}}/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>
+                            显示值
+                        </th>
+                        <th>
+                            真值
+                        </th>
+                        <th>
+                            默认
+                        </th>
+                        <th>
+                            禁用
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {opts}
+                    </tbody>
+                </table>
+            </div>
+        )
     }
 }
