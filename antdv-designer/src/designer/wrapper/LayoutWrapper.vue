@@ -44,11 +44,13 @@ export default {
   },
   setup(props: any, ctx: any) {
 
-    function onActive() {
-      ctx.emit('onActive', !props.active)
+    function onActive(e: Event) {
+      e.stopPropagation();
+      ctx.emit('onActive')
     }
 
-    function onDelete() {
+    function onDelete(e: Event) {
+      e.stopPropagation();
       ctx.emit('onDelete')
     }
 

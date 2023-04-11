@@ -6,8 +6,6 @@
         :key="it.type+'-'+it.id"
         :definition="it"
         v-on:on-delete="removeChild(index)"
-        v-on:on-active="activeChild(index)"
-        :active="activeIndex == index"
     />
   </div>
 </template>
@@ -47,8 +45,6 @@ export default defineComponent({
   },
   setup() {
     const refNode = ref<HTMLElement | null>(null);
-    const isActive = ref<boolean>(false);
-    const activeIndex = ref(0);
     const groupMethods = useVueComponentGroup();
 
     onMounted(() => {
@@ -58,17 +54,9 @@ export default defineComponent({
       }
     });
 
-    function activeChild(index: number) {
-      activeIndex.value = index;
-    }
-
     return {
       refNode,
-      isActive,
       ...groupMethods,
-      activeChild,
-      activeIndex,
-      FactoryGroup
     };
   },
 })

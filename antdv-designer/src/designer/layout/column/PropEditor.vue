@@ -1,7 +1,7 @@
 <template>
-  <a-form-item label="数量">
-    <a-input-number v-model:value="props.count"
-                    v-on:change="fieldChange('props.count')"
+  <a-form-item label="列数">
+    <a-input-number v-model:value="props.columnNum"
+                    v-on:change="fieldChange('props.columnNum')"
                     :min="1"
     />
   </a-form-item>
@@ -11,11 +11,11 @@
 
 import {defineComponent} from "vue";
 import {Form, InputNumber} from 'ant-design-vue'
-import {RateProps} from "@@/props";
-import Factory from "@@/factory/RateFactory";
+import {ColumnLayoutProps} from "@@/props";
+import Factory from "@@/factory/ColumnLayoutFactory";
 
 function Definition() {
-  return {} as RateProps
+  return {} as ColumnLayoutProps
 }
 
 export default defineComponent({

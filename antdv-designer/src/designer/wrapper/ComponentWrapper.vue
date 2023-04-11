@@ -30,11 +30,13 @@ export default defineComponent({
   emits: ['onDelete', 'onActive'],
   setup(props: any, ctx: any) {
 
-    function onDelete() {
+    function onDelete(e: Event) {
+      e.stopPropagation();
       ctx.emit('onDelete')
     }
 
-    function onActive() {
+    function onActive(e: Event) {
+      e.stopPropagation();
       ctx.emit('onActive')
     }
 

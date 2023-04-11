@@ -51,7 +51,7 @@ class FormStudio {
         return this._definition;
     }
 
-    get fromDef() {
+    get formDef() {
         return this._formDef;
     }
 

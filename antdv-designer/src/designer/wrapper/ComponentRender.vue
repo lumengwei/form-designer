@@ -4,7 +4,7 @@
       :title="definition.title"
       v-on:on-delete="onDelete"
       v-on:on-active="onActive"
-      :active="active"
+      :active="isActive(definition)"
   >
     <Component :is="getComponent(definition.type)" :definition="definition" ref="refCom"/>
   </ComponentWrapper>
@@ -12,7 +12,7 @@
       v-else
       v-on:on-delete="onDelete"
       v-on:on-active="onActive"
-      :active="active"
+      :active="isActive(definition)"
   >
     <Component :is="getComponent(definition.type)" :definition="definition" ref="refCom"/>
   </LayoutWrapper>
@@ -35,10 +35,9 @@ export default defineComponent({
     ComponentWrapper
   },
   props: {
-    active: Boolean,
     definition: Object
   },
-  emits: ['onDelete', 'onActive'],
+  emits: ['onDelete'],
   setup(props: any, ctx: any) {
 
     const refCom = ref();
@@ -49,13 +48,16 @@ export default defineComponent({
     }
 
     function onActive() {
-      FormHelper.activeComponentIns = inst?.proxy
-      ctx.emit('onActive')
+      FormHelper.activeComponentIns = inst?.proxy;
     }
 
     onUpdated(() => {
       refCom.value!.$forceUpdate();
     })
+
+    function isActive(it: any) {
+      return FormHelper.activeComponentId == it.id;
+    }
 
     function isGroup(group: FactoryGroup) {
       return FormStudio.getFactory(props.definition.type).group == group;
@@ -71,7 +73,8 @@ export default defineComponent({
       isGroup,
       FactoryGroup,
       onDelete,
-      onActive
+      onActive,
+      isActive
     }
   }
 })

@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, getCurrentInstance, onMounted} from "vue";
 import {FormHelper} from "@/designer/helper";
 import LayoutWrapper from "@/designer/wrapper/LayoutWrapper.vue";
 import {ComponentDefinition, FormDefinition} from "@@/types";
@@ -34,6 +34,11 @@ export default defineComponent({
     definition: Definition
   },
   setup() {
+    onMounted(() => {
+      const inst = getCurrentInstance();
+      FormHelper.formView = inst?.proxy;
+    })
+
     function getComponent(type: string) {
       return FormHelper.getComponent(type)
     }

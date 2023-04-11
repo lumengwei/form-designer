@@ -36,8 +36,6 @@ export default defineComponent({
 
     let old =  props.definition.props.options
     onUpdated(() => {
-      console.log('checkbox update', props.definition.props.options)
-      console.log('checkbox update', props.definition.props.options == old)
       old =  props.definition.props.options
     })
     return {}

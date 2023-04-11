@@ -23,7 +23,7 @@
           <ComponentPropsEditor/>
         </tab-pane>
         <tab-pane tab="表单属性" key='2'>
-          <!--          <FormPropsEditor definition={FormStudio.fromDef}/>-->
+          <FormPropsEditor/>
         </tab-pane>
       </Tabs>
     </div>
@@ -38,10 +38,12 @@ import FormStudio from "@@/FormStudio";
 import {FactoryGroup} from "@@/types";
 import FormWidget from "@/designer/FormWidget.vue";
 import ComponentPropsEditor from "@/designer/ComponentPropsEditor.vue";
+import FormPropsEditor from "@/designer/FormPropsEditor.vue";
 
 export default defineComponent({
   name: "FormDesigner",
   components: {
+    FormPropsEditor,
     ComponentPropsEditor,
     FormWidget,
     Tabs,
@@ -62,7 +64,7 @@ export default defineComponent({
     return {
       layoutList,
       compList,
-      fromDef: FormStudio.fromDef,
+      fromDef: FormStudio.formDef,
       definition: FormStudio.definition,
       activeKey: ref('1'),
       activeKeyRight: ref('1')

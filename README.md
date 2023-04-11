@@ -1,126 +1,83 @@
-
 <h1 align="center">Form Designer</h1>
 
 <div align="center">
 
-基于<a href="https://ant.design/" target="_blank" rel="noopener noreferrer">Ant Design</a> 和 <a href="http://jqueryui.com/" target="_blank" rel="noopener noreferrer">jQuery UI</a> 的表单设计器
+基于<a href="https://ant.design/" target="_blank" rel="noopener noreferrer">Ant Design</a>
+和 <a href="http://jqueryui.com/" target="_blank" rel="noopener noreferrer">jQuery UI</a> 的表单设计器
 
-![](https://github.com/lumengwei/form-designer/blob/master/preview.png)
+![](https://github.com/lumengwei/form-designer/blob/master/preview-react.png)
 
 </div>
 
+### 特性
 
-## 概念
-- Comonent 组件
+- [x] React
+- [x] Vue 3.x
+- [x] Typescript
+- [x] 统一的组件定义，对Vue 和React 的实现提供一个统一的组件定义描述
+
+### 概念
+
+- Component 组件
 - Layout 布局，一种特殊的Component
 - Component Editor 组件属性编辑器
-- Component Factory 组件工厂，创建Component 和 Component Editor
+- Component Factory 提供组件定义
 
+### 扩展组件
 
-## 扩展组件
+#### 定义组件属性类型
 
-### 创建一个组件
+在src/props.ts 文件中定义组件属性
 
-组件的定义是通过<b>this.props.definition</b>来传递的。definition的格式如下：
 ```
-{
-  type: 'Checkbox', // 必须存在
-  title: '多选框',  // 必须存在
-  props:{
-    'columnNum':2
-  },
-  children:[// 只有在Layout 中出现该属性
-    componentDefinition,
-    ...
-  ]
-}
-```
-
-在this.props 中还提供了<b>renderCounter</b>属性，每次组件的刷新该属性值会自增。definition的结构可能是深层次的，然而在Ant Design提供的React 组件中的<a href="https://reactjs.org/docs/react-component.html#shouldcomponentupdate" target="_blank" rel="noopener noreferrer">shouldComponentUpdate(nextProps,nextState)</a>方法的实现是对象的浅层比较，在某些情况下Component Editor对组件属性的改变不会导致组件的刷新。可以通过renderCounter来解决组件不刷新的问题。
-```
-/**
- * 组件
- */
-@ComponentWrapper
-class CheckboxComponent extends Component{
-
-  render(){
-    const { definition :{props}, renderCounter} = this.props;
-    const defaultValue = props.options.filter(item=>{
-      return item.checked;
-    }).map(item=>{
-      return item.value;
-    });
-
-    return (
-      <CheckboxGroup options={props.options} value={defaultValue} renderCounter={renderCounter} />
-    )
-  }
+export type RateProps = {
+    count: number
 }
 
 ```
+
+#### 定义一个ComponentFactory
+
+在src/factory目录下定义。 提供了makeFieldId()和makeComponentId()两个方法用于生成id
+
 ```
+class RateFactory implements FieldFactory<RateProps> {
+    readonly type = "Rate"
+    readonly group = FactoryGroup.Component;
+    title = "评分"
 
-/**
- * 组件编辑器
- */
-@ComponentEditor
-class InputComponentEditor extends PureComponent{
-
-   /**
-    * 当编辑器改变时，此方法被调用
-    */
-  onChange(_, allValues){
-    if(!isNull(allValues.minLength, allValues.maxLength) && allValues.minLength > allValues.maxLength){
-      message.warn(`最小长度${allValues.minLength}应该小于最大长度${allValues.maxLength}`);
-      return false;// 阻止组件的刷新
+    /**
+     * 初始化一个组件定义
+     * @returns {{type: string, title: string}}
+     */
+    createComponentDefinition() {
+        return {
+            id: makeComponentId(),
+            type: this.type,
+            title: this.title,
+            fieldDef: {
+                fieldId: makeFieldId(),
+                fieldType: 'varchar' as FieldType,
+                fieldName: '',
+            },
+            props: {
+                count: 5
+            },
+        }
     }
-
-    const { definition:{props}, definition } = this.props;
-    definition.name = getErasure(allValues, 'name');
-    definition.title = getErasure(allValues, 'title');
-    Object.assign(props, allValues);
-    props.minLength = guaranteeNumber(props.minLength, 0, Number.MAX_VALUE);
-    props.maxLength = guaranteeNumber(props.maxLength, 0, Number.MAX_VALUE);
-
-    return true;
-  }
-
-  render(){
-   return (
-     <PropsEditor {...this.props} lengthLimit placeholder/>
-   );
-  }
 }
 
+export default new RateFactory();
 ```
+#### 创建一个vue组件或布局
 
-```
-/**
- * 组件工厂
- */
-@FactoryRegister(InputComponent,InputComponentEditor)
-class InputFactory {
-  type="Input"      // 必须存在
+- 在src/antdv-designer/src/designer/components目录下添加vue组件
+- 在src/antdv-designer/src/designer/layout目录下添加vue布局
 
-  title="单行输入框"    // 必须存在
 
-  /**
-   * 初始化一个组件定义
-   * @returns {{type: string, title: string}}
-   */
-  createComponentDefinition(){
-    return {
-      type: this.type,
-      title: this.title,
-      props:{
-        placeholder: '请输入'
-      },
-    }
-  }
-}
+#### 创建一个React组件或布局
 
-export default InputFactory;
-```
+- 在src/antd-designer/src/designer/components目录下添加React组件
+- 在src/antd-designer/src/designer/layout目录下添加React布局
 
-在compoents/index.tsx 或 layout/index.tsx 引入自己组件
+

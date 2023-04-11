@@ -67,7 +67,7 @@ class FormDesigner extends PureComponent {
                     </Tabs>
                 </div>
                 <div className="form-view-wrapper">
-                    <FormView formDefinition={FormStudio.fromDef}/>
+                    <FormView formDefinition={FormStudio.formDef}/>
                 </div>
 
                 <div className="form-editor">
@@ -76,7 +76,7 @@ class FormDesigner extends PureComponent {
                             <ComponentPropsEditor/>
                         </Tabs.TabPane>
                         <Tabs.TabPane tab="表单属性" key='2'>
-                            <FormPropsEditor definition={FormStudio.fromDef}/>
+                            <FormPropsEditor definition={FormStudio.formDef}/>
                         </Tabs.TabPane>
                     </Tabs>
                 </div>

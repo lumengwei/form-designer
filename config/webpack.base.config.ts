@@ -15,8 +15,6 @@ const envKeys = Object.keys(env).reduce((prev: any, next) => {
 })
 
 
-console.log(envKeys)
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('mini-css-extract-plugin');
 

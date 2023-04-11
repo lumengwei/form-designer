@@ -8,6 +8,7 @@
     >
       <a-form-item label="字段"
                    name="fieldDef.fieldName"
+                   v-if="formModel.fieldDef != null"
                    :rules="fieldNameRules"
       >
         <Input placeholder="字段"
@@ -18,6 +19,7 @@
       <a-form-item
           label="类型"
           name="fieldDef.fieldType"
+          v-if="formModel.fieldDef != null"
       >
         <Select :options="fieldTypeList"
                 v-on:change="onSelectType"
@@ -27,6 +29,7 @@
       <a-form-item
           label="长度或精度"
           name="fieldDef.length"
+          v-if="formModel.fieldDef != null"
       >
         <InputNumber placeholder="长度或精度"
                      :disabled="lengthDisabled"
@@ -37,6 +40,7 @@
       <a-form-item
           label="小数"
           name="fieldDef.scale"
+          v-if="formModel.fieldDef != null"
       >
         <InputNumber
             placeholder="小数"
@@ -49,6 +53,7 @@
           label="标题"
           name="title"
           :rules="titleRules"
+          v-if="formModel.fieldDef != null"
       >
         <Input placeholder="标题"
                v-model:value="formModel.title"
@@ -125,7 +130,7 @@ export default defineComponent({
       if (refForm.value) {
         // Fix: form 不支持 `a.b.c` 的格式
         formModel.value[fieldPath] = getFieldValue(formModel.value, fieldPath)
-        refForm.value.validate([fieldPath]).then(res=>{
+        refForm.value.validate([fieldPath]).then(res => {
           window.console.log(res)
           mergeObj2Obj(fieldPath, formModel.value, definition.value)
           FormHelper.activeComponentIns!.$forceUpdate()
