@@ -15,7 +15,7 @@ import installModule from './designer/installModule';
 import FormDesigner from "@/designer/FormDesigner.vue";
 import FormStudio from "@@/FormStudio";
 
-installModule(['components', 'layout']);
+installModule();
 
 export default defineComponent({
   name: 'App',

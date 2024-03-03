@@ -1,9 +1,10 @@
 import $ from "./jquery";
 import {FormHelper} from "../designer/helper";
-import FormStudio from "../../../src/FormStudio";
+import FormStudio from "@@/FormStudio";
 import {ComponentGroup} from "../designer/ReactComponent";
 import {ReactComponentGroupState, ReactComponentProps} from "../designer/types";
 import SortableUIParams = JQueryUI.SortableUIParams;
+import {ComponentType} from "@@/types";
 
 /**
  *
@@ -13,7 +14,7 @@ import SortableUIParams = JQueryUI.SortableUIParams;
  * @param limitSize 子元素最大个数
  * @param limitToDisable 如果子元素满额时，禁用sortable
  */
-export function sortable<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>>($node: HTMLElement | null
+export function sortable<P extends ReactComponentProps<T>, T extends ComponentType, S extends ReactComponentGroupState<T>>($node: HTMLElement | null
     , componentInst: ComponentGroup<P, T, S>, slotIndex?: number, limitSize?: number, limitToDisable?: boolean
 ) {
     if ($node) {
@@ -47,7 +48,7 @@ export function sortable<P extends ReactComponentProps<T>, T, S extends ReactCom
 
                 }
             },
-            over(e: JQueryEventObject, ui: SortableUIParams) {
+            over(_e: JQueryEventObject, _ui: SortableUIParams) {
                 if ($($node).children().length > limitSize!) {
                     return;
                 } else {
@@ -59,9 +60,9 @@ export function sortable<P extends ReactComponentProps<T>, T, S extends ReactCom
                 console.log('activate', e, ui)
                 sourceIndex = $(ui.item).index();
             },
-            out(e: JQueryEventObject, ui: SortableUIParams) {
+            out(_e: JQueryEventObject, _ui: SortableUIParams) {
             },
-            receive(e: JQueryEventObject, ui: SortableUIParams) {
+            receive(_e: JQueryEventObject, _ui: SortableUIParams) {
             },
         });
     } else {
@@ -70,7 +71,7 @@ export function sortable<P extends ReactComponentProps<T>, T, S extends ReactCom
 }
 
 
-export function draggable(node: HTMLElement | null, factoryType: string) {
+export function draggable(node: HTMLElement | null, factoryType: ComponentType) {
     if (node) {
         $(node).draggable({
             connectToSortable: ".ui-sortable",

@@ -1,8 +1,8 @@
-import {PureComponent} from 'react';
+import { PureComponent} from 'react';
 import {ReactComponentGroupState, ReactComponentProps, ReactComponentState} from "./types";
-import {ComponentDefinition} from "../../../src/types";
+import {ComponentDefinition, ComponentType} from "@@/types";
 
-export class ReactComponent<P extends ReactComponentProps<T>, T, S extends ReactComponentState> extends PureComponent<P, S> {
+export class ReactComponent<P extends ReactComponentProps<T>, T extends ComponentType, S extends ReactComponentState> extends PureComponent<P, S> {
     override componentWillMount() {
         const {definition: {type, title}} = this.props;
         if (!type || !title) {
@@ -22,7 +22,7 @@ export class ReactComponent<P extends ReactComponentProps<T>, T, S extends React
     }
 }
 
-export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>> extends ReactComponent<P, T, S> {
+export class ComponentGroup<P extends ReactComponentProps<T>, T extends ComponentType, S extends ReactComponentGroupState<T>> extends ReactComponent<P, T, S> {
 
     override componentWillMount() {
         super.componentWillMount();
@@ -93,6 +93,6 @@ export class ComponentGroup<P extends ReactComponentProps<T>, T, S extends React
 
 }
 
-export class Layout<P extends ReactComponentProps<T>, T, S extends ReactComponentGroupState<T>> extends ComponentGroup<P, T, S> {
+export class Layout<P extends ReactComponentProps<T>, T extends ComponentType, S extends ReactComponentGroupState<T>> extends ComponentGroup<P, T, S> {
 
 }

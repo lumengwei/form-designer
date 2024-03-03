@@ -1,16 +1,16 @@
-import type {ComponentDefinition} from "@@/types";
+import type {ComponentDefinition, ComponentType} from "@@/types";
 import {Component, ReactElement} from "react";
 
-export interface ComponentFactoryRender<T, P> {
+export interface ComponentFactoryRender<T extends ComponentType, P> {
     renderComponent(definition: ComponentDefinition<T>): (props: P) => ReactElement;
 
     renderEditor(definition: ComponentDefinition<T>): (props: P) => ReactElement;
 }
 
-export interface ComponentEditor<P extends ReactComponentProps<T>, T> extends Component<P> {
+export interface ComponentEditor<P extends ReactComponentProps<T>, T extends ComponentType> extends Component<P> {
 }
 
-export interface ReactComponentProps<T> {
+export interface ReactComponentProps<T extends ComponentType> {
     definition: ComponentDefinition<T>;
 
     onRemove(): void;
@@ -21,7 +21,7 @@ export interface ReactComponentState {
     renderCounter: number;
 }
 
-export interface ReactComponentGroupState<T> extends ReactComponentState {
+export interface ReactComponentGroupState<T extends ComponentType> extends ReactComponentState {
     definition: ComponentDefinition<T> | null;
 }
 

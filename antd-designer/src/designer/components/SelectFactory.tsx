@@ -2,15 +2,12 @@ import React from 'react';
 import {Select} from 'antd';
 import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
-import {SelectProps} from "../../../../src/props";
 import {ReactComponentProps, ReactComponentState} from "../types";
-import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
-import {makeComponentId, makeFieldId} from "../../../../src/utils";
 import {OptionGroupEditor} from "../widgets/OptionGroupEditor";
 import SelectFactory from "@@/factory/SelectFactory";
 
 @ComponentWrapper
-class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, SelectProps, ReactComponentState> {
+class SelectComponent extends ReactComponent<ReactComponentProps<'Select'>, 'Select', ReactComponentState> {
 
     renderOptions() {
         const {definition: {props}} = this.props;
@@ -42,7 +39,7 @@ class SelectComponent extends ReactComponent<ReactComponentProps<SelectProps>, S
     }
 }
 
-class SelectComponentEditor extends OptionGroupEditor<SelectProps> {
+class SelectComponentEditor extends OptionGroupEditor<'Select'> {
 
     doRender() {
         return (

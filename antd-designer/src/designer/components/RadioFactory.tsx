@@ -2,16 +2,14 @@ import React from 'react';
 import {Radio,} from 'antd';
 import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
-import {RadioProps} from "../../../../src/props";
+import {RadioProps} from "@@/props";
 import {ReactComponentProps, ReactComponentState} from "../types";
-import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
-import {makeComponentId, makeFieldId} from "../../../../src/utils";
 import {OptionGroupEditor} from "../widgets/OptionGroupEditor";
 import RadioFactory from "@@/factory/RadioFactory";
 
 
 @ComponentWrapper
-class RadioComponent extends ReactComponent<ReactComponentProps<RadioProps>, RadioProps, ReactComponentState> {
+class RadioComponent extends ReactComponent<ReactComponentProps<'Radio'>, 'Radio', ReactComponentState> {
 
     override render() {
         const definition = this.props.definition;
@@ -33,7 +31,7 @@ class RadioComponent extends ReactComponent<ReactComponentProps<RadioProps>, Rad
     }
 }
 
-class RadioComponentEditor extends OptionGroupEditor<RadioProps> {
+class RadioComponentEditor extends OptionGroupEditor<'Radio'> {
 
     doRender() {
         return (

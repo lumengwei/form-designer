@@ -1,33 +1,9 @@
-import {ComponentDefinition} from "@@/types";
-import {ComponentInternalInstance} from "@vue/runtime-core";
+import { ComponentDefinition, ComponentType } from '@@/types';
+import { ComponentInternalInstance } from '@vue/runtime-core';
 
-export interface ComponentFactoryRender<T, P> {
-    renderComponent(definition: ComponentDefinition<T>): (props: P) => ComponentInternalInstance;
+export interface VueComponentProps<T extends ComponentType> {
+  definition: ComponentDefinition<T>;
 
-    renderEditor(definition: ComponentDefinition<T>): (props: P) => ComponentInternalInstance;
+  onRemove?: () => void;
 }
 
-export interface ComponentEditor<P extends VueComponentProps<T>, T> extends ComponentInternalInstance {
-}
-
-export interface VueComponentProps<T> {
-    definition: ComponentDefinition<T>;
-
-    onRemove?: () => void;
-}
-
-
-export interface ReactComponentState {
-    renderCounter: number;
-}
-
-export interface ReactComponentGroupState<T> extends ComponentInternalInstance {
-    definition: ComponentDefinition<T> | null;
-}
-
-
-export interface Activatable {
-    onActive(): void;
-
-    unActive(): void;
-}

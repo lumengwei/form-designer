@@ -4,10 +4,11 @@ import className from 'classnames';
 import createReactClass from 'create-react-class';
 import {Activatable, ReactComponentProps} from "../types";
 import {FormHelper} from "../helper";
+import {ComponentType} from "@@/types";
 
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
-function ComponentWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProps<T>>) {
+function ComponentWrapper<T extends ComponentType>(WrappedComponent: ComponentClass<ReactComponentProps<T>>) {
     const componentLayout = createReactClass({
         displayName: 'ComponentWrapper',
         getInitialState() {

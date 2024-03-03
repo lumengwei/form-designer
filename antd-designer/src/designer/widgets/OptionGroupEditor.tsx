@@ -1,29 +1,48 @@
 import React from "react";
 import {Button, Checkbox, Form, Input, Radio} from "antd";
 import {PropsEditor} from "./PropsEditor";
-import {OptionType} from "../../../../src/props";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
+import {ComponentType} from '@@/types'
+import {ComponentProps, OptionType} from "@@/props";
 
 const styles = require('@@/style/component.module.less')
 
-type OptionGroupProps = {
-    options: OptionType[]
+type OptionFilter<T extends ComponentType> = ComponentProps[T] extends {options: OptionType[]} ? T: never;
+
+type FilterPick<Source, Condition> = Pick<
+    Source,
+    {
+        [K in keyof Source]: Source[K] extends Condition ? K : never
+    }[keyof Source]
+>;
+
+type FilterOmit<Source, Condition> = Omit<
+    Source,
+    {
+        [K in keyof Source]: Source[K] extends Condition ? K : never
+    }[keyof Source]
+>;
+
+type CP = {
+    [P in ComponentType]: OptionFilter<P>
 }
 
-export abstract class OptionGroupEditor<T extends OptionGroupProps> extends PropsEditor<T> {
+type cs = keyof FilterOmit<CP, never>;
+
+export abstract class OptionGroupEditor<T extends cs> extends PropsEditor<OptionFilter<T>> {
 
     protected removeOption(index: number) {
         const definition = this.props.definition;
-        const props: OptionGroupProps = definition.props!;
-        props.options.splice(index, 1);
+        const props = definition.props!;
+        props.options?.splice(index, 1);
         this.forceUpdate();
         this.refreshFormView();
     }
 
     protected addOption(index: number) {
         const definition = this.props.definition;
-        const props: OptionGroupProps = definition.props!;
-        props.options.splice(index + 1, 0, {
+        const props = definition.props!;
+        props.options?.splice(index + 1, 0, {
             label: `显示值${index + 1}`,
             value: `真值${index + 1}`,
             checked: false,
@@ -35,8 +54,8 @@ export abstract class OptionGroupEditor<T extends OptionGroupProps> extends Prop
 
     protected renderOptions() {
         const definition = this.props.definition;
-        const props: OptionGroupProps = definition.props!;
-        const opts = props.options.map((item, index) => {
+        const props = definition.props!;
+        const opts = props.options?.map((item, index) => {
             return (
                 <tr>
                     <td>
@@ -102,7 +121,7 @@ export abstract class OptionGroupEditor<T extends OptionGroupProps> extends Prop
             <div>
                 <div className={styles.optionsTools}>
                     <Button size="small" icon={<PlusOutlined/>}
-                            onClick={() => this.addOption(props.options.length - 1)}>
+                            onClick={() => this.addOption(props.options?.length - 1)}>
                         添加
                     </Button>
                 </div>

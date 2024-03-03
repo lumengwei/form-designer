@@ -1,42 +1,50 @@
 export type OptionType = {
-    label: string;
-    value: string;
-    checked: boolean;
-    disabled: boolean;
-}
-
+  label: string;
+  value: string;
+  checked: boolean;
+  disabled: boolean;
+};
 
 export type CheckboxProps = {
-    options: OptionType[];
+  options: OptionType[];
 };
 
 export type RadioProps = {
-    options: OptionType[];
+  options: OptionType[];
 };
 
-
 export type RateProps = {
-    count: number
-}
+  count: number;
+};
 
 export type SelectProps = {
-    placeholder: string;
-    options: OptionType[];
-}
+  placeholder: string;
+  options: OptionType[];
+};
 
 export type TextAreaProps = {
-    placeholder: string;
-}
+  placeholder: string;
+};
 
 export type LinearLayoutProps = {
-    direction: 'row' | 'column'
+  direction: 'row' | 'column';
 };
 
 export type ColumnLayoutProps = {
-    columnNum: number
+  columnNum: number;
 };
-
 
 export type InputProps = {
-    placeholder: string
+  placeholder: string;
 };
+
+export interface ComponentProps {
+  Checkbox: CheckboxProps;
+  ColumnLayout: ColumnLayoutProps;
+  Input: InputProps;
+  LinearLayout: LinearLayoutProps;
+  Radio: RadioProps;
+  Rate: RateProps;
+  Select: SelectProps;
+  TextArea: TextAreaProps;
+}

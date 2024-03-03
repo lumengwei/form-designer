@@ -2,8 +2,7 @@ import React from 'react';
 import {Form, InputNumber} from 'antd';
 import {Layout} from '../ReactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
-import FormStudio from "../../../../src/FormStudio";
-import {ColumnLayoutProps} from "../../../../src/props";
+import FormStudio from "@@/FormStudio";
 import {ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
 import {sortable} from "../../lib/sortable";
@@ -12,7 +11,7 @@ import ColumnLayoutFactory from "@@/factory/ColumnLayoutFactory";
 
 
 @LayoutWrapper()
-class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, ColumnLayoutProps, ReactComponentGroupState<ColumnLayoutProps>> {
+class ColumnLayout extends Layout<ReactComponentProps<'ColumnLayout'>, 'ColumnLayout', ReactComponentGroupState<'ColumnLayout'>> {
 
     renderColumns() {
 
@@ -67,7 +66,7 @@ class ColumnLayout extends Layout<ReactComponentProps<ColumnLayoutProps>, Column
     }
 }
 
-class ColumnComponentEditor extends PropsEditor<ColumnLayoutProps> {
+class ColumnComponentEditor extends PropsEditor<'ColumnLayout'> {
 
     doRender() {
         const {definition: {props}} = this.props;

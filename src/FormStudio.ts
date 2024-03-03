@@ -1,67 +1,81 @@
-import {ComponentDefinition, ComponentFactory, FactoryGroup, FormDefinition} from './types';
-
+import {
+  ComponentDefinition,
+  ComponentFactory,
+  ComponentType,
+  FactoryGroup,
+  FormDefinition,
+} from './types';
 
 class FormStudio {
-    private factoryList: ComponentFactory<any>[] = [];
-    private factoryStore = new Map<string, ComponentFactory<any>>();
-    private _definition: ComponentDefinition<any> | null = null;
-    private _formDef: FormDefinition = {
-        title: '',
-        description: '',
-        width: ''
+  private _factoryList: ComponentFactory<any>[] = [];
+  private _factoryStore: Map<ComponentType, ComponentFactory<any>> = new Map<
+    ComponentType,
+    ComponentFactory<any>
+  >();
+  private _definition: ComponentDefinition<any> | undefined;
+  private _formDef: FormDefinition = {
+    title: '',
+    description: '',
+    width: '',
+  };
+
+  /**
+   * 注册组件工厂
+   * @param factory
+   */
+  registerFactory<T extends ComponentType>(factory: ComponentFactory<T>) {
+    if (this._factoryStore.has(factory.type)) {
+      console.log(`[warn] factory ${factory.type} is exist, ignore`);
+      return;
+    }
+
+    this._factoryStore.set(factory.type, factory);
+    this._factoryList.push(factory);
+
+    if (factory.type == 'LinearLayout') {
+      this._definition = factory.createComponentDefinition() as ComponentDefinition<any>;
+    }
+  }
+
+  getFactoryByGroup(group: FactoryGroup): ComponentFactory<any>[] {
+    return this._factoryList.filter((it) => it.group == group);
+  }
+
+  /**
+   * 根据类型获取工厂
+   * @param factoryType
+   * @returns {*}
+   */
+  getFactory<T extends ComponentType>(factoryType: T): ComponentFactory<T> {
+    return this._factoryStore.get(factoryType) as ComponentFactory<T>;
+  }
+
+  get definition() {
+    return this._definition;
+  }
+
+  set definition(val: ComponentDefinition<any> | undefined) {
+    this._definition = val;
+  }
+
+  get formDef() {
+    return this._formDef;
+  }
+
+  set formDef(val: FormDefinition) {
+    this._formDef = val;
+  }
+
+  get factoryList() {
+    return this._factoryList;
+  }
+
+  getJsonData() {
+    return {
+      props: JSON.parse(JSON.stringify(this._definition)),
+      form: JSON.parse(JSON.stringify(this._formDef)),
     };
-
-
-    /**
-     * 注册组件工厂
-     * @param factory
-     */
-    registerFactory<T>(factory: ComponentFactory<T>) {
-        if (this.factoryStore.has(factory.type)) {
-            console.log(`[warn] factory ${factory.type} is exist, ignore`);
-            return;
-        }
-
-        this.factoryStore.set(factory.type, factory);
-        this.factoryList.push(factory);
-
-        if (factory.type == 'LinearLayout') {
-            this._definition = factory.createComponentDefinition() as ComponentDefinition<any>;
-        }
-    }
-
-    getFactoryList(group: FactoryGroup): ComponentFactory<any>[] {
-        return this.factoryList.filter(it => it.group == group)
-    }
-
-    /**
-     * 根据类型获取工厂
-     * @param factoryType
-     * @returns {*}
-     */
-    getFactory<T>(factoryType: string): ComponentFactory<T> {
-        return this.factoryStore.get(factoryType) as ComponentFactory<T>;
-    }
-
-    factoryFilter(filter: (it: ComponentFactory<any>) => boolean) {
-        return this.factoryList.filter(filter);
-    }
-
-    get definition() {
-        return this._definition;
-    }
-
-    get formDef() {
-        return this._formDef;
-    }
-
-
-    getJsonData() {
-        return {
-            props: JSON.parse(JSON.stringify(this._definition)),
-            form: JSON.parse(JSON.stringify(this._formDef)),
-        };
-    }
+  }
 }
 
 export default new FormStudio();

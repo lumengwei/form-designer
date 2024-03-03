@@ -6,6 +6,7 @@
     "start": "npx webpack serve"
   },
   "dependencies": {
+    "sortablejs": "^1.15.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -38,6 +39,7 @@
     "eslint-plugin-import": "^2.27.5",
     "webpack-merge": "^5.8.0",
     "dotenv": "^16.0.3",
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.0",
+    "@types/sortablejs": "^1.10.6"
   }
 }

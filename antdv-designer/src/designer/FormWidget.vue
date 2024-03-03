@@ -1,39 +1,25 @@
 <template>
-  <div
-      title
-      class="widgetItem"
-      draggable="true"
-      ref="refNode"
-  >
+  <div title class="widgetItem" draggable="true">
     {{ title }}
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue';
-import {draggable} from "@/lib/sortable";
+  import { defineComponent } from 'vue';
 
-export default defineComponent({
-  name: 'FormWidget',
-  props: {
-    type: String,
-    title: String,
-  },
+  export default defineComponent({
+    name: 'FormWidget',
+    props: {
+      type: String,
+      title: String,
+    },
 
-  setup(props) {
-    const refNode = ref<HTMLElement | null>(null);
-
-    onMounted(() => {
-      draggable(refNode.value, props.type!)
-    });
-
-    return {
-      refNode,
-    };
-  },
-})
+    setup(props) {
+      return {};
+    },
+  });
 </script>
 
 <style scoped lang="less">
-@import "@@/style/component.less";
+  @import '@@/style/component.less';
 </style>

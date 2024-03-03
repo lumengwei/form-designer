@@ -99,14 +99,10 @@
 
 <script lang="ts">
 
-import {defineComponent} from "vue";
+import {defineComponent, PropType} from "vue";
 import {Button, Checkbox, Form, Input, Radio} from 'ant-design-vue'
 import {DeleteOutlined, PlusOutlined} from '@ant-design/icons-vue'
 import {OptionType} from "@@/props";
-
-function Definition() {
-  return {} as { options: OptionType[] }
-}
 
 export default defineComponent({
   name: 'OptionsEditor',
@@ -121,11 +117,14 @@ export default defineComponent({
     PlusOutlined
   },
   props: {
-    props: Definition
+    props: {
+      type: Object as PropType<{ options: OptionType[] }>,
+      required: true,
+    },
   },
   emits: ['fieldChange'],
   setup(props: any, ctx) {
-    function fieldChange(fieldPath: string) {
+    function fieldChange() {
       ctx.emit('fieldChange', 'props.options')
     }
 

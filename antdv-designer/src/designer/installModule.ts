@@ -1,34 +1,24 @@
-import {FormHelper} from '@/designer/helper';
-import FormStudio from "@@/FormStudio";
+import { FormHelper } from './helper';
+import FormStudio from '@@/FormStudio';
+import components from './components';
+import factorys from '@@/factory';
+import layouts from './layout';
 
-function installFactory(modules: __WebpackModuleApi.RequireContext) {
-    modules.keys().forEach((key) => {
-        const mod = modules(key);
-        FormStudio.registerFactory(mod.default);
-    });
-}
+export default function install() {
+  for (const mod of Object.keys(factorys)) {
+    FormStudio.registerFactory(factorys[mod]);
+  }
+  for (const mod of Object.keys(components)) {
+    FormHelper.registerComponent(components[mod].default);
+    if (components[mod].PropEditor) {
+      FormHelper.registerEditor(components[mod].PropEditor);
+    }
+  }
 
-function installDef(modules: __WebpackModuleApi.RequireContext) {
-    modules.keys().forEach((key) => {
-        const mod = modules(key);
-        FormHelper.registerComponent(mod.default);
-    });
-}
-
-function installEditor(modules: __WebpackModuleApi.RequireContext) {
-    modules.keys().forEach((key) => {
-        const mod = modules(key);
-        FormHelper.registerEditor(mod.default);
-    });
-}
-
-
-installFactory(require.context('@@/factory', true, /Factory.ts/))
-installDef(require.context('./components', true, /index.vue/))
-installDef(require.context('./layout', true, /index.vue/))
-installEditor(require.context('./components', true, /PropEditor.vue/))
-installEditor(require.context('./layout', true, /PropEditor.vue/))
-
-export default function install(modules: string[]) {
-    console.log(modules);
+  for (const mod of Object.keys(layouts)) {
+    FormHelper.registerComponent(layouts[mod].default);
+    if (layouts[mod].PropEditor) {
+      FormHelper.registerEditor(layouts[mod].PropEditor);
+    }
+  }
 }

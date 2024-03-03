@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import {Activatable, ReactComponentProps} from "../types";
 import {DeleteOutlined, DragOutlined} from "@ant-design/icons";
 import {FormHelper} from "../helper";
+import {ComponentType} from "@@/types";
 
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
@@ -53,7 +54,7 @@ export interface FactoryWrapperOptions {
 function LayoutWrapperFactory(opt: FactoryWrapperOptions = {}) {
     const options = opt || {};
 
-    return function LayoutWrapper<T>(WrappedComponent: ComponentClass<ReactComponentProps<T>>) {
+    return function LayoutWrapper<T extends ComponentType>(WrappedComponent: ComponentClass<ReactComponentProps<T>>) {
         const componentLayout = createReactClass({
             displayName: 'LayoutWrapper',
             getInitialState() {

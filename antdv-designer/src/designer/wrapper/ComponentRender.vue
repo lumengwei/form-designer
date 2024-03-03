@@ -1,85 +1,79 @@
 <template>
   <ComponentWrapper
-      v-if="isGroup(FactoryGroup.Component)"
-      :title="definition.title"
-      v-on:on-delete="onDelete"
-      v-on:on-active="onActive"
-      :active="isActive(definition)"
+    v-if="isGroup(FactoryGroup.Component)"
+    :title="definition.title"
+    @on-delete="onDelete"
+    @on-active="onActive"
+    :active="isActive(definition)"
   >
-    <Component :is="getComponent(definition.type)" :definition="definition" ref="refCom"/>
+    <Component :is="getComponent(definition.type)" :definition="definition" ref="refCom" />
   </ComponentWrapper>
-  <LayoutWrapper
-      v-else
-      v-on:on-delete="onDelete"
-      v-on:on-active="onActive"
-      :active="isActive(definition)"
-  >
-    <Component :is="getComponent(definition.type)" :definition="definition" ref="refCom"/>
+  <LayoutWrapper v-else @on-delete="onDelete" @on-active="onActive" :active="isActive(definition)">
+    <Component :is="getComponent(definition.type)" :definition="definition" ref="refCom" />
   </LayoutWrapper>
 </template>
 
 <script lang="ts">
+  import { defineComponent, getCurrentInstance, onUpdated, ref } from 'vue';
+  import { DefineComponent, PropType } from '@vue/runtime-core';
+  import { FormHelper } from '../helper';
+  import FormStudio from '@@/FormStudio';
+  import { ComponentDefinition, FactoryGroup } from '@@/types';
+  import ComponentWrapper from '../wrapper/ComponentWrapper.vue';
+  import LayoutWrapper from '../wrapper/LayoutWrapper.vue';
 
-import {defineComponent, getCurrentInstance, onUpdated, ref} from "vue";
-import {DefineComponent} from "@vue/runtime-core";
-import {FormHelper} from "../helper";
-import FormStudio from "@@/FormStudio";
-import {FactoryGroup} from "@@/types";
-import ComponentWrapper from "@/designer/wrapper/ComponentWrapper.vue";
-import LayoutWrapper from "@/designer/wrapper/LayoutWrapper.vue";
+  export default defineComponent({
+    name: 'ComponentRender',
+    components: {
+      LayoutWrapper,
+      ComponentWrapper,
+    },
+    props: {
+      definition: {
+        type: Object as PropType<ComponentDefinition<any>>,
+        required: true,
+      },
+    },
+    emits: ['onDelete'],
+    setup(props: any, ctx: any) {
+      const refCom = ref();
+      const inst = getCurrentInstance();
 
-export default defineComponent({
-  name: "ComponentRender",
-  components: {
-    LayoutWrapper,
-    ComponentWrapper
-  },
-  props: {
-    definition: Object
-  },
-  emits: ['onDelete'],
-  setup(props: any, ctx: any) {
+      function onDelete() {
+        ctx.emit('onDelete');
+      }
 
-    const refCom = ref();
-    const inst = getCurrentInstance();
+      function onActive() {
+        FormHelper.activeComponentIns = inst?.proxy;
+      }
 
-    function onDelete() {
-      ctx.emit('onDelete')
-    }
+      onUpdated(() => {
+        refCom.value!.$forceUpdate();
+      });
 
-    function onActive() {
-      FormHelper.activeComponentIns = inst?.proxy;
-    }
+      function isActive(it: any) {
+        return FormHelper.activeComponentId == it.id;
+      }
 
-    onUpdated(() => {
-      refCom.value!.$forceUpdate();
-    })
+      function isGroup(group: FactoryGroup) {
+        return FormStudio.getFactory(props.definition.type).group == group;
+      }
 
-    function isActive(it: any) {
-      return FormHelper.activeComponentId == it.id;
-    }
+      function getComponent(type: string): DefineComponent {
+        return FormHelper.getComponent(type);
+      }
 
-    function isGroup(group: FactoryGroup) {
-      return FormStudio.getFactory(props.definition.type).group == group;
-    }
-
-    function getComponent(type: string): DefineComponent {
-      return FormHelper.getComponent(type)
-    }
-
-    return {
-      refCom,
-      getComponent,
-      isGroup,
-      FactoryGroup,
-      onDelete,
-      onActive,
-      isActive
-    }
-  }
-})
+      return {
+        refCom,
+        getComponent,
+        isGroup,
+        FactoryGroup,
+        onDelete,
+        onActive,
+        isActive,
+      };
+    },
+  });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

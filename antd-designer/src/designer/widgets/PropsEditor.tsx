@@ -2,8 +2,8 @@ import React, {PropsWithChildren, PureComponent, ReactElement} from "react";
 import {Form, FormInstance, Input, InputNumber, Select} from "antd";
 import {ComponentEditor, ReactComponentProps} from "../types";
 import {FormHelper} from "../helper";
-import {mergeObject} from "../../../../src/utils";
-import {FieldType, FieldTypes} from "../../../../src/types";
+import {mergeObject} from "@@/utils";
+import {FieldType, FieldTypes, ComponentType} from "@@/types";
 
 const lengthFields: FieldType[] = ['varchar', 'string'];
 const scaleFields: FieldType[] = ['decimal'];
@@ -13,9 +13,8 @@ export type PropsEditorState = {
     lengthDisabled: boolean
 }
 
-export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<ReactComponentProps<T>>, PropsEditorState>
+export abstract class PropsEditor<T extends ComponentType> extends PureComponent<PropsWithChildren<ReactComponentProps<T>>, PropsEditorState>
     implements ComponentEditor<ReactComponentProps<T>, T> {
-
 
     private writeFields: string[] = ["props", "title", "fieldDef.fieldName", "fieldDef.fieldType"];
 
@@ -36,7 +35,7 @@ export abstract class PropsEditor<T> extends PureComponent<PropsWithChildren<Rea
         }
     }
 
-    onValuesChange(changedValues: any, allValues: any) {
+    onValuesChange(changedValues: any, _allValues: any) {
         console.log('onValuesChange', changedValues)
         const {definition} = this.props;
         for (const field of Object.keys(changedValues)) {

@@ -1,65 +1,60 @@
 <template>
   <div class="ui-sortable" ref="refNode">
-    <ComponentRender
-        v-if="definition.children"
-        v-for="(it, index) in definition.children"
-        :key="it.type+'-'+it.id"
-        :definition="it"
-        v-on:on-delete="removeChild(index)"
-    />
+    <template v-if="definition.children">
+      <ComponentRender
+          v-for="(it, index) in childrenList"
+          :key="it.id"
+          :definition="it"
+          @on-delete="removeChild(index)"
+      />
+    </template>
   </div>
 </template>
 <script lang="ts">
-import LayoutWrapper from '../../wrapper/LayoutWrapper.vue';
-
-import {defineComponent, getCurrentInstance, onMounted, ref} from 'vue';
-import {sortable} from "@/lib/sortable";
+import {defineComponent, getCurrentInstance, onMounted, PropType, ref, computed} from 'vue';
+import {sortable} from "../../lib/sortable";
 import LinearLayoutFactory from '@@/factory/LinearLayoutFactory';
 import {useVueComponentGroup} from "@/designer/helper";
 import {ComponentGroup} from "../../../VueComponents";
-import ComponentWrapper from "@/designer/wrapper/ComponentWrapper.vue";
-import {ComponentDefinition, FactoryGroup} from "@@/types";
+import {ComponentDefinition} from "@@/types";
 import ComponentRender from "@/designer/wrapper/ComponentRender.vue";
-import {LinearLayoutProps} from "@@/props";
-
-
-function Definition() {
-  return {} as ComponentDefinition<LinearLayoutProps>
-}
-
 
 export default defineComponent({
   name: LinearLayoutFactory.type,
   components: {
     ComponentRender,
-    ComponentWrapper,
-    LayoutWrapper,
   },
   props: {
     definition: {
-      type: Definition,
+      type: Object as PropType<ComponentDefinition<'LinearLayout'>>,
+      required: true,
       default() {
         return LinearLayoutFactory.createComponentDefinition();
       },
     },
   },
-  setup() {
+  setup(props) {
     const refNode = ref<HTMLElement | null>(null);
     const groupMethods = useVueComponentGroup();
 
     onMounted(() => {
       const inst = getCurrentInstance();
       if (inst) {
-        sortable(refNode.value, inst.proxy as ComponentGroup);
+        sortable(refNode.value, inst.proxy as ComponentGroup, {});
       }
+    });
+
+    const childrenList = computed(() => {
+      return props.definition.children?.filter(Boolean);
     });
 
     return {
       refNode,
+      childrenList,
       ...groupMethods,
     };
   },
-})
+});
 </script>
 
 <style scoped lang="less">

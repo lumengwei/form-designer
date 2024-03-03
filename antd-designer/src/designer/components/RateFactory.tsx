@@ -3,14 +3,12 @@ import {Form, InputNumber, Rate} from 'antd';
 import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
 import {PropsEditor} from '../widgets/PropsEditor';
-import {RateProps} from "../../../../src/props";
-import {FactoryGroup, FieldFactory, FieldType} from "../../../../src/types";
+import {RateProps} from "@@/props";
 import {ReactComponentProps, ReactComponentState} from "../types";
-import {makeComponentId, makeFieldId} from "../../../../src/utils";
 import RateFactory from "@@/factory/RateFactory";
 
 @ComponentWrapper
-class RateComponent extends ReactComponent<ReactComponentProps<RateProps>, RateProps, ReactComponentState> {
+class RateComponent extends ReactComponent<ReactComponentProps<'Rate'>, 'Rate', ReactComponentState> {
 
     override render() {
         const {definition: {props}} = this.props;
@@ -25,7 +23,7 @@ class RateComponent extends ReactComponent<ReactComponentProps<RateProps>, RateP
     }
 }
 
-class RateComponentEditor extends PropsEditor<RateProps> {
+class RateComponentEditor extends PropsEditor<'Rate'> {
     doRender() {
         const definition = this.props.definition;
         const props: RateProps = definition.props!;

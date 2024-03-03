@@ -2,12 +2,10 @@ import React from 'react';
 import {sortable} from '../../lib/sortable';
 import {Layout} from '../ReactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
-import {ComponentDefinition, ComponentFactory, FactoryGroup} from "../../../../src/types";
-import {LinearLayoutProps} from "../../../../src/props";
+import {ComponentDefinition} from "@@/types";
 import {ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
 import className from "classnames";
-import {makeComponentId} from "../../../../src/utils";
 import LinearLayoutFactory from "@@/factory/LinearLayoutFactory";
 
 /**
@@ -23,9 +21,9 @@ import LinearLayoutFactory from "@@/factory/LinearLayoutFactory";
         minHeight: '50px',
     }
 })
-class LinearLayout extends Layout<ReactComponentProps<LinearLayoutProps>,
-    LinearLayoutProps
-    , ReactComponentGroupState<LinearLayoutProps>> {
+class LinearLayout extends Layout<ReactComponentProps<'LinearLayout'>,
+    'LinearLayout'
+    , ReactComponentGroupState<'LinearLayout'>> {
 
     private _node: HTMLElement | null = null;
 

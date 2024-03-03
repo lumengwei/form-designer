@@ -12,7 +12,7 @@ require('./components');
 
 require('./layout');
 
-class FormComponent extends PureComponent<Component> {
+class FormComponent extends PureComponent<Component<any>> {
 
     private _node: HTMLElement | null = null;
 
@@ -44,7 +44,7 @@ class FormComponent extends PureComponent<Component> {
 class FormDesigner extends PureComponent {
 
     renderChild(group: FactoryGroup) {
-        return FormStudio.getFactoryList(group).map(item => {
+        return FormStudio.factoryList.filter(it=> it.group == group).map(item => {
             return <FormComponent title={item.title} type={item.type} key={item.type}/>
         })
     }

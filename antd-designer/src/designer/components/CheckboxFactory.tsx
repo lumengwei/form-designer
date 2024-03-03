@@ -10,7 +10,7 @@ import CheckboxFactory from "@@/factory/CheckboxFactory";
 const CheckboxGroup = Checkbox.Group;
 
 @ComponentWrapper
-class CheckboxComponent extends ReactComponent<ReactComponentProps<CheckboxProps>, CheckboxProps, ReactComponentState> {
+class CheckboxComponent extends ReactComponent<ReactComponentProps<'Checkbox'>, 'Checkbox', ReactComponentState> {
 
     override render() {
         const definition = this.props.definition;
@@ -27,7 +27,7 @@ class CheckboxComponent extends ReactComponent<ReactComponentProps<CheckboxProps
     }
 }
 
-class CheckboxComponentEditor extends OptionGroupEditor<CheckboxProps> {
+class CheckboxComponentEditor extends OptionGroupEditor<'Checkbox'> {
 
     doRender() {
         return (

@@ -4,14 +4,13 @@ import {ComponentWrapper, FactoryRegister} from '../wrapper';
 import {ReactComponent} from '../ReactComponent';
 import {PropsEditor} from '../widgets/PropsEditor';
 import {ReactComponentProps, ReactComponentState} from "../types";
-import {InputProps} from "@@/props";
 import InputFactory from "@@/factory/InputFactory";
 
 /**
  * 组件
  */
 @ComponentWrapper
-class InputComponent extends ReactComponent<ReactComponentProps<InputProps>, InputProps, ReactComponentState> {
+class InputComponent extends ReactComponent<ReactComponentProps<'Input'>, 'Input', ReactComponentState> {
 
     override render() {
         const {definition: {props}} = this.props;
@@ -24,7 +23,7 @@ class InputComponent extends ReactComponent<ReactComponentProps<InputProps>, Inp
 /**
  * 组件属性编辑器
  */
-class InputComponentEditor extends PropsEditor<InputProps> {
+class InputComponentEditor extends PropsEditor<'Input'> {
     doRender() {
         return (
             <></>

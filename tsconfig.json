@@ -5,20 +5,21 @@
     }
   },
   "compilerOptions": {
-    "sourceMap": true,
-    //    "outDir": "./dist",
-    "target": "es6",
+    "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "jsx": "react",
     "strict": true,
-    "skipLibCheck": true,
-    "stripInternal": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "strictFunctionTypes": false,
+    "jsx": "preserve",
+    "allowJs": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false,
     "lib": [
       "dom",
       "es2017"
@@ -28,7 +29,10 @@
       "@@/*": [
         "./src/*"
       ]
-    }
+    },
+    "typeRoots": [
+      "./node_modules/@types/",
+    ]
   },
   "path": [],
   "exclude": [

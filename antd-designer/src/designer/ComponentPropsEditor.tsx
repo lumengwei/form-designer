@@ -28,7 +28,7 @@ class ComponentPropsEditor extends PureComponent<{}, ReactComponentGroupState<an
         })
     }
 
-    onValuesChange(props: any, values: any, _: any) {
+    onValuesChange(_props: any, _values: any, _: any) {
         /* setTimeout(() => {// validateFields 的调用放在最后
              props.form.validateFields((err, allValues) => {
                  if (err) return;

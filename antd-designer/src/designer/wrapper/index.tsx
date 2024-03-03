@@ -1,19 +1,19 @@
 import React, {ComponentClass} from 'react';
-import {ComponentDefinition, ComponentFactory, ComponentFactoryConstructor} from "../../../../src/types";
+import {ComponentDefinition, ComponentFactory} from "../../../../src/types";
 import FormStudio from "../../../../src/FormStudio";
 import FactoryRenders from "../helper/FactoryRenders";
 import {ComponentFactoryRender, ReactComponentProps} from "../types";
-
+import {ComponentType} from "@@/types";
 
 /**
  * 注册ComponentFactory
  * @param Factory
  * @constructor
  */
-export function FactoryRegister<P extends ReactComponentProps<T>, T>(Component: ComponentClass<P>
+export function FactoryRegister<P extends ReactComponentProps<T>, T extends ComponentType>(Component: ComponentClass<P>
     , ComponentEditor?: ComponentClass<ReactComponentProps<T>>) {
 
-    return function FactoryWrapper(factory: ComponentFactory<T>) {
+    return function FactoryWrapper<T  extends ComponentType>(factory: ComponentFactory<T>) {
         const render: ComponentFactoryRender<T, any> = {
             renderComponent(componentDefinition: ComponentDefinition<T>) {
 
@@ -39,7 +39,7 @@ export function FactoryRegister<P extends ReactComponentProps<T>, T>(Component: 
         }
 
         //const factory: ComponentFactory<T> = new Factory();
-        FactoryRenders.register<T>(render, factory.type)
+        FactoryRenders.register(render, factory.type)
         FormStudio.registerFactory(factory)
     }
 }
