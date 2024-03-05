@@ -15,7 +15,7 @@ import {defineComponent, getCurrentInstance, onMounted, PropType, ref, computed}
 import {sortable} from "../../lib/sortable";
 import LinearLayoutFactory from '@@/factory/LinearLayoutFactory';
 import {useVueComponentGroup} from "@/designer/helper";
-import {ComponentGroup} from "../../../VueComponents";
+import {ComponentGroup} from "@/designer/VueComponents";
 import {ComponentDefinition} from "@@/types";
 import ComponentRender from "@/designer/wrapper/ComponentRender.vue";
 

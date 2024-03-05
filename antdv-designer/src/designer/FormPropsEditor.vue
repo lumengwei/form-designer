@@ -60,8 +60,11 @@
       function onFieldChange(fieldPath: string) {
         if (refForm.value) {
           // Fix: form 不支持 `a.b.c` 的格式
-          formModel.value[fieldPath] = getFieldValue(formModel.value, fieldPath);
-          refForm.value.validate([fieldPath]).then((_res) => {
+          formModel.value = {
+            ...formModel.value,
+            [fieldPath]: getFieldValue(formModel.value, fieldPath)
+          }
+          refForm.value.validate([fieldPath]).then(() => {
             mergeObj2Obj(fieldPath, formModel.value, definition.value);
             FormHelper.formView!.$forceUpdate();
           });

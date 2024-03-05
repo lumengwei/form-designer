@@ -1,5 +1,5 @@
 import React from 'react';
-import {sortable} from '../../lib/sortable';
+import {sortable} from '@/designer/lib/sortable';
 import {Layout} from '../ReactComponent';
 import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import {ComponentDefinition} from "@@/types";
@@ -27,9 +27,8 @@ class LinearLayout extends Layout<ReactComponentProps<'LinearLayout'>,
 
     private _node: HTMLElement | null = null;
 
-
     override componentDidMount() {
-        sortable(this._node, this);
+        sortable(this._node, this, {});
     }
 
     ref = (node: HTMLElement | null) => {

@@ -5,7 +5,7 @@ import {FactoryRegister, LayoutWrapper} from '../wrapper';
 import FormStudio from "@@/FormStudio";
 import {ReactComponentGroupState, ReactComponentProps} from "../types";
 import FactoryRenders from "../helper/FactoryRenders";
-import {sortable} from "../../lib/sortable";
+import {sortable} from "@/designer/lib/sortable";
 import {PropsEditor} from "../widgets/PropsEditor";
 import ColumnLayoutFactory from "@@/factory/ColumnLayoutFactory";
 
@@ -48,7 +48,10 @@ class ColumnLayout extends Layout<ReactComponentProps<'ColumnLayout'>, 'ColumnLa
             } else {
                 const ref = (node: HTMLDivElement) => {
                     if (node) {
-                        sortable(node, this, i, 1, true)
+                        sortable(node, this, {
+                            slotIndex: i,
+                            limitSize: 1,
+                        })
                     }
                 };
                 segments.push((<div className="cell" ref={ref} key={'cell-' + i}/>))

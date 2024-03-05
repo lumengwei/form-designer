@@ -11,10 +11,9 @@
     "@ant-design/icons": "^5.0.1",
     "antd": "^5.3.1",
     "classnames": "^2.3.2",
-    "jquery": "^3.4.0",
-    "jquery-ui-dist": "^1.12.1",
     "react": "latest",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sortablejs": "^1.15.2"
   },
   "devDependencies": {
     "@types/create-react-class": "^15.6.3",

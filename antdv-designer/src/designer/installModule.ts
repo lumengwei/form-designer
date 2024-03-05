@@ -1,24 +1,35 @@
-import { FormHelper } from './helper';
+import {FormHelper} from './helper';
 import FormStudio from '@@/FormStudio';
 import components from './components';
 import factorys from '@@/factory';
 import layouts from './layout';
 
 export default function install() {
-  for (const mod of Object.keys(factorys)) {
-    FormStudio.registerFactory(factorys[mod]);
-  }
-  for (const mod of Object.keys(components)) {
-    FormHelper.registerComponent(components[mod].default);
-    if (components[mod].PropEditor) {
-      FormHelper.registerEditor(components[mod].PropEditor);
-    }
-  }
+    Object.entries(factorys).forEach(([, v]) => {
+        FormStudio.registerFactory(v);
+    });
 
-  for (const mod of Object.keys(layouts)) {
-    FormHelper.registerComponent(layouts[mod].default);
-    if (layouts[mod].PropEditor) {
-      FormHelper.registerEditor(layouts[mod].PropEditor);
-    }
-  }
+    Object.entries(components).forEach(([, v]) => {
+        Object.entries(v).forEach(([k, m]) => {
+            if (k == 'default') {
+                FormHelper.registerComponent(m);
+            }
+
+            if (k == 'PropEditor') {
+                FormHelper.registerEditor(m);
+            }
+        });
+    });
+
+    Object.entries(layouts).forEach(([, v]) => {
+        Object.entries(v).forEach(([k, m]) => {
+            if (k == 'default') {
+                FormHelper.registerComponent(m);
+            }
+
+            if (k == 'PropEditor') {
+                FormHelper.registerEditor(m);
+            }
+        });
+    });
 }

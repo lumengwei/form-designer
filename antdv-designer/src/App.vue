@@ -4,18 +4,17 @@
       <Button type="primary" v-on:click="getJsonData">获取数据</Button>
     </LayoutHeader>
     <div class="layout-content">
-      <form-designer/>
+      <FormDesigner :definition="definition!" :from-def="formDef" ref="formDesigner" />
     </div>
   </Layout>
 </template>
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, reactive, toRefs} from 'vue';
 import {Button, Layout, LayoutHeader} from 'ant-design-vue';
 import installModule from './designer/installModule';
 import FormDesigner from "@/designer/FormDesigner.vue";
 import FormStudio from "@@/FormStudio";
 
-installModule();
 
 export default defineComponent({
   name: 'App',
@@ -26,11 +25,19 @@ export default defineComponent({
     Button
   },
   setup() {
+    installModule();
+
+    const formData = reactive({
+      definition: FormStudio.definition,
+      formDef: FormStudio.formDef,
+    });
+
     function getJsonData() {
       alert(JSON.stringify(FormStudio.getJsonData()));
     }
 
     return {
+      ...toRefs(formData),
       getJsonData
     };
   },
